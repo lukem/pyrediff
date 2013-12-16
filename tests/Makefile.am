@@ -41,7 +41,7 @@ clean-local:
 
 $(TESTSUITE): @MAINTAINER_MODE_TRUE@ $(TESTSUITE_DEPS)
 	$(AM_V_GEN)$(AUTOTEST) \
-		-I '$(top_srcdir)/src/autotest' \
+		-I '$(top_srcdir)/src' \
 		-I '$(srcdir)' \
 		-o $@.tmp $@.at
 	mv $@.tmp $@
