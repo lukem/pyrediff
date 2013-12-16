@@ -1,0 +1,2 @@
+m4_include([ax_at_check_pattern.m4])
+

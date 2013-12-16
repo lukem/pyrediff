@@ -1,0 +1,9 @@
+AT_INIT([at_check_pattern])
+
+AT_COLOR_TESTS()
+
+m4_include([01-simple.at])
+m4_include([02-trivial.at])
+m4_include([03-complex.at])
+m4_include([04-trivial-bad.at])
+m4_include([05-diff-function.at])

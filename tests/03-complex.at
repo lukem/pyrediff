@@ -1,0 +1,7 @@
+AT_SETUP([complex pattern])
+
+AX_AT_CHECK_PATTERN([env TZ=UTC date], [0],
+[[[[A-Z]][[a-z]][[a-z]] [[A-Z]][[a-z]][[a-z]] [[0-9]][[0-9]] [[0-9]][[0-9]]:[[0-9]][[0-9]]:[[0-9]][[0-9]] UTC 2013
+]])
+
+AT_CLEANUP()

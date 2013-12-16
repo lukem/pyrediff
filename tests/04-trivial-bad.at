@@ -1,0 +1,11 @@
+AT_SETUP([trivial bad pattern])
+
+fault=false
+AX_AT_CHECK_PATTERN([echo ab; echo c], [0],
+[ab?d?
+C
+], [], [echo expected mismatch;exit 0], [echo unexpected match;fault=true])
+AT_FAIL_IF([$fault])
+
+
+AT_CLEANUP()

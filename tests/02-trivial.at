@@ -1,0 +1,8 @@
+AT_SETUP([trivial pattern])
+
+AX_AT_CHECK_PATTERN([echo ab; echo c], [0],
+[ab?d?
+c
+])
+
+AT_CLEANUP()
