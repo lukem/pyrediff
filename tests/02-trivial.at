@@ -1,8 +1,18 @@
 AT_SETUP([trivial pattern])
 
-AX_AT_CHECK_PATTERN([echo ab; echo c], [0],
-[ab?d?
+AX_AT_CHECK_PATTERN([echo ab; echo c], [0], [dnl
+ab?d?
 c
 ])
+
+
+AT_DATA([02.re], [dnl
+ab?d?
+c
+])
+
+AT_CHECK([echo ab; echo c], [0], [stdout])
+AX_AT_DIFF_PATTERN([02.re], [stdout])
+
 
 AT_CLEANUP()
