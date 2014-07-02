@@ -1,4 +1,4 @@
-AT_INIT([at_check_pattern])
+AT_INIT([ax_at_check_pattern])
 
 AT_COLOR_TESTS()
 
