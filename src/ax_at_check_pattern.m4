@@ -1,32 +1,40 @@
 # SYNOPSIS
 #
-#   AX_AT_CHECK_PATTERN(commands, [status], [stdout_re], [stderr_re],
-#                      [run-if-fail], [run-if-pass])
+#   AX_AT_CHECK_PATTERN(COMMANDS, [STATUS], [STDOUT-RE], [STDERR-RE], [RUN-IF-FAIL], [RUN-IF-PASS])
 #
 # DESCRIPTION
 #
 #   This macro executes a test, similar to AT_CHECK(), except that
-#   stdout and stderr are awk regular expressions.
+#   stdout and stderr are awk regular expressions (REs).
+#
+#   NOTE: as autoconf uses [] for quoting, the use of [brackets] in the RE
+#   arguments STDOUT-RE and STDERR-RE can be awkward and require careful
+#   extra quoting, or quadrigraphs '@<:@' (for '[') and '@:>@' (for ']').
+#
+#   awk is invoked via $AWK, which defaults to "awk" if unset or empty.
+#
+#   Implemented using AT_CHECK() with a custom value for $at_diff that
+#   invokes diff with an awk post-processor.
 #
 # LICENSE
 #
-#   Copyright (c) 2013 Luke Mewburn <luke@mewburn.net>
+#   Copyright (c) 2013-2014 Luke Mewburn <luke@mewburn.net>
 #
 #   Copying and distribution of this file, with or without modification,
 #   are permitted in any medium without royalty provided the copyright
 #   notice and this notice are preserved.  This file is offered as-is,
 #   without any warranty.
 
-#serial 1
+#serial 2
 
-dnl XXX AC_REQUIRE([AC_PROG_AWK])
+m4_defun([_AX_AT_CHECK_PATTERN_PREPARE], [dnl
+dnl Can't use AC_PROG_AWK() in autotest.
+AS_VAR_IF([AWK], [], [AWK=awk])
 
-
-m4_defun([_AX_AT_CHECK_PATTERN_PREPARE],
-[AS_REQUIRE_SHELL_FN([ax_at_diff_pattern],
+AS_REQUIRE_SHELL_FN([ax_at_diff_pattern],
   [AS_FUNCTION_DESCRIBE([ax_at_diff_pattern], [PATTERN OUTPUT],
     [Diff PATTERN OUTPUT and elide change lines where the RE pattern matches])],
-[diff "$[]1" "$[]2" | awk '
+[diff "$[]1" "$[]2" | $AWK '
 BEGIN { exitval=0 }
 
 function mismatch()
@@ -92,15 +100,16 @@ $[]1 == ">" {
 }
 
 END { exit exitval }
-'])])dnl _AX_AT_CHECK_PATTERN_PREPARE
+'])dnl ax_at_diff_pattern
+])dnl _AX_AT_CHECK_PATTERN_PREPARE
 
 
-m4_defun([AX_AT_CHECK_PATTERN],
-[AS_REQUIRE([_AX_AT_CHECK_PATTERN_PREPARE])
-_ax_a_c_p_d="$at_diff"
+m4_defun([AX_AT_CHECK_PATTERN], [dnl
+AS_REQUIRE([_AX_AT_CHECK_PATTERN_PREPARE])
+_ax_at_check_pattern_prepare_original_at_diff="$at_diff"
 at_diff='ax_at_diff_pattern'
 AT_CHECK($1, $2, $3, $4,
-        [at_diff="$_ax_a_c_p_d";]$5,
-	[at_diff="$_ax_a_c_p_d";]$6)
+        [at_diff="$_ax_at_check_pattern_prepare_original_at_diff";]$5,
+        [at_diff="$_ax_at_check_pattern_prepare_original_at_diff";]$6)
 
 ])dnl AX_AT_CHECK_PATTERN
