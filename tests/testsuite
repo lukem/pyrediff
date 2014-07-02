@@ -2237,17 +2237,60 @@ at_fn_check_status 0 $at_status "$at_srcdir/03-complex.at:11"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
-
 { set +x
-$as_echo "$at_srcdir/03-complex.at:12: ax_at_diff_pattern 03.re stdout"
+$as_echo "$at_srcdir/03-complex.at:12: mv stdout 03.out"
 at_fn_check_prepare_trace "03-complex.at:12"
-( $at_check_trace; ax_at_diff_pattern 03.re stdout
+( $at_check_trace; mv stdout 03.out
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
 at_fn_diff_devnull "$at_stdout" || at_failed=:
 at_fn_check_status 0 $at_status "$at_srcdir/03-complex.at:12"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+$as_echo "$at_srcdir/03-complex.at:13: ax_at_diff_pattern 03.re 03.out"
+at_fn_check_prepare_trace "03-complex.at:13"
+( $at_check_trace; ax_at_diff_pattern 03.re 03.out
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/03-complex.at:13"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+{ set +x
+$as_echo "$at_srcdir/03-complex.at:14: ax_at_diff_pattern 03.re 03.out"
+at_fn_check_prepare_trace "03-complex.at:14"
+( $at_check_trace; ax_at_diff_pattern 03.re 03.out
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/03-complex.at:14"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+{ set +x
+$as_echo "$at_srcdir/03-complex.at:15: ax_at_diff_pattern 03.re 03.out"
+at_fn_check_prepare_trace "03-complex.at:15"
+( $at_check_trace; ax_at_diff_pattern 03.re 03.out
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/03-complex.at:15"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
