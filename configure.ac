@@ -1,5 +1,5 @@
 AC_PREREQ([2.69])
-AC_INIT([at_check_pattern], [1], [luke@mewburn.net])
+AC_INIT([ax_at_check_pattern], [2], [luke@mewburn.net])
 
 AC_CONFIG_AUX_DIR([buildaux])
 AC_CONFIG_MACRO_DIR([buildaux])
