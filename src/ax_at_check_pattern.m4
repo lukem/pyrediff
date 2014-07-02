@@ -30,7 +30,7 @@
 #   notice and this notice are preserved.  This file is offered as-is,
 #   without any warranty.
 
-#serial 2
+#serial 3
 
 m4_defun([_AX_AT_CHECK_PATTERN_PREPARE], [dnl
 dnl Can't use AC_PROG_AWK() in autotest.
