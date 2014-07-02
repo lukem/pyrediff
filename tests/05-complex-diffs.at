@@ -1,4 +1,4 @@
-AT_SETUP([diff function])
+AT_SETUP([complex diffs])
 
 dnl create pattern file
 dnl
