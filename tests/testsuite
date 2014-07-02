@@ -377,7 +377,7 @@ fi # as_fn_arith
 # Diff PATTERN OUTPUT and elide change lines where the RE pattern matches
 ax_at_diff_pattern ()
 {
-diff "$1" "$2" | awk '
+diff "$1" "$2" | $AWK '
 BEGIN { exitval=0 }
 
 function mismatch()
@@ -598,6 +598,10 @@ as_tr_cpp="eval sed 'y%*$as_cr_letters%P$as_cr_LETTERS%;s%[^_$as_cr_alnum]%_%g'"
 
 # Sed expression to map a string onto a valid variable name.
 as_tr_sh="eval sed 'y%*+%pp%;s%[^_$as_cr_alnum]%_%g'"
+
+if ${AWK:+false} :; then :
+  AWK=awk
+fi
 
 
 
@@ -981,7 +985,7 @@ fi
 # List of tests.
 if $at_list_p; then
   cat <<_ATEOF || at_write_fail=1
-at_check_pattern 1 test suite: at_check_pattern test groups:
+ax_at_check_pattern 2 test suite: ax_at_check_pattern test groups:
 
  NUM: FILE-NAME:LINE     TEST-GROUP-NAME
       KEYWORDS
@@ -1022,7 +1026,7 @@ _ATEOF
   exit $at_write_fail
 fi
 if $at_version_p; then
-  $as_echo "$as_me (at_check_pattern 1)" &&
+  $as_echo "$as_me (ax_at_check_pattern 2)" &&
   cat <<\_ATEOF || at_write_fail=1
 
 Copyright (C) 2012 Free Software Foundation, Inc.
@@ -1198,13 +1202,13 @@ fi
 exec 5>>"$at_suite_log"
 
 # Banners and logs.
-$as_echo "## ------------------------------------------------ ##
-## at_check_pattern 1 test suite: at_check_pattern. ##
-## ------------------------------------------------ ##"
+$as_echo "## ------------------------------------------------------ ##
+## ax_at_check_pattern 2 test suite: ax_at_check_pattern. ##
+## ------------------------------------------------------ ##"
 {
-  $as_echo "## ------------------------------------------------ ##
-## at_check_pattern 1 test suite: at_check_pattern. ##
-## ------------------------------------------------ ##"
+  $as_echo "## ------------------------------------------------------ ##
+## ax_at_check_pattern 2 test suite: ax_at_check_pattern. ##
+## ------------------------------------------------------ ##"
   echo
 
   $as_echo "$as_me: command line was:"
@@ -2047,7 +2051,7 @@ _ASBOX
   $as_echo "Please send $at_msg and all information you think might help:
 
    To: <luke@mewburn.net>
-   Subject: [at_check_pattern 1] $as_me: $at_fail_list${at_fail_list:+ failed${at_xpass_list:+, }}$at_xpass_list${at_xpass_list:+ passed unexpectedly}
+   Subject: [ax_at_check_pattern 2] $as_me: $at_fail_list${at_fail_list:+ failed${at_xpass_list:+, }}$at_xpass_list${at_xpass_list:+ passed unexpectedly}
 
 You may investigate any problem if you feel able to do so, in which
 case the test suite provides a good starting point.  Its output may
@@ -2071,7 +2075,7 @@ at_xfail=no
 
 
 
-_ax_a_c_p_d="$at_diff"
+_ax_at_check_pattern_prepare_original_at_diff="$at_diff"
 at_diff='ax_at_diff_pattern'
 { set +x
 $as_echo "$at_srcdir/01-simple.at:3: echo ab; echo c"
@@ -2087,9 +2091,9 @@ c
   $at_diff - "$at_stdout" || at_failed=:
 at_fn_check_status 0 $at_status "$at_srcdir/01-simple.at:3"
 if $at_failed; then :
-  at_diff="$_ax_a_c_p_d";
+  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
 else
-  at_diff="$_ax_a_c_p_d";
+  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
@@ -2112,7 +2116,7 @@ at_xfail=no
 
 
 
-_ax_a_c_p_d="$at_diff"
+_ax_at_check_pattern_prepare_original_at_diff="$at_diff"
 at_diff='ax_at_diff_pattern'
 { set +x
 $as_echo "$at_srcdir/02-trivial.at:3: echo ab; echo c"
@@ -2128,9 +2132,9 @@ c
   $at_diff - "$at_stdout" || at_failed=:
 at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:3"
 if $at_failed; then :
-  at_diff="$_ax_a_c_p_d";
+  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
 else
-  at_diff="$_ax_a_c_p_d";
+  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
@@ -2153,24 +2157,24 @@ at_xfail=no
 
 
 
-_ax_a_c_p_d="$at_diff"
+_ax_at_check_pattern_prepare_original_at_diff="$at_diff"
 at_diff='ax_at_diff_pattern'
 { set +x
-$as_echo "$at_srcdir/03-complex.at:3: env TZ=UTC date"
+$as_echo "$at_srcdir/03-complex.at:3: env LC_TIME=C TZ=UTC date"
 at_fn_check_prepare_trace "03-complex.at:3"
-( $at_check_trace; env TZ=UTC date
+( $at_check_trace; env LC_TIME=C TZ=UTC date
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
-echo >>"$at_stdout"; $as_echo "[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] UTC 2013
+echo >>"$at_stdout"; $as_echo "[A-Z][a-z][a-z] [A-Z][a-z][a-z] [ 0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] UTC [0-9][0-9][0-9][0-9]
 " | \
   $at_diff - "$at_stdout" || at_failed=:
 at_fn_check_status 0 $at_status "$at_srcdir/03-complex.at:3"
 if $at_failed; then :
-  at_diff="$_ax_a_c_p_d";
+  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
 else
-  at_diff="$_ax_a_c_p_d";
+  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
@@ -2194,7 +2198,7 @@ at_xfail=no
 
 fault=false
 
-_ax_a_c_p_d="$at_diff"
+_ax_at_check_pattern_prepare_original_at_diff="$at_diff"
 at_diff='ax_at_diff_pattern'
 { set +x
 $as_echo "$at_srcdir/04-trivial-bad.at:4: echo ab; echo c"
@@ -2210,9 +2214,9 @@ C
   $at_diff - "$at_stdout" || at_failed=:
 at_fn_check_status 0 $at_status "$at_srcdir/04-trivial-bad.at:4"
 if $at_failed; then :
-  at_diff="$_ax_a_c_p_d";echo expected mismatch;exit 0
+  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";echo expected mismatch;exit 0
 else
-  at_diff="$_ax_a_c_p_d";echo unexpected match;fault=true
+  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";echo unexpected match;fault=true
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
