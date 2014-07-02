@@ -9,7 +9,10 @@ AT_DATA([03.re], [dnl
 @<:@A-Z@:>@@<:@a-z@:>@@<:@a-z@:>@ @<:@A-Z@:>@@<:@a-z@:>@@<:@a-z@:>@ @<:@ 0-9@:>@@<:@0-9@:>@ @<:@0-9@:>@@<:@0-9@:>@:@<:@0-9@:>@@<:@0-9@:>@:@<:@0-9@:>@@<:@0-9@:>@ UTC @<:@0-9@:>@@<:@0-9@:>@@<:@0-9@:>@@<:@0-9@:>@
 ])
 AT_CHECK([env LC_TIME=C TZ=UTC date], [0], [stdout])
-AX_AT_DIFF_PATTERN([03.re], [stdout])
+AT_CHECK([mv stdout 03.out])
+AX_AT_DIFF_PATTERN([03.re], [03.out])
+AX_AT_DIFF_PATTERN([03.re], [03.out], [0])
+AX_AT_DIFF_PATTERN([03.re], [03.out], [0], [])
 
 
 AT_CLEANUP()
