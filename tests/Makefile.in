@@ -137,7 +137,7 @@ TESTSUITE_DEPS = \
 	02-trivial.at \
 	03-complex.at \
 	04-trivial-bad.at \
-	05-diff-function.at \
+	05-complex-diffs.at \
 	local.at \
 	testsuite.at
 
