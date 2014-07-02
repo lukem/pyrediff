@@ -1,7 +1,7 @@
 AT_SETUP([simple (no pattern)])
 
-AX_AT_CHECK_PATTERN([echo ab; echo c], [0],
-[ab
+AX_AT_CHECK_PATTERN([echo ab; echo c], [0], [dnl
+ab
 c
 ])
 
