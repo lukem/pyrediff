@@ -2,6 +2,7 @@
 #
 #   AX_AT_CHECK_PATTERN(COMMANDS, [STATUS], [STDOUT-RE], [STDERR-RE], [RUN-IF-FAIL], [RUN-IF-PASS])
 #   AX_AT_DIFF_PATTERN(PATTERN-FILE, TEST-FILE, [STATUS=0], [DIFFERENCES])
+#   AX_AT_DATA_CHECK_PATTERN_AWK(FILENAME)
 #
 # DESCRIPTION
 #
@@ -21,6 +22,11 @@
 #   AX_AT_DIFF_PATTERN() checks that the PATTERN-FILE applies to TEST-FILE.
 #   If there are differences, STATUS will be 1 and they should be DIFFERENCES.
 #
+#
+#   AX_AT_DATA_CHECK_PATTERN_AWK() creates FILENAME with the contents of
+#   the awk script used.
+#
+#
 # LICENSE
 #
 #   Copyright (c) 2013-2014 Luke Mewburn <luke@mewburn.net>
@@ -32,14 +38,7 @@
 
 #serial 3
 
-m4_defun([_AX_AT_CHECK_PATTERN_PREPARE], [dnl
-dnl Can't use AC_PROG_AWK() in autotest.
-AS_VAR_IF([AWK], [], [AWK=awk])
-
-AS_REQUIRE_SHELL_FN([ax_at_diff_pattern],
-  [AS_FUNCTION_DESCRIBE([ax_at_diff_pattern], [PATTERN OUTPUT],
-    [Diff PATTERN OUTPUT and elide change lines where the RE pattern matches])],
-[diff "$[]1" "$[]2" | $AWK '
+m4_define([_AX_AT_CHECK_PATTERN_AWK], [dnl
 BEGIN { exitval=0 }
 
 function mismatch()
@@ -105,7 +104,17 @@ $[]1 == ">" {
 }
 
 END { exit exitval }
-'])dnl ax_at_diff_pattern
+])
+
+
+m4_defun([_AX_AT_CHECK_PATTERN_PREPARE], [dnl
+dnl Can't use AC_PROG_AWK() in autotest.
+AS_VAR_IF([AWK], [], [AWK=awk])
+
+AS_REQUIRE_SHELL_FN([ax_at_diff_pattern],
+  [AS_FUNCTION_DESCRIBE([ax_at_diff_pattern], [PATTERN OUTPUT],
+    [Diff PATTERN OUTPUT and elide change lines where the RE pattern matches])],
+[diff "$[]1" "$[]2" | $AWK '_AX_AT_CHECK_PATTERN_AWK'])
 ])dnl _AX_AT_CHECK_PATTERN_PREPARE
 
 
@@ -124,3 +133,9 @@ m4_defun([AX_AT_DIFF_PATTERN], [dnl
 AS_REQUIRE([_AX_AT_CHECK_PATTERN_PREPARE])
 AT_CHECK([ax_at_diff_pattern $1 $2], [$3], [$4])
 ])dnl AX_AT_CHECK_PATTERN
+
+
+m4_defun([AX_AT_DATA_CHECK_PATTERN_AWK], [dnl
+m4_if([$1], [], [m4_fatal([$0: argument 1: empty filename])])
+AT_DATA($1, _AX_AT_CHECK_PATTERN_AWK)
+])
