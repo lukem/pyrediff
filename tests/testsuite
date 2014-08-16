@@ -377,8 +377,7 @@ fi # as_fn_arith
 # Diff PATTERN OUTPUT and elide change lines where the RE pattern matches
 ax_at_diff_pattern ()
 {
-diff "$1" "$2" | $AWK '
-BEGIN { exitval=0 }
+diff "$1" "$2" | $AWK 'BEGIN { exitval=0 }
 
 function mismatch()
 {
@@ -602,6 +601,7 @@ as_tr_sh="eval sed 'y%*+%pp%;s%[^_$as_cr_alnum]%_%g'"
 if ${AWK:+false} :; then :
   AWK=awk
 fi
+
 
 
 
