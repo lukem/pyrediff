@@ -38,73 +38,73 @@
 
 #serial 3
 
-m4_define([_AX_AT_CHECK_PATTERN_AWK], [dnl
-BEGIN { exitval=0 }
+m4_define([_AX_AT_CHECK_PATTERN_AWK],
+[[BEGIN { exitval=0 }
 
 function mismatch()
 {
 	print mode
 	for (i = 0; i < lc; i++) {
-		print ll[[i]]
+		print ll@<:@i@:>@
 	}
 	print "---"
 	for (i = 0; i < rc; i++) {
-		print rl[[i]]
+		print rl@<:@i@:>@
 	}
 	mode=""
 	exitval=1
 }
 
-$[]1 ~ /^[[0-9]]+(,[[0-9]]+)?[[ad]][[0-9]]+(,[[0-9]]+)?$/ {
+@S|@1 ~ /^@<:@0-9@:>@+(,@<:@0-9@:>@+)?@<:@ad@:>@@<:@0-9@:>@+(,@<:@0-9@:>@+)?@S|@/ {
 	print
 	mode=""
 	exitval=1
 	next
 }
 
-$[]1 ~ /^[[0-9]]+(,[[0-9]]+)?[[c]][[0-9]]+(,[[0-9]]+)?$/ {
-	mode=$[]1
+@S|@1 ~ /^@<:@0-9@:>@+(,@<:@0-9@:>@+)?@<:@c@:>@@<:@0-9@:>@+(,@<:@0-9@:>@+)?@S|@/ {
+	mode=@S|@1
 	lc=0
 	rc=0
 	next
 }
 
 mode == "" {
-	print $[]0
+	print @S|@0
 	next
 }
 
-$[]1 == "<" {
-	ll[[lc]] = $[]0
+@S|@1 == "<" {
+	ll@<:@lc@:>@ = @S|@0
 	lc = lc + 1
 	next
 }
 
-$[]1 == "---" {
+@S|@1 == "---" {
 	next
 }
 
-$[]1 == ">" {
-	rl[[rc]] = $[]0
+@S|@1 == ">" {
+	rl@<:@rc@:>@ = @S|@0
 	rc = rc + 1
 	if (rc > lc) {
 		mismatch()
 		next
 	}
-	pat = "^" substr(ll[[rc-1]], 2) "$"
-	str = substr($[]0, 2)
+	pat = "^" substr(ll@<:@rc-1@:>@, 2) "@S|@"
+	str = substr(@S|@0, 2)
 	if (str !~ pat) {
 		mismatch()
 	}
 	next
 }
 {
-	print "UNEXPECTED LINE: " $[]0
+	print "UNEXPECTED LINE: " @S|@0
 	exit 10
 }
 
 END { exit exitval }
-])
+]])
 
 
 m4_defun([_AX_AT_CHECK_PATTERN_PREPARE], [dnl
