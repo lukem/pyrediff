@@ -27,6 +27,10 @@
 #   the awk script used.
 #
 #
+#   The latest version of this macro and a supporting test suite are at:
+#   https://github.com/lukem/ax_at_check_pattern
+#
+#
 # LICENSE
 #
 #   Copyright (c) 2013-2014 Luke Mewburn <luke@mewburn.net>
