@@ -675,6 +675,7 @@ at_help_all="1;01-simple.at:1;simple (no pattern);;
 4;04-trivial-bad.at:1;trivial bad pattern;;
 5;05-complex-diffs.at:1;complex diffs;;
 6;06-extract.at:1;extract check_pattern.awk;;
+7;07-quoting.at:1;macro quoting;;
 "
 # List of the all the test groups.
 at_groups_all=`$as_echo "$at_help_all" | sed 's/;.*//'`
@@ -688,7 +689,7 @@ at_fn_validate_ranges ()
   for at_grp
   do
     eval at_value=\$$at_grp
-    if test $at_value -lt 1 || test $at_value -gt 6; then
+    if test $at_value -lt 1 || test $at_value -gt 7; then
       $as_echo "invalid test group: $at_value" >&2
       exit 1
     fi
@@ -2569,3 +2570,101 @@ $at_traceon; }
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
 #AT_STOP_6
+#AT_START_7
+at_fn_group_banner 7 '07-quoting.at:1' \
+  "macro quoting" "                                  "
+at_xfail=no
+(
+  $as_echo "7. $at_setup_line: testing $at_desc ..."
+  $at_traceon
+
+
+{ set +x
+$as_echo "$at_srcdir/07-quoting.at:3: echo 1, 2"
+at_fn_check_prepare_trace "07-quoting.at:3"
+( $at_check_trace; echo 1, 2
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "1, 2
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/07-quoting.at:3"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+_ax_at_check_pattern_prepare_original_at_diff="$at_diff"
+at_diff='ax_at_diff_pattern'
+{ set +x
+$as_echo "$at_srcdir/07-quoting.at:7: echo 1, 2"
+at_fn_check_prepare_trace "07-quoting.at:7"
+( $at_check_trace; echo 1, 2
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "1, 2
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/07-quoting.at:7"
+if $at_failed; then :
+  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
+else
+  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
+fi
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+
+{ set +x
+$as_echo "$at_srcdir/07-quoting.at:11: echo \"1,  2\""
+at_fn_check_prepare_trace "07-quoting.at:11"
+( $at_check_trace; echo "1,  2"
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "1,  2
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/07-quoting.at:11"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+_ax_at_check_pattern_prepare_original_at_diff="$at_diff"
+at_diff='ax_at_diff_pattern'
+{ set +x
+$as_echo "$at_srcdir/07-quoting.at:15: echo \"1,   2\""
+at_fn_check_prepare_trace "07-quoting.at:15"
+( $at_check_trace; echo "1,   2"
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "1, +2
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/07-quoting.at:15"
+if $at_failed; then :
+  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
+else
+  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
+fi
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+
+  set +x
+  $at_times_p && times >"$at_times_file"
+) 5>&1 2>&1 7>&- | eval $at_tee_pipe
+read at_status <"$at_status_file"
+#AT_STOP_7

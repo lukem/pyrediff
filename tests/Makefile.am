@@ -13,6 +13,7 @@ TESTSUITE_DEPS = \
 	04-trivial-bad.at \
 	05-complex-diffs.at \
 	06-extract.at \
+	07-quoting.at \
 	local.at \
 	testsuite.at
 

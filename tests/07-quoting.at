@@ -1,0 +1,19 @@
+AT_SETUP([macro quoting])
+
+AT_CHECK([echo 1, 2], [0], [dnl
+1, 2
+])
+
+AX_AT_CHECK_PATTERN([echo 1, 2], [0], [dnl
+1, 2
+])
+
+AT_CHECK([echo "1,  2"], [0], [dnl
+1,  2
+])
+
+AX_AT_CHECK_PATTERN([echo "1,   2"], [0], [dnl
+1, +2
+])
+
+AT_CLEANUP()

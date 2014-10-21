@@ -126,9 +126,9 @@ m4_defun([AX_AT_CHECK_PATTERN], [dnl
 AS_REQUIRE([_AX_AT_CHECK_PATTERN_PREPARE])
 _ax_at_check_pattern_prepare_original_at_diff="$at_diff"
 at_diff='ax_at_diff_pattern'
-AT_CHECK($1, $2, $3, $4,
-        [at_diff="$_ax_at_check_pattern_prepare_original_at_diff";]$5,
-        [at_diff="$_ax_at_check_pattern_prepare_original_at_diff";]$6)
+AT_CHECK(m4_expand([$1]), [$2], m4_expand([$3]), m4_expand([$4]),
+        [at_diff="$_ax_at_check_pattern_prepare_original_at_diff";$5],
+        [at_diff="$_ax_at_check_pattern_prepare_original_at_diff";$6])
 
 ])dnl AX_AT_CHECK_PATTERN
 
