@@ -33,6 +33,7 @@ Second line with a date .*\.
 and output file `1.output`:
 
 ```
+First line
 Second line with a date 2014-11-22T16:41:00.
 ```
 
