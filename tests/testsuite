@@ -5,6 +5,11 @@
 #
 # This test suite is free software; the Free Software Foundation gives
 # unlimited permission to copy, distribute and modify it.
+#
+#
+# Copyright 2013-2015, Luke Mewburn <luke@mewburn.net>.
+# All rights reserved.
+#
 ## -------------------- ##
 ## M4sh Initialization. ##
 ## -------------------- ##
@@ -1034,6 +1039,11 @@ if $at_version_p; then
 Copyright (C) 2012 Free Software Foundation, Inc.
 This test suite is free software; the Free Software Foundation gives
 unlimited permission to copy, distribute and modify it.
+
+
+Copyright 2013-2015, Luke Mewburn <luke@mewburn.net>.
+All rights reserved.
+
 _ATEOF
   exit $at_write_fail
 fi

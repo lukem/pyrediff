@@ -1,5 +1,10 @@
 AT_INIT([ax_at_check_pattern])
 
+AT_COPYRIGHT([[
+Copyright 2013-2015, Luke Mewburn <luke@mewburn.net>.
+All rights reserved.
+]])
+
 AT_COLOR_TESTS()
 
 m4_include([01-simple.at])
