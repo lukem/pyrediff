@@ -429,8 +429,8 @@ $1 == ">" {
 		mismatch()
 		next
 	}
-	pat = "^" substr(ll[rc-1], 2) "$"
-	str = substr($0, 2)
+	pat = "^" substr(ll[rc-1], 3) "$"
+	str = substr($0, 3)
 	if (str !~ pat) {
 		mismatch()
 	}
@@ -2538,8 +2538,8 @@ $1 == ">" {
 		mismatch()
 		next
 	}
-	pat = "^" substr(ll[rc-1], 2) "$"
-	str = substr($0, 2)
+	pat = "^" substr(ll[rc-1], 3) "$"
+	str = substr($0, 3)
 	if (str !~ pat) {
 		mismatch()
 	}
