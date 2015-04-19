@@ -95,8 +95,8 @@ mode == "" {
 		mismatch()
 		next
 	}
-	pat = "^" substr(ll@<:@rc-1@:>@, 2) "@S|@"
-	str = substr(@S|@0, 2)
+	pat = "^" substr(ll@<:@rc-1@:>@, 3) "@S|@"
+	str = substr(@S|@0, 3)
 	if (str !~ pat) {
 		mismatch()
 	}
