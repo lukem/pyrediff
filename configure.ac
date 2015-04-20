@@ -16,6 +16,7 @@ AM_MAINTAINER_MODE()
 AS_SHELL_SANITIZE()
 
 AC_PROG_AWK()
+AM_PATH_PYTHON()
 
 AC_CONFIG_TESTDIR([tests])
 AM_MISSING_PROG([AUTOM4TE], [autom4te])
@@ -26,3 +27,9 @@ AC_CONFIG_FILES([
 ])
 
 AC_OUTPUT()
+
+AC_MSG_NOTICE([ === Configuration results ===])
+AC_MSG_NOTICE([Version:             $PACKAGE_VERSION])
+AC_MSG_NOTICE([awk:                 $AWK])
+AC_MSG_NOTICE([python:              $PYTHON])
+AC_MSG_NOTICE([ =============================])
