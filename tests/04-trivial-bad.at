@@ -11,4 +11,15 @@ C
 AT_FAIL_IF([$fault])
 
 
+fault=false
+AX_AT_CHECK_PYREDIFF([echo ab; echo c], [0], [dnl
+ab?d?
+C
+],
+                    [],
+                    [echo expected mismatch;exit 0],
+                    [echo unexpected match;fault=true])
+AT_FAIL_IF([$fault])
+
+
 AT_CLEANUP()

@@ -15,4 +15,14 @@ AT_CHECK([echo ab; echo c], [0], [stdout])
 AX_AT_DIFF_PATTERN([02.re], [stdout])
 
 
+
+AX_AT_CHECK_PYREDIFF([echo ab; echo c], [0], [dnl
+ab?d?
+c
+])
+
+AT_CHECK([echo ab; echo c], [0], [stdout])
+AX_AT_DIFF_PYRE([02.re], [stdout])
+
+
 AT_CLEANUP()

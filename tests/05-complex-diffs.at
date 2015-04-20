@@ -59,9 +59,37 @@ AT_CHECK([ax_at_diff_pattern 05.re 05.out], [1], [dnl
 < sixth line
 ])
 
+dnl ax_at_diff_pyre output; diff with the 'second' regexes elided
+dnl
+AT_CHECK([ax_at_diff_pyre 05.re 05.out], [1], [dnl
+0a1
+> new first line
+5c6,7
+< fourth line
+---
+> fourth line change
+> fourth.2 new
+7d8
+< sixth line
+])
+
 dnl AX_AT_DIFF_PATTERN()
 dnl
 AX_AT_DIFF_PATTERN([05.re], [05.out], [1], [dnl
+0a1
+> new first line
+5c6,7
+< fourth line
+---
+> fourth line change
+> fourth.2 new
+7d8
+< sixth line
+])
+
+dnl AX_AT_DIFF_PYRE()
+dnl
+AX_AT_DIFF_PYRE([05.re], [05.out], [1], [dnl
 0a1
 > new first line
 5c6,7
