@@ -136,7 +136,7 @@ AT_CHECK(m4_expand([$1]), [$2], m4_expand([$3]), m4_expand([$4]),
 m4_defun([AX_AT_DIFF_PATTERN], [dnl
 AS_REQUIRE([_AX_AT_CHECK_PATTERN_PREPARE])
 AT_CHECK([ax_at_diff_pattern $1 $2], [$3], [$4])
-])dnl AX_AT_CHECK_PATTERN
+])dnl AX_AT_DIFF_PATTERN
 
 
 m4_defun([AX_AT_DATA_CHECK_PATTERN_AWK], [dnl
@@ -152,3 +152,4 @@ AT_DATA($1, [dnl
 ]
 _AX_AT_CHECK_PATTERN_AWK)
 ])
+])dnl AX_AT_DATA_CHECK_PATTERN_AWK
