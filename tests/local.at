@@ -1,2 +1,2 @@
 m4_include([ax_at_check_pattern.m4])
-
+m4_include([ax_at_check_pyrediff.m4])

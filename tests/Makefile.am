@@ -7,6 +7,7 @@ AUTOTEST = \
 TESTSUITE_DEPS = \
 	$(srcdir)/package.m4 \
 	$(top_srcdir)/src/ax_at_check_pattern.m4 \
+	$(top_srcdir)/src/ax_at_check_pyrediff.m4 \
 	01-simple.at \
 	02-trivial.at \
 	03-complex.at \

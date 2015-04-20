@@ -1,7 +1,11 @@
-AT_SETUP([extract check_pattern.awk])
+AT_SETUP([extract check_pattern.awk & pyrediff.py])
 
 AX_AT_DATA_CHECK_PATTERN_AWK([check_pattern.awk])
 
 AT_CHECK([diff $top_srcdir/src/check_pattern.awk check_pattern.awk])
+
+AX_AT_DATA_PYREDIFF_PY([pyrediff.py])
+
+AT_CHECK([diff $top_srcdir/src/pyrediff.py pyrediff.py])
 
 AT_CLEANUP()
