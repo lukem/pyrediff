@@ -5,7 +5,8 @@ This project contains a collection of scripts and autotest macros
 offering the following functionality:
 
   * `check_pattern.awk` to post-process the output of `diff PATTERN OUTPUT` to remove blocks that don't differ if a given line in PATTERN matches the equivalent OUTPUT line as an `awk` regular expression.
-  * autotest checks with pattern (`awk` regular expression) support.
+  * `pyrediff.py` to post-process the output of `diff PATTERN OUTPUT` to remove blocks that don't differ if a given line in PATTERN matches the equivalent OUTPUT line as a `python` regular expression.
+  * autotest checks with pattern (`awk` regular expression) and pyre (`python` regular expression) support.
 
 (autotest is part of [autoconf](https://www.gnu.org/software/autoconf/))
 
@@ -15,8 +16,11 @@ Available autotest Macros
 The following autotest macros are provided:
 
   * `AX_AT_CHECK_PATTERN()`: similar to `AT_CHECK()`, except that stdout and stderr are awk regular expressions (REs).
+  * `AX_AT_CHECK_PYREDIFF()`: similar to `AT_CHECK()`, except that stdout and stderr are python regular expressions (REs).
   * `AX_AT_DIFF_PATTERN()`: checks that a pattern file applies to a test file.
+  * `AX_AT_DIFF_PYRE()`: checks that a pattern file applies to a test file.
   * `AX_AT_DATA_CHECK_PATTERN_AWK()`: create a file with the contents of the awk script used by `AX_AT_CHECK_PATTERN()` and `AX_AT_DIFF_PATTERN()`.
+  * `AX_AT_DATA_PYREDIFF_PY()`: create a file with the contents of the python script used by `AX_AT_CHECK_PYREDIFF()` and `AX_AT_DIFF_PYRE()`.
 
 Examples
 --------
@@ -100,7 +104,7 @@ and filtered with `awk -f check_pattern.awk` the only output is the extra line `
 Copyright
 ---------
 
-Copyright (c) 2013-2014 Luke Mewburn <luke@mewburn.net>
+Copyright (c) 2013-2015 Luke Mewburn <luke@mewburn.net>
 
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
