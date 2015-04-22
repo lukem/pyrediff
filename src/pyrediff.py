@@ -18,6 +18,7 @@ class Pyrediff:
     def diff(self, input):
         self.fail = False
         self.set_mode()
+        self.groups = {}
         for line in input:
             self.diff_line(line.rstrip("\n"))
         return self.fail
@@ -40,11 +41,14 @@ class Pyrediff:
             if len(self.strlines) > len(self.patlines):
                 self.mismatch()
             else:
-                pat = self.patlines[len(self.strlines)-1][2:]
+                pat = re.sub(r"\\g<([^>]+)>", self.repl_groups,
+                             self.patlines[len(self.strlines)-1][2:])
                 str = line[2:]
                 match = re.search("^%s$" % pat, str)
                 if match is None:
                     self.mismatch()
+                elif match.lastgroup is not None:
+                    self.groups.update(match.groupdict())
         else:
             raise NotImplementedError("unexpected line=%r" % line)
 
@@ -55,6 +59,12 @@ class Pyrediff:
         print "\n".join(self.strlines)
         self.set_mode()
         self.fail = True
+
+    def repl_groups(self, match):
+        if match.group(1) in self.groups:
+            return self.groups[match.group(1)]
+        else:
+            return match.string
 
     def set_mode(self, mode=None):
         self.mode = mode
