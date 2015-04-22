@@ -761,6 +761,8 @@ at_help_all="1;01-simple.at:1;simple (no pattern);;
 5;05-complex-diffs.at:1;complex diffs;;
 6;06-extract.at:1;extract check_pattern.awk & pyrediff.py;;
 7;07-quoting.at:1;macro quoting;;
+8;08-example1.at:1;example 1: simple example;;
+9;09-example2.at:1;example 2: extra lines in output;;
 "
 # List of the all the test groups.
 at_groups_all=`$as_echo "$at_help_all" | sed 's/;.*//'`
@@ -774,7 +776,7 @@ at_fn_validate_ranges ()
   for at_grp
   do
     eval at_value=\$$at_grp
-    if test $at_value -lt 1 || test $at_value -gt 7; then
+    if test $at_value -lt 1 || test $at_value -gt 9; then
       $as_echo "invalid test group: $at_value" >&2
       exit 1
     fi
@@ -3149,3 +3151,170 @@ $at_traceon; }
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
 #AT_STOP_7
+#AT_START_8
+at_fn_group_banner 8 '08-example1.at:1' \
+  "example 1: simple example" "                      "
+at_xfail=no
+(
+  $as_echo "8. $at_setup_line: testing $at_desc ..."
+  $at_traceon
+
+
+cat >1.pattern <<'_ATEOF'
+First line
+Second line with a date .*\.
+_ATEOF
+
+
+cat >1.output <<'_ATEOF'
+First line
+Second line with a date 2014-11-22T16:41:00.
+_ATEOF
+
+
+{ set +x
+$as_echo "$at_srcdir/08-example1.at:19: diff 1.pattern 1.output"
+at_fn_check_prepare_trace "08-example1.at:19"
+( $at_check_trace; diff 1.pattern 1.output
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "2c2
+< Second line with a date .*\\.
+---
+> Second line with a date 2014-11-22T16:41:00.
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 1 $at_status "$at_srcdir/08-example1.at:19"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+{ set +x
+$as_echo "$at_srcdir/08-example1.at:28: ax_at_diff_pattern 1.pattern 1.output"
+at_fn_check_prepare_trace "08-example1.at:28"
+( $at_check_trace; ax_at_diff_pattern 1.pattern 1.output
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/08-example1.at:28"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+
+{ set +x
+$as_echo "$at_srcdir/08-example1.at:33: ax_at_diff_pyre 1.pattern 1.output"
+at_fn_check_prepare_trace "08-example1.at:33"
+( $at_check_trace; ax_at_diff_pyre 1.pattern 1.output
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/08-example1.at:33"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+  set +x
+  $at_times_p && times >"$at_times_file"
+) 5>&1 2>&1 7>&- | eval $at_tee_pipe
+read at_status <"$at_status_file"
+#AT_STOP_8
+#AT_START_9
+at_fn_group_banner 9 '09-example2.at:1' \
+  "example 2: extra lines in output" "               "
+at_xfail=no
+(
+  $as_echo "9. $at_setup_line: testing $at_desc ..."
+  $at_traceon
+
+
+cat >2.pattern <<'_ATEOF'
+line 1 [0-9]+\.[0-9]+s
+line 2
+line 3
+line 4
+_ATEOF
+
+
+cat >2.output <<'_ATEOF'
+line 1 25.63s
+line 2
+line 3
+line 3b extra
+line 4
+_ATEOF
+
+
+{ set +x
+$as_echo "$at_srcdir/09-example2.at:24: diff 2.pattern 2.output"
+at_fn_check_prepare_trace "09-example2.at:24"
+( $at_check_trace; diff 2.pattern 2.output
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "1c1
+< line 1 [0-9]+\\.[0-9]+s
+---
+> line 1 25.63s
+3a4
+> line 3b extra
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 1 $at_status "$at_srcdir/09-example2.at:24"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+{ set +x
+$as_echo "$at_srcdir/09-example2.at:35: ax_at_diff_pattern 2.pattern 2.output"
+at_fn_check_prepare_trace "09-example2.at:35"
+( $at_check_trace; ax_at_diff_pattern 2.pattern 2.output
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "3a4
+> line 3b extra
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 1 $at_status "$at_srcdir/09-example2.at:35"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+
+{ set +x
+$as_echo "$at_srcdir/09-example2.at:42: ax_at_diff_pyre 2.pattern 2.output"
+at_fn_check_prepare_trace "09-example2.at:42"
+( $at_check_trace; ax_at_diff_pyre 2.pattern 2.output
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "3a4
+> line 3b extra
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 1 $at_status "$at_srcdir/09-example2.at:42"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+  set +x
+  $at_times_p && times >"$at_times_file"
+) 5>&1 2>&1 7>&- | eval $at_tee_pipe
+read at_status <"$at_status_file"
+#AT_STOP_9

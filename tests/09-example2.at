@@ -1,0 +1,47 @@
+AT_SETUP([example 2: extra lines in output])
+
+dnl create 2.pattern
+dnl
+AT_DATA([2.pattern], [dnl
+line 1 @<:@0-9@:>@+\.@<:@0-9@:>@+s
+line 2
+line 3
+line 4
+])
+
+dnl create 2.output
+dnl
+AT_DATA([2.output], [dnl
+line 1 25.63s
+line 2
+line 3
+line 3b extra
+line 4
+])
+
+dnl diff 2.pattern 2.output
+dnl
+AT_CHECK([diff 2.pattern 2.output], [1], [dnl
+1c1
+< line 1 @<:@0-9@:>@+\.@<:@0-9@:>@+s
+---
+> line 1 25.63s
+3a4
+> line 3b extra
+])
+
+dnl AX_AT_DIFF_PATTERN()
+dnl
+AX_AT_DIFF_PATTERN([2.pattern], [2.output], [1], [dnl
+3a4
+> line 3b extra
+])
+
+dnl AX_AT_DIFF_PYRE()
+dnl
+AX_AT_DIFF_PYRE([2.pattern], [2.output], [1], [dnl
+3a4
+> line 3b extra
+])
+
+AT_CLEANUP()

@@ -15,6 +15,8 @@ TESTSUITE_DEPS = \
 	05-complex-diffs.at \
 	06-extract.at \
 	07-quoting.at \
+	08-example1.at \
+	09-example2.at \
 	local.at \
 	testsuite.at
 
