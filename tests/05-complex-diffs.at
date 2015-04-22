@@ -5,7 +5,7 @@ dnl
 AT_DATA([05.re], [dnl
 first line is ok
 second line changes .*
-second( line)? changes .*
+second( second)? changes .*
 third line
 fourth line
 fifth line
@@ -32,7 +32,7 @@ AT_CHECK([diff 05.re 05.out], [1], [dnl
 > new first line
 2,3c3,4
 < second line changes .*
-< second( line)? changes .*
+< second( second)? changes .*
 ---
 > second line changes Sat Nov  9 08:23:01 EST 2013
 > second changes *

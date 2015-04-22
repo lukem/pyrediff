@@ -73,7 +73,7 @@ class Pyrediff:
                 if len(self.rl) > len(self.ll):
                     self.mismatch()
                 else:
-                    pat = "^" + self.ll@<:@-1@:>@@<:@2:@:>@ + "@S|@"
+                    pat = "^" + self.ll@<:@len(self.rl)-1@:>@@<:@2:@:>@ + "@S|@"
                     str = line@<:@2:@:>@
                     if not re.match(pat, str):
                         self.mismatch()
