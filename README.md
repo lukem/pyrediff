@@ -13,13 +13,20 @@ offering the following functionality:
 Available autotest Macros
 -------------------------
 
-The following autotest macros are provided:
+### awk regex patterns
+
+Macros that support awk regular expressions in the pattern:
 
   * `AX_AT_CHECK_PATTERN()`: similar to `AT_CHECK()`, except that stdout and stderr are awk regular expressions (REs).
-  * `AX_AT_CHECK_PYREDIFF()`: similar to `AT_CHECK()`, except that stdout and stderr are python regular expressions (REs).
   * `AX_AT_DIFF_PATTERN()`: checks that a pattern file applies to a test file.
-  * `AX_AT_DIFF_PYRE()`: checks that a pattern file applies to a test file.
   * `AX_AT_DATA_CHECK_PATTERN_AWK()`: create a file with the contents of the awk script used by `AX_AT_CHECK_PATTERN()` and `AX_AT_DIFF_PATTERN()`.
+
+### Support for python re (pyre) patterns
+
+Macros that support python regular expressions in the pattern:
+
+  * `AX_AT_CHECK_PYREDIFF()`: similar to `AT_CHECK()`, except that stdout and stderr are python regular expressions (REs).
+  * `AX_AT_DIFF_PYRE()`: checks that a pattern file applies to a test file.
   * `AX_AT_DATA_PYREDIFF_PY()`: create a file with the contents of the python script used by `AX_AT_CHECK_PYREDIFF()` and `AX_AT_DIFF_PYRE()`.
 
 Examples
