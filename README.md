@@ -64,6 +64,12 @@ and filtered with `awk -f check_pattern.awk`:
 % diff 1.pattern 1.output | awk -f check_pattern.awk
 ```
 
+or filtered with `python pyrediff.py`:
+
+```
+% diff 1.pattern 1.output | python pyrediff.py
+```
+
 There is no output because the regex on the second line of 1.pattern
 matches that of the second line of 1.output.
 
@@ -104,6 +110,14 @@ and filtered with `awk -f check_pattern.awk` the only output is the extra line `
 
 ```
 % diff 2.pattern 2.output | awk -f check_pattern.awk
+3a4
+> line 3b extra
+```
+
+or filtered with `python pyrediff.py`:
+
+```
+% diff 2.pattern 2.output | python pyrediff.py
 3a4
 > line 3b extra
 ```
