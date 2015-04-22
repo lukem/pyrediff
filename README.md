@@ -5,7 +5,7 @@ This project contains a collection of scripts and autotest macros
 offering the following functionality:
 
   * `check_pattern.awk` to post-process the output of `diff PATTERN OUTPUT` to remove blocks that don't differ if a given line in PATTERN matches the equivalent OUTPUT line as an `awk` regular expression.
-  * `pyrediff.py` to post-process the output of `diff PATTERN OUTPUT` to remove blocks that don't differ if a given line in PATTERN matches the equivalent OUTPUT line as a `python` regular expression.
+  * `pyrediff.py` to post-process the output of `diff PYRE OUTPUT` to remove blocks that don't differ if a given line in PYRE matches the equivalent OUTPUT line as a `python` regular expression. Named groups `(?P<name>...)` can be used in subsequent patterns with `\g<name>`.
   * autotest checks with pattern (`awk` regular expression) and pyre (`python` regular expression) support.
 
 (autotest is part of [autoconf](https://www.gnu.org/software/autoconf/))
