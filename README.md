@@ -151,7 +151,7 @@ and filtered with `python pyrediff.py`:
 % diff 3.pattern 3.output | python pyrediff.py
 ```
 
-There is no output because pattern line `third,\g<Pid>\g<Pid>` matches the value of named group `Pid` captured from the `(?P<Pid>\d+)` in the first pattern.
+There is no output because the occurrences of `\g<Pid>` in the pattern line `third,\g<Pid>\g<Pid>` are replaced by the value of named group `Pid` captured from the `(?P<Pid>\d+)` in the first pattern.
 
 Copyright
 ---------
