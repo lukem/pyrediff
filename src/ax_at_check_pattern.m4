@@ -40,7 +40,7 @@
 #   notice and this notice are preserved.  This file is offered as-is,
 #   without any warranty.
 
-#serial 4
+#serial 6
 
 m4_define([_AX_AT_CHECK_PATTERN_AWK],
 [[BEGIN { exitval=0 }
