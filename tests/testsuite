@@ -752,7 +752,7 @@ at_tested=''
 # As many question marks as there are digits in the last test group number.
 # Used to normalize the test group numbers so that `ls' lists them in
 # numerical order.
-at_format='?'
+at_format='??'
 # Description of all the test groups.
 at_help_all="1;01-simple.at:1;simple (no pattern);;
 2;02-trivial.at:1;trivial pattern;;
@@ -763,6 +763,7 @@ at_help_all="1;01-simple.at:1;simple (no pattern);;
 7;07-quoting.at:1;macro quoting;;
 8;08-example1.at:1;example 1: simple example;;
 9;09-example2.at:1;example 2: extra lines in output;;
+10;10-example3.at:1;example 3: pyre (?P<group>) and \\g<group>;;
 "
 # List of the all the test groups.
 at_groups_all=`$as_echo "$at_help_all" | sed 's/;.*//'`
@@ -776,7 +777,7 @@ at_fn_validate_ranges ()
   for at_grp
   do
     eval at_value=\$$at_grp
-    if test $at_value -lt 1 || test $at_value -gt 9; then
+    if test $at_value -lt 1 || test $at_value -gt 10; then
       $as_echo "invalid test group: $at_value" >&2
       exit 1
     fi
@@ -3318,3 +3319,55 @@ $at_traceon; }
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
 #AT_STOP_9
+#AT_START_10
+at_fn_group_banner 10 '10-example3.at:1' \
+  "example 3: pyre (?P<group>) and \\g<group>" "      "
+at_xfail=no
+(
+  $as_echo "10. $at_setup_line: testing $at_desc ..."
+  $at_traceon
+
+
+cat >3.pattern <<'_ATEOF'
+pid (?P<Pid>\d+) again=(?P=Pid)
+second
+third,\g<Pid>\g<Pid>
+_ATEOF
+
+
+{ set +x
+$as_echo "$at_srcdir/10-example3.at:13: echo \"pid \$\$ again=\$\$\"; echo \"second\"; echo \"third,\$\$\$\$\""
+at_fn_check_prepare_dynamic "echo \"pid $$ again=$$\"; echo \"second\"; echo \"third,$$$$\"" "10-example3.at:13"
+( $at_check_trace; echo "pid $$ again=$$"; echo "second"; echo "third,$$$$"
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo stdout:; tee stdout <"$at_stdout"
+at_fn_check_status 0 $at_status "$at_srcdir/10-example3.at:13"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+mv stdout 3.output
+
+
+{ set +x
+$as_echo "$at_srcdir/10-example3.at:18: ax_at_diff_pyre 3.pattern 3.output"
+at_fn_check_prepare_trace "10-example3.at:18"
+( $at_check_trace; ax_at_diff_pyre 3.pattern 3.output
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/10-example3.at:18"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+  set +x
+  $at_times_p && times >"$at_times_file"
+) 5>&1 2>&1 7>&- | eval $at_tee_pipe
+read at_status <"$at_status_file"
+#AT_STOP_10
