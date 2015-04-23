@@ -13,7 +13,7 @@ offering the following functionality:
 Available autotest Macros
 -------------------------
 
-### awk regex patterns
+### awk regular expression patterns
 
 Macros that support awk regular expressions in the pattern:
 
@@ -21,13 +21,15 @@ Macros that support awk regular expressions in the pattern:
   * `AX_AT_DIFF_PATTERN()`: checks that a pattern file applies to a test file.
   * `AX_AT_DATA_CHECK_PATTERN_AWK()`: create a file with the contents of the awk script used by `AX_AT_CHECK_PATTERN()` and `AX_AT_DIFF_PATTERN()`.
 
-### Support for python re (pyre) patterns
+### python regular expression (pyre) patterns
 
-Macros that support python regular expressions in the pattern:
+Macros that support [python regular expressions](https://docs.python.org/2/library/re.html):
 
-  * `AX_AT_CHECK_PYREDIFF()`: similar to `AT_CHECK()`, except that stdout and stderr are python regular expressions (REs).
+  * `AX_AT_CHECK_PYREDIFF()`: similar to `AT_CHECK()`, except that stdout and stderr are python regular expressions.
   * `AX_AT_DIFF_PYRE()`: checks that a pattern file applies to a test file.
   * `AX_AT_DATA_PYREDIFF_PY()`: create a file with the contents of the python script used by `AX_AT_CHECK_PYREDIFF()` and `AX_AT_DIFF_PYRE()`.
+
+Strings captured in a named group using `(?P<name>...)` can be used in subsequent pattern lines with `\g<name>`; occurrences of `\g<name>` in the pattern line will be replaced with a previously captured value before the pattern is applied.
 
 Examples
 --------
@@ -121,6 +123,35 @@ or filtered with `python pyrediff.py`:
 3a4
 > line 3b extra
 ```
+
+### Example 3: pyre (?P<group>) and \g<group>])
+
+Given pattern file `3.pattern`:
+
+```
+pid (?P<Pid>\d+) again=(?P=Pid)
+second
+third,\g<Pid>\g<Pid>
+```
+
+and output file `3.output` created with:
+
+```
+% ( echo "pid $$ again=$$"; echo "second"; echo "third,$$$$" ) > 3.output
+
+% cat 3.output
+pid 2211 again=2211
+second
+third,22112211
+```
+
+and filtered with `python pyrediff.py`:
+
+```
+% diff 3.pattern 3.output | python pyrediff.py
+```
+
+There is no output because pattern line `third,\g<Pid>\g<Pid>` matches the value of named group `Pid` captured from the `(?P<Pid>\d+)` in the first pattern.
 
 Copyright
 ---------

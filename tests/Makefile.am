@@ -17,6 +17,7 @@ TESTSUITE_DEPS = \
 	07-quoting.at \
 	08-example1.at \
 	09-example2.at \
+	10-example3.at \
 	local.at \
 	testsuite.at
 
