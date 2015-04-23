@@ -124,7 +124,7 @@ or filtered with `python pyrediff.py`:
 > line 3b extra
 ```
 
-### Example 3: pyre (?P<group>) and \g<group>])
+### Example 3: pyre `(?P<group>)` and `\g<group>`
 
 Given pattern file `3.pattern`:
 
