@@ -2817,6 +2817,14 @@ cat >check_pattern.awk <<'_ATEOF'
 # awk script to process the output of "diff PATTERN OUTPUT" removing lines
 # where the difference is a PATTERN line that exactly matches an OUTPUT line.
 #
+#
+# Copyright (c) 2013-2015 Luke Mewburn <luke@mewburn.net>
+#
+# Copying and distribution of this file, with or without modification,
+# are permitted in any medium without royalty provided the copyright
+# notice and this notice are preserved.  This file is offered as-is,
+# without any warranty.
+#
 
 BEGIN { exitval=0 }
 
@@ -2911,6 +2919,14 @@ cat >pyrediff.py <<'_ATEOF'
 #
 # python script to process the output of "diff PYRE OUTPUT" removing lines
 # where the difference is a PYRE line that exactly matches an OUTPUT line.
+#
+#
+# Copyright (c) 2015 Luke Mewburn <luke@mewburn.net>
+#
+# Copying and distribution of this file, with or without modification,
+# are permitted in any medium without royalty provided the copyright
+# notice and this notice are preserved.  This file is offered as-is,
+# without any warranty.
 #
 
 import re

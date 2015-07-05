@@ -33,7 +33,7 @@
 #
 # LICENSE
 #
-#   Copyright (c) 2013-2014 Luke Mewburn <luke@mewburn.net>
+#   Copyright (c) 2013-2015 Luke Mewburn <luke@mewburn.net>
 #
 #   Copying and distribution of this file, with or without modification,
 #   are permitted in any medium without royalty provided the copyright
@@ -148,6 +148,14 @@ AT_DATA($1, [dnl
 #
 # awk script to process the output of "diff PATTERN OUTPUT" removing lines
 # where the difference is a PATTERN line that exactly matches an OUTPUT line.
+#
+#
+# Copyright (c) 2013-2015 Luke Mewburn <luke@mewburn.net>
+#
+# Copying and distribution of this file, with or without modification,
+# are permitted in any medium without royalty provided the copyright
+# notice and this notice are preserved.  This file is offered as-is,
+# without any warranty.
 # 
 ]
 _AX_AT_CHECK_PATTERN_AWK)
