@@ -1075,7 +1075,7 @@ fi
 # List of tests.
 if $at_list_p; then
   cat <<_ATEOF || at_write_fail=1
-ax_at_check_pattern 6 test suite: ax_at_check_pattern test groups:
+ax_at_check_pattern 7 test suite: ax_at_check_pattern test groups:
 
  NUM: FILE-NAME:LINE     TEST-GROUP-NAME
       KEYWORDS
@@ -1116,7 +1116,7 @@ _ATEOF
   exit $at_write_fail
 fi
 if $at_version_p; then
-  $as_echo "$as_me (ax_at_check_pattern 6)" &&
+  $as_echo "$as_me (ax_at_check_pattern 7)" &&
   cat <<\_ATEOF || at_write_fail=1
 
 Copyright (C) 2012 Free Software Foundation, Inc.
@@ -1298,11 +1298,11 @@ exec 5>>"$at_suite_log"
 
 # Banners and logs.
 $as_echo "## ------------------------------------------------------ ##
-## ax_at_check_pattern 6 test suite: ax_at_check_pattern. ##
+## ax_at_check_pattern 7 test suite: ax_at_check_pattern. ##
 ## ------------------------------------------------------ ##"
 {
   $as_echo "## ------------------------------------------------------ ##
-## ax_at_check_pattern 6 test suite: ax_at_check_pattern. ##
+## ax_at_check_pattern 7 test suite: ax_at_check_pattern. ##
 ## ------------------------------------------------------ ##"
   echo
 
@@ -2146,7 +2146,7 @@ _ASBOX
   $as_echo "Please send $at_msg and all information you think might help:
 
    To: <luke@mewburn.net>
-   Subject: [ax_at_check_pattern 6] $as_me: $at_fail_list${at_fail_list:+ failed${at_xpass_list:+, }}$at_xpass_list${at_xpass_list:+ passed unexpectedly}
+   Subject: [ax_at_check_pattern 7] $as_me: $at_fail_list${at_fail_list:+ failed${at_xpass_list:+, }}$at_xpass_list${at_xpass_list:+ passed unexpectedly}
 
 You may investigate any problem if you feel able to do so, in which
 case the test suite provides a good starting point.  Its output may
