@@ -1,0 +1,69 @@
+NEWS
+====
+
+
+release 7, 2015-07-06
+---------------------
+
+Add copyright to generated .awk and .py files.
+
+
+release 6, 2015-04-23
+---------------------
+
+Fix multiline pattern comparison in pyrediff.
+
+Support named group caching in pyrediff.
+
+
+release 5, 2015-04-20
+---------------------
+
+Provide AX_AT_CHECK_PYREDIFF() to use python RE (instead of awk RE),
+also known as 'pyrediff'.
+
+Provide AX_AT_DIFF_PYRE().
+
+Provide AX_AT_DATA_PYREDIFF_PY() to write a python script
+containing the diff post-processor to a file.
+
+Provide pyrediff.py implementing the pyrediff functionality.
+
+Describe check_pattern.awk.
+
+Fix AX_AT_CHECK_PATTERN() to skip leading space in diff output.
+
+
+release 4, 2014-10-21
+---------------------
+
+Provide AX_AT_DATA_CHECK_PATTERN_AWK() to write an awk script
+containing the diff post-processor to a file.
+
+Add README.
+
+Improve AX_AT_CHECK_PATTERN() quoting and use quadrigraphs.
+
+Add references to github.
+
+
+release 3, 2014-07-02
+---------------------
+
+Provide AX_AT_DIFF_PATTERN().
+
+
+release 2, 2014-07-02
+---------------------
+
+Improve comments and documentation.
+
+Fix testsuite assumptions about timezone.
+
+
+release 1, 2013-12-17
+---------------------
+
+Initial release.
+
+Provide AX_AT_CHECK_PATTERN().
