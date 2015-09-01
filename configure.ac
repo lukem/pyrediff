@@ -5,7 +5,6 @@ AC_COPYRIGHT([[
 Copyright 2013-2015, Luke Mewburn <luke@mewburn.net>.
 All rights reserved.
 ]])
-AC_REVISION([m4_esyscmd_s([git describe --tags --always])])
 
 AC_CONFIG_AUX_DIR([buildaux])
 AC_CONFIG_MACRO_DIR([buildaux])
