@@ -1,33 +1,33 @@
 README
 ======
 
-This project contains a collection of scripts and autotest macros
-offering the following functionality:
+This project contains a collection of scripts and autotest
+(part of [autoconf](https://www.gnu.org/software/autoconf/))
+macros offering the following functionality:
 
-  * `check_pattern.awk` to post-process the output of `diff PATTERN OUTPUT` to remove blocks that don't differ if a given line in PATTERN matches the equivalent OUTPUT line as an `awk` regular expression.
-  * `pyrediff.py` to post-process the output of `diff PYRE OUTPUT` to remove blocks that don't differ if a given line in PYRE matches the equivalent OUTPUT line as a `python` regular expression. Named groups `(?P<name>...)` can be used in subsequent patterns with `\g<name>`.
-  * autotest checks with pattern (`awk` regular expression) and pyre (`python` regular expression) support.
+  * `check_pattern.awk`: `awk` script to post-process the output of `diff PATTERN OUTPUT` to remove blocks that don't differ if a given line in `PATTERN` matches the equivalent `OUTPUT` line as an AWK regular expression.
+  * `pyrediff.py`: `python` script to post-process the output of `diff PYRE OUTPUT` to remove blocks that don't differ if a given line in `PYRE` matches the equivalent `OUTPUTs line as a Python regular expression. Named groups `(?P<name>...)` can be used in subsequent patterns with `\g<name>`.
+  * autotest checks with pattern (AWK regular expression) and pyre (Python regular expression) support.
 
-(autotest is part of [autoconf](https://www.gnu.org/software/autoconf/))
 
-Available autotest Macros
--------------------------
+autotest macros
+---------------
 
-### awk regular expression patterns
+### AWK regular expression patterns
 
-Macros that support awk regular expressions in the pattern:
+Macros that support AWK regular expressions in the pattern:
 
-  * `AX_AT_CHECK_PATTERN()`: similar to `AT_CHECK()`, except that stdout and stderr are awk regular expressions (REs).
+  * `AX_AT_CHECK_PATTERN()`: similar to `AT_CHECK()`, except that stdout and stderr are AWK regular expressions (REs).
   * `AX_AT_DIFF_PATTERN()`: checks that a pattern file applies to a test file.
-  * `AX_AT_DATA_CHECK_PATTERN_AWK()`: create a file with the contents of the awk script used by `AX_AT_CHECK_PATTERN()` and `AX_AT_DIFF_PATTERN()`.
+  * `AX_AT_DATA_CHECK_PATTERN_AWK()`: create a file with the contents of the AWK script used by `AX_AT_CHECK_PATTERN()` and `AX_AT_DIFF_PATTERN()`. This is the same as the `check_pattern.awk` script.
 
-### python regular expression (pyre) patterns
+### Python regular expression (pyre) patterns
 
-Macros that support [python regular expressions](https://docs.python.org/2/library/re.html):
+Macros that support [Python regular expressions](https://docs.python.org/2/library/re.html):
 
-  * `AX_AT_CHECK_PYREDIFF()`: similar to `AT_CHECK()`, except that stdout and stderr are python regular expressions.
+  * `AX_AT_CHECK_PYREDIFF()`: similar to `AT_CHECK()`, except that stdout and stderr are Python regular expressions (pyre).
   * `AX_AT_DIFF_PYRE()`: checks that a pattern file applies to a test file.
-  * `AX_AT_DATA_PYREDIFF_PY()`: create a file with the contents of the python script used by `AX_AT_CHECK_PYREDIFF()` and `AX_AT_DIFF_PYRE()`.
+  * `AX_AT_DATA_PYREDIFF_PY()`: create a file with the contents of the Python script used by `AX_AT_CHECK_PYREDIFF()` and `AX_AT_DIFF_PYRE()`. This is the same as the `pyrediff.py` script.
 
 Strings captured in a named group using `(?P<name>...)` can be used in subsequent pattern lines with `\g<name>`; occurrences of `\g<name>` in the pattern line will be replaced with a previously captured value before the pattern is applied.
 
