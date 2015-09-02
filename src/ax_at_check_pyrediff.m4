@@ -119,7 +119,7 @@ AS_VAR_IF([PYTHON], [], [PYTHON=python])
 AS_REQUIRE_SHELL_FN([ax_at_diff_pyre],
   [AS_FUNCTION_DESCRIBE([ax_at_diff_pyre], [PYRE OUTPUT],
     [Diff PYRE OUTPUT and elide change lines where the python RE matches])],
-[diff "$[]1" "$[]2" | $PYTHON -c '_AX_AT_CHECK_PYREDIFF'])
+  [diff "$[]1" "$[]2" | $PYTHON -c '_AX_AT_CHECK_PYREDIFF'])
 ])dnl _AX_AT_CHECK_PYRE_PREPARE
 
 
@@ -130,7 +130,6 @@ at_diff='ax_at_diff_pyre'
 AT_CHECK(m4_expand([$1]), [$2], m4_expand([$3]), m4_expand([$4]),
         [at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";$5],
         [at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";$6])
-
 ])dnl AX_AT_CHECK_PYREDIFF
 
 
@@ -142,7 +141,7 @@ AT_CHECK([ax_at_diff_pyre $1 $2], [$3], [$4])
 
 m4_defun([AX_AT_DATA_PYREDIFF_PY], [dnl
 m4_if([$1], [], [m4_fatal([$0: argument 1: empty filename])])
-AT_DATA($1, [dnl
+AT_DATA([$1], [dnl
 #!/usr/bin/env python
 #
 # pyrediff.py
@@ -159,7 +158,7 @@ AT_DATA($1, [dnl
 # are permitted in any medium without royalty provided the copyright
 # notice and this notice are preserved.  This file is offered as-is,
 # without any warranty.
-# 
+#
 ]
 _AX_AT_CHECK_PYREDIFF)
 ])dnl AX_AT_DATA_PYREDIFF_PY
