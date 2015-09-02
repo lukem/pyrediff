@@ -14,5 +14,7 @@ dist_aclocal_DATA = \
 	src/ax_at_check_pyrediff.m4
 
 
-EXTRA_DIST = \
+awkdir = $(datadir)/awk
+
+dist_awk_DATA = \
 	src/check_pattern.awk

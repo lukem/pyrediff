@@ -35,7 +35,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 subdir = .
 DIST_COMMON = $(am__configure_deps) $(dist_aclocal_DATA) \
-	$(dist_bin_SCRIPTS) $(srcdir)/Makefile.am \
+	$(dist_awk_DATA) $(dist_bin_SCRIPTS) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(top_srcdir)/configure NEWS \
 	buildaux/install-sh buildaux/missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -68,7 +68,8 @@ am__nobase_list = $(am__nobase_strip_setup); \
 am__base_list = \
   sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
-am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(aclocaldir)"
+am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(aclocaldir)" \
+	"$(DESTDIR)$(awkdir)"
 SCRIPTS = $(dist_bin_SCRIPTS)
 AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
@@ -85,7 +86,7 @@ RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	install-pdf-recursive install-ps-recursive install-recursive \
 	installcheck-recursive installdirs-recursive pdf-recursive \
 	ps-recursive uninstall-recursive
-DATA = $(dist_aclocal_DATA)
+DATA = $(dist_aclocal_DATA) $(dist_awk_DATA)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \
@@ -224,7 +225,8 @@ dist_aclocal_DATA = \
 	src/ax_at_check_pattern.m4 \
 	src/ax_at_check_pyrediff.m4
 
-EXTRA_DIST = \
+awkdir = $(datadir)/awk
+dist_awk_DATA = \
 	src/check_pattern.awk
 
 all: all-recursive
@@ -318,6 +320,26 @@ uninstall-dist_aclocalDATA:
 	test -n "$$files" || exit 0; \
 	echo " ( cd '$(DESTDIR)$(aclocaldir)' && rm -f" $$files ")"; \
 	cd "$(DESTDIR)$(aclocaldir)" && rm -f $$files
+install-dist_awkDATA: $(dist_awk_DATA)
+	@$(NORMAL_INSTALL)
+	test -z "$(awkdir)" || $(MKDIR_P) "$(DESTDIR)$(awkdir)"
+	@list='$(dist_awk_DATA)'; test -n "$(awkdir)" || list=; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(awkdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(awkdir)" || exit $$?; \
+	done
+
+uninstall-dist_awkDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(dist_awk_DATA)'; test -n "$(awkdir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	test -n "$$files" || exit 0; \
+	echo " ( cd '$(DESTDIR)$(awkdir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(awkdir)" && rm -f $$files
 
 # This directory's subdirectories are mostly independent; you can cd
 # into them and run `make' without going through this Makefile.
@@ -634,7 +656,7 @@ check: check-recursive
 all-am: Makefile $(SCRIPTS) $(DATA)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(aclocaldir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(aclocaldir)" "$(DESTDIR)$(awkdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-recursive
@@ -683,7 +705,7 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-dist_aclocalDATA
+install-data-am: install-dist_aclocalDATA install-dist_awkDATA
 
 install-dvi: install-dvi-recursive
 
@@ -729,7 +751,8 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-dist_aclocalDATA uninstall-dist_binSCRIPTS
+uninstall-am: uninstall-dist_aclocalDATA uninstall-dist_awkDATA \
+	uninstall-dist_binSCRIPTS
 
 .MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) ctags-recursive \
 	install-am install-strip tags-recursive
@@ -741,15 +764,16 @@ uninstall-am: uninstall-dist_aclocalDATA uninstall-dist_binSCRIPTS
 	distclean distclean-generic distclean-tags distcleancheck \
 	distdir distuninstallcheck dvi dvi-am html html-am info \
 	info-am install install-am install-data install-data-am \
-	install-dist_aclocalDATA install-dist_binSCRIPTS install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am install-man \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	installdirs-am maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am tags \
-	tags-recursive uninstall uninstall-am \
-	uninstall-dist_aclocalDATA uninstall-dist_binSCRIPTS
+	install-dist_aclocalDATA install-dist_awkDATA \
+	install-dist_binSCRIPTS install-dvi install-dvi-am \
+	install-exec install-exec-am install-html install-html-am \
+	install-info install-info-am install-man install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs installdirs-am \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-generic pdf pdf-am ps ps-am tags tags-recursive \
+	uninstall uninstall-am uninstall-dist_aclocalDATA \
+	uninstall-dist_awkDATA uninstall-dist_binSCRIPTS
 
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
