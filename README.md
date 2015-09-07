@@ -6,7 +6,7 @@ This project contains a collection of scripts and autotest
 macros offering the following functionality:
 
   * `check_pattern.awk`: AWK script to post-process the output of `diff PATTERN OUTPUT` to remove blocks that don't differ if a given line in `PATTERN` matches the equivalent `OUTPUT` line as an AWK regular expression.
-  * `pyrediff`: Python script to post-process the output of `diff PYRE OUTPUT` to remove blocks that don't differ if a given line in `PYRE` matches the equivalent `OUTPUT` line as a Python regular expression. Named groups `(?P<name>...)` can be used in subsequent patterns with `\g<name>`.
+  * `pyrediff`: Python script to perform pattern-aware comparison of PYRE and OUTPUT to remove blocks that don't differ if a given line in `PYRE` matches the equivalent `OUTPUT` line as a Python regular expression. Named groups `(?P<name>...)` can be used in subsequent patterns with `\g<name>`. Can optionally filter the output of `diff PATTERN OUTPUT`, or escape the pattern characters in INPUT.
   * autotest checks with pattern (AWK regular expression) and pyre (Python regular expression) support.
 
 
@@ -69,7 +69,13 @@ and filtered with `awk -f check_pattern.awk`:
 or filtered with `pyrediff`:
 
 ```
-% diff 1.pattern 1.output | pyrediff
+% diff 1.pattern 1.output | pyrediff -f
+```
+
+or processed with `pyrediff`:
+
+```
+% pyrediff 1.pattern 1.output
 ```
 
 There is no output because the regex on the second line of 1.pattern
@@ -119,10 +125,19 @@ and filtered with `awk -f check_pattern.awk` the only output is the extra line `
 or filtered with `pyrediff`:
 
 ```
-% diff 2.pattern 2.output | pyrediff
+% diff 2.pattern 2.output | pyrediff -f
 3a4
 > line 3b extra
 ```
+
+or processed with `pyrediff`:
+
+```
+% pyrediff 2.pattern 2.output
+3a4
+> line 3b extra
+```
+
 
 ### Example 3: pyre `(?P<group>)` and `\g<group>`
 
@@ -148,7 +163,13 @@ third,22112211
 and filtered with `pyrediff`:
 
 ```
-% diff 3.pattern 3.output | pyrediff
+% diff 3.pattern 3.output | pyrediff -f
+```
+
+or processed with `pyrediff`:
+
+```
+% pyrediff 3.pattern 3.output
 ```
 
 There is no output because the occurrences of `\g<Pid>` in the pattern line `third,\g<Pid>\g<Pid>` are replaced by the value of named group `Pid` captured from the `(?P<Pid>\d+)` in the first pattern.
