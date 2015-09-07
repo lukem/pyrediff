@@ -43,7 +43,9 @@
 #serial 7
 
 m4_define([_AX_AT_CHECK_PYREDIFF],
-[[import re
+[[import optparse
+import re
+import subprocess
 import sys
 
 class Pyrediff:
@@ -57,6 +59,16 @@ class Pyrediff:
         for line in input:
             self.diff_line(line.rstrip("\n"))
         return self.fail
+
+    def escape(self, input_name):
+        fp = open(input_name, "r")
+        try:
+            for line in fp:
+                esc = re.escape(line)
+                esc = re.sub(r"\\(@<:@- %,/=:@_\n@:>@)", r"\1", esc)
+                sys.stdout.write(esc)
+        finally:
+            fp.close()
 
     def diff_line(self, line):
         if self.apat.match(line):
@@ -106,9 +118,59 @@ class Pyrediff:
         self.patlines = @<:@@:>@
         self.strlines = @<:@@:>@
 
+    def parse_args(self):
+        parser = optparse.OptionParser(
+            usage="""%prog PATTERN OUTPUT
+       %prog -e INPUT
+       %prog -f\
+""",
+            description="""\
+Pattern-aware comparison of PATTERN and OUTPUT.
+Similar to diff(1), except that PATTERN may contain python regular expressions.
+Strings captured in a named group using (?P<name>...) can be used in subsequent
+pattern lines with \g<name>; occurrences of \g<name> in the pattern line will
+be replaced with a previously captured value before the pattern is applied.
+""")
+        parser.add_option("-e", "--escape",
+            metavar="INPUT",
+            help="escape INPUT to stdout instead of diffing")
+        parser.add_option("-f", "--filter",
+            action="store_true",
+            default=False,
+            help="filter stdin, which is the output of `diff PATTERN OUTPUT`")
+        (self.opts, self.args) = parser.parse_args()
+        modes = 0
+        if self.opts.escape is not None:
+            modes += 1
+        if self.opts.filter:
+            modes += 1
+        if modes > 1:
+            parser.error("-e and -f and mutually exclusive")
+        elif modes == 1:
+            if len(self.args) != 0:
+                parser.error("incorrect number of arguments")
+        else:
+            if len(self.args) != 2:
+                parser.error("incorrect number of arguments")
+
+    def main(self):
+        self.parse_args()
+        if self.opts.escape is not None:
+            self.escape(self.opts.escape)
+        elif self.opts.filter:
+            if self.diff(sys.stdin):
+                sys.exit(1)
+        else:
+            pipe = subprocess.Popen(@<:@"diff", self.args@<:@0@:>@, self.args@<:@1@:>@@:>@,
+                                   stdout=subprocess.PIPE)
+            if self.diff(pipe.stdout):
+                sys.exit(1)
+            prv = pipe.wait()
+            if prv > 1:
+                sys.exit(prv)
+
 if "__main__" == __name__:
-    if Pyrediff().diff(sys.stdin):
-        sys.exit(1)
+    Pyrediff().main()
 ]])
 
 
@@ -119,7 +181,7 @@ AS_VAR_IF([PYTHON], [], [PYTHON=python])
 AS_REQUIRE_SHELL_FN([ax_at_diff_pyre],
   [AS_FUNCTION_DESCRIBE([ax_at_diff_pyre], [PYRE OUTPUT],
     [Diff PYRE OUTPUT and elide change lines where the python RE matches])],
-  [diff "$[]1" "$[]2" | $PYTHON -c '_AX_AT_CHECK_PYREDIFF'])
+  [$PYTHON -c '_AX_AT_CHECK_PYREDIFF' "$[]1" "$[]2"])
 ])dnl _AX_AT_CHECK_PYRE_PREPARE
 
 
