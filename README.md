@@ -122,6 +122,7 @@ and filtered with `awk -f check_pattern.awk` the only output is the extra line `
 > line 3b extra
 ```
 
+(with an exit status of 1),
 or filtered with `pyrediff`:
 
 ```
@@ -130,6 +131,7 @@ or filtered with `pyrediff`:
 > line 3b extra
 ```
 
+(with an exit status of 1),
 or processed with `pyrediff`:
 
 ```
@@ -137,6 +139,8 @@ or processed with `pyrediff`:
 3a4
 > line 3b extra
 ```
+
+(with an exit status of 1).
 
 
 ### Example 3: pyre `(?P<group>)` and `\g<group>`
