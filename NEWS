@@ -1,6 +1,19 @@
 NEWS
 ====
 
+release 8, 2015-09-22
+---------------------
+
+Install pyrediff as a standalone python application with
+argument handling and a changed interface (to pyrediff.py):
+     pyrediff PATTERN OUTPUT    internally diff PATTERN OUTPUT and process
+     pyrediff -e INPUT          escape pattern chars in INPUT, write to stdout
+     pyrediff -f                act as filter of `diff PATTERN OUTPUT`
+
+Install check_pattern.awk and the .m4 files.
+
+Add NEWS.
+
 
 release 7, 2015-07-06
 ---------------------
