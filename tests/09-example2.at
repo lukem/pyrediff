@@ -44,4 +44,25 @@ AX_AT_DIFF_PYRE([2.pattern], [2.output], [1], [dnl
 > line 3b extra
 ])
 
+dnl diff 2.pattern 2.output | awk -f check_pattern.awk
+dnl
+AT_CHECK([diff 2.pattern 2.output | awk -f ${abs_top_srcdir}/src/check_pattern.awk], [1], [dnl
+3a4
+> line 3b extra
+])
+
+dnl diff 2.pattern 2.output | pyrediff -f
+dnl
+AT_CHECK([diff 2.pattern 2.output | ${abs_top_srcdir}/src/pyrediff -f], [1], [dnl
+3a4
+> line 3b extra
+])
+
+dnl pyrediff 2.pattern 2.output
+dnl
+AT_CHECK([${abs_top_srcdir}/src/pyrediff 2.pattern 2.output], [1], [dnl
+3a4
+> line 3b extra
+])
+
 AT_CLEANUP()

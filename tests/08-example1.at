@@ -25,12 +25,22 @@ AT_CHECK([diff 1.pattern 1.output], [1], [dnl
 
 dnl AX_AT_DIFF_PATTERN()
 dnl
-AX_AT_DIFF_PATTERN([1.pattern], [1.output], [0], [dnl
-])
+AX_AT_DIFF_PATTERN([1.pattern], [1.output])
 
 dnl AX_AT_DIFF_PYRE()
 dnl
-AX_AT_DIFF_PYRE([1.pattern], [1.output], [0], [dnl
-])
+AX_AT_DIFF_PYRE([1.pattern], [1.output])
+
+dnl diff 1.pattern 1.output | awk -f check_pattern.awk
+dnl
+AT_CHECK([diff 1.pattern 1.output | awk -f ${abs_top_srcdir}/src/check_pattern.awk])
+
+dnl diff 1.pattern 1.output | pyrediff -f
+dnl
+AT_CHECK([diff 1.pattern 1.output | ${abs_top_srcdir}/src/pyrediff -f])
+
+dnl pyrediff 1.pattern 1.output
+dnl
+AT_CHECK([${abs_top_srcdir}/src/pyrediff 1.pattern 1.output])
 
 AT_CLEANUP()

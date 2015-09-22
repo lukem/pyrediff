@@ -18,4 +18,12 @@ dnl
 AX_AT_DIFF_PYRE([3.pattern], [3.output], [0], [dnl
 ])
 
+dnl diff 3.pattern 3.output | pyrediff -f
+dnl
+AT_CHECK([diff 3.pattern 3.output | ${abs_top_srcdir}/src/pyrediff -f])
+
+dnl pyrediff 3.pattern 3.output
+dnl
+AT_CHECK([${abs_top_srcdir}/src/pyrediff 3.pattern 3.output])
+
 AT_CLEANUP()

@@ -1,0 +1,28 @@
+AT_SETUP([inline testing])
+
+AX_AT_DATA_CHECK_PATTERN_AWK([$top_srcdir/src/check_pattern.awk])
+
+AX_AT_DATA_GENERATE_PATTERN([$top_srcdir/t1], [[
+1234\5 i can't do it.
+backslash \ x
+caret ^ x
+dollar $ x
+dollar quadri @S|@ x
+dot . x
+lbracket [ x
+rbracket ] x
+lbracket quadri @<:@ x
+rbracket quadri @:>@ x
+bar | x
+lparen ( x
+rparen ) x
+lparen quadri @{:@ x
+rparen quadri @:}@ x
+star * x
+plus + x
+question ? x
+lbrace { x
+rbrace } x
+]])
+
+AT_CLEANUP()
