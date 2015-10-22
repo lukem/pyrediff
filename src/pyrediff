@@ -21,6 +21,7 @@ import re
 import subprocess
 import sys
 
+
 class Pyrediff:
     apat = re.compile("^\d+(,\d+)?[ad]\d+(,\d+)?$")
     cpat = re.compile("^\d+(,\d+)?[c]\d+(,\d+)?$")
@@ -104,10 +105,12 @@ Strings captured in a named group using (?P<name>...) can be used in subsequent
 pattern lines with \g<name>; occurrences of \g<name> in the pattern line will
 be replaced with a previously captured value before the pattern is applied.
 """)
-        parser.add_option("-e", "--escape",
+        parser.add_option(
+            "-e", "--escape",
             metavar="INPUT",
             help="escape INPUT to stdout instead of diffing")
-        parser.add_option("-f", "--filter",
+        parser.add_option(
+            "-f", "--filter",
             action="store_true",
             default=False,
             help="filter stdin, which is the output of `diff PATTERN OUTPUT`")
@@ -135,7 +138,7 @@ be replaced with a previously captured value before the pattern is applied.
                 sys.exit(1)
         else:
             pipe = subprocess.Popen(["diff", self.args[0], self.args[1]],
-                                   stdout=subprocess.PIPE)
+                                    stdout=subprocess.PIPE)
             if self.diff(pipe.stdout):
                 sys.exit(1)
             prv = pipe.wait()
