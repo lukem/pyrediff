@@ -66,7 +66,7 @@ class Pyrediff:
         try:
             for line in fp:
                 esc = re.escape(line)
-                esc = re.sub(r"\\(@<:@- %,/=:@_\n@:>@)", r"\1", esc)
+                esc = re.sub(r"\\(@<:@- \"%,/<=>:@_\n@:>@)", r"\1", esc)
                 sys.stdout.write(esc)
         finally:
             fp.close()
