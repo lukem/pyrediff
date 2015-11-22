@@ -508,7 +508,7 @@ class Pyrediff:
                 if match is None:
                     self.mismatch()
                 elif match.lastgroup is not None:
-                    for k,v in match.groupdict().iteritems():
+                    for k, v in match.groupdict().iteritems():
                         self.groups[k] = re.escape(v)
         else:
             raise NotImplementedError("unexpected line=%r" % line)
@@ -3040,7 +3040,7 @@ class Pyrediff:
                 if match is None:
                     self.mismatch()
                 elif match.lastgroup is not None:
-                    for k,v in match.groupdict().iteritems():
+                    for k, v in match.groupdict().iteritems():
                         self.groups[k] = re.escape(v)
         else:
             raise NotImplementedError("unexpected line=%r" % line)
