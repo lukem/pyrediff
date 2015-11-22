@@ -503,12 +503,13 @@ class Pyrediff:
             else:
                 pat = re.sub(r"\\g<([^>]+)>", self.repl_groups,
                              self.patlines[len(self.strlines)-1][2:])
-                str = line[2:]
-                match = re.search("^%s$" % pat, str)
+                raw = line[2:]
+                match = re.search("^%s$" % pat, raw)
                 if match is None:
                     self.mismatch()
                 elif match.lastgroup is not None:
-                    self.groups.update(match.groupdict())
+                    for k,v in match.groupdict().iteritems():
+                        self.groups[k] = re.escape(v)
         else:
             raise NotImplementedError("unexpected line=%r" % line)
 
@@ -829,6 +830,7 @@ at_help_all="1;01-simple.at:1;simple (no pattern);;
 8;08-example1.at:1;example 1: simple example;;
 9;09-example2.at:1;example 2: extra lines in output;;
 10;10-example3.at:1;example 3: pyre (?P<group>) and \\g<group>;;
+11;11-group-escape.at:1;pyre \\g<group> escaping;;
 "
 # List of the all the test groups.
 at_groups_all=`$as_echo "$at_help_all" | sed 's/;.*//'`
@@ -842,7 +844,7 @@ at_fn_validate_ranges ()
   for at_grp
   do
     eval at_value=\$$at_grp
-    if test $at_value -lt 1 || test $at_value -gt 10; then
+    if test $at_value -lt 1 || test $at_value -gt 11; then
       $as_echo "invalid test group: $at_value" >&2
       exit 1
     fi
@@ -3033,12 +3035,13 @@ class Pyrediff:
             else:
                 pat = re.sub(r"\\g<([^>]+)>", self.repl_groups,
                              self.patlines[len(self.strlines)-1][2:])
-                str = line[2:]
-                match = re.search("^%s$" % pat, str)
+                raw = line[2:]
+                match = re.search("^%s$" % pat, raw)
                 if match is None:
                     self.mismatch()
                 elif match.lastgroup is not None:
-                    self.groups.update(match.groupdict())
+                    for k,v in match.groupdict().iteritems():
+                        self.groups[k] = re.escape(v)
         else:
             raise NotImplementedError("unexpected line=%r" % line)
 
@@ -3625,3 +3628,62 @@ $at_traceon; }
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
 #AT_STOP_10
+#AT_START_11
+at_fn_group_banner 11 '11-group-escape.at:1' \
+  "pyre \\g<group> escaping" "                        "
+at_xfail=no
+(
+  $as_echo "11. $at_setup_line: testing $at_desc ..."
+  $at_traceon
+
+
+cat >11.re <<'_ATEOF'
+r(?P<re>.*)ge(?P=re)x
+second
+reg\g<re>x
+
+_ATEOF
+
+
+cat >11.out <<'_ATEOF'
+r+*ge+*x
+second
+reg+*x
+_ATEOF
+
+
+
+
+{ set +x
+$as_echo "$at_srcdir/11-group-escape.at:29: diff 11.re 11.out | \${abs_top_srcdir}/src/pyrediff -f"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "11-group-escape.at:29"
+( $at_check_trace; diff 11.re 11.out | ${abs_top_srcdir}/src/pyrediff -f
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/11-group-escape.at:29"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+$as_echo "$at_srcdir/11-group-escape.at:33: \${abs_top_srcdir}/src/pyrediff 11.re 11.out"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "11-group-escape.at:33"
+( $at_check_trace; ${abs_top_srcdir}/src/pyrediff 11.re 11.out
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/11-group-escape.at:33"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+  set +x
+  $at_times_p && times >"$at_times_file"
+) 5>&1 2>&1 7>&- | eval $at_tee_pipe
+read at_status <"$at_status_file"
+#AT_STOP_11

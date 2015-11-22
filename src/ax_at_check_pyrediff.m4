@@ -91,12 +91,13 @@ class Pyrediff:
             else:
                 pat = re.sub(r"\\g<(@<:@^>@:>@+)>", self.repl_groups,
                              self.patlines@<:@len(self.strlines)-1@:>@@<:@2:@:>@)
-                str = line@<:@2:@:>@
-                match = re.search("^%s@S|@" % pat, str)
+                raw = line@<:@2:@:>@
+                match = re.search("^%s@S|@" % pat, raw)
                 if match is None:
                     self.mismatch()
                 elif match.lastgroup is not None:
-                    self.groups.update(match.groupdict())
+                    for k,v in match.groupdict().iteritems():
+                        self.groups@<:@k@:>@ = re.escape(v)
         else:
             raise NotImplementedError("unexpected line=%r" % line)
 
