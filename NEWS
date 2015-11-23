@@ -1,6 +1,14 @@
 NEWS
 ====
 
+release 9, 2015-11-22
+---------------------
+
+Fix \g<> handling when patterns are captured in pyrediff.
+
+Simplify pyrediff -e escaping: no need to escape: " < >
+
+
 release 8, 2015-09-22
 ---------------------
 
