@@ -33,7 +33,7 @@
 #
 # LICENSE
 #
-#   Copyright (c) 2013-2015 Luke Mewburn <luke@mewburn.net>
+#   Copyright (c) 2013-2016 Luke Mewburn <luke@mewburn.net>
 #
 #   Copying and distribution of this file, with or without modification,
 #   are permitted in any medium without royalty provided the copyright
@@ -45,6 +45,13 @@
 m4_define([_AX_AT_CHECK_PATTERN_AWK],
 [[BEGIN { exitval=0 }
 
+function setmode(m)
+{
+	mode=m
+	lc=0
+	rc=0
+}
+
 function mismatch()
 {
 	print mode
@@ -55,21 +62,19 @@ function mismatch()
 	for (i = 0; i < rc; i++) {
 		print rl@<:@i@:>@
 	}
-	mode=""
+	setmode("")
 	exitval=1
 }
 
 @S|@1 ~ /^@<:@0-9@:>@+(,@<:@0-9@:>@+)?@<:@ad@:>@@<:@0-9@:>@+(,@<:@0-9@:>@+)?@S|@/ {
 	print
-	mode=""
+	setmode("")
 	exitval=1
 	next
 }
 
 @S|@1 ~ /^@<:@0-9@:>@+(,@<:@0-9@:>@+)?@<:@c@:>@@<:@0-9@:>@+(,@<:@0-9@:>@+)?@S|@/ {
-	mode=@S|@1
-	lc=0
-	rc=0
+	setmode(@S|@1)
 	next
 }
 
@@ -102,12 +107,18 @@ mode == "" {
 	}
 	next
 }
+
 {
 	print "UNEXPECTED LINE: " @S|@0
 	exit 10
 }
 
-END { exit exitval }
+END {
+	if (lc > rc) {
+		mismatch()
+	}
+	exit exitval
+}
 ]])
 
 
@@ -149,7 +160,7 @@ AT_DATA([$1], [dnl
 # where the difference is a PATTERN line that exactly matches an OUTPUT line.
 #
 #
-# Copyright (c) 2013-2015 Luke Mewburn <luke@mewburn.net>
+# Copyright (c) 2013-2016 Luke Mewburn <luke@mewburn.net>
 #
 # Copying and distribution of this file, with or without modification,
 # are permitted in any medium without royalty provided the copyright

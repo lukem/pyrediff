@@ -142,7 +142,6 @@ or processed with `pyrediff`:
 
 (with an exit status of 1).
 
-
 ### Example 3: pyre `(?P<group>)` and `\g<group>`
 
 Given pattern file `3.pattern`:
@@ -178,10 +177,83 @@ or processed with `pyrediff`:
 
 There is no output because the occurrences of `\g<Pid>` in the pattern line `third,\g<Pid>\g<Pid>` are replaced by the value of named group `Pid` captured from the `(?P<Pid>\d+)` in the first pattern.
 
+### Example 4: Missing lines in output
+
+Given pattern file `4.pattern`:
+
+```
+line 1 [0-9]+\.[0-9]+s
+line 2
+line 3
+l..e 4
+line 5 extra
+```
+
+and output file `4.output`:
+
+```
+line 1 25.63s
+line 2
+line 3
+line 4
+```
+
+the output of `diff 4.pattern 4.output` is:
+
+```
+% diff 4.pattern 4.output
+1c1
+< line 1 @<:@0-9@:>@+\.@<:@0-9@:>@+s
+---
+> line 1 25.63s
+4,5c4
+< l..e 4
+< line 5 extra
+---
+> line 4
+```
+
+and filtered with `awk -f check_pattern.awk` the output is missing `line 5 extra`:
+
+```
+% diff 4.pattern 4.output | awk -f check_pattern.awk
+4,5c4
+< l..e 4
+< line 5 extra
+---
+> line 4
+```
+
+(with an exit status of 1),
+or filtered with `pyrediff`:
+
+```
+% diff 4.pattern 4.output | pyrediff -f
+4,5c4
+< l..e 4
+< line 5 extra
+---
+> line 4
+```
+
+(with an exit status of 1),
+or processed with `pyrediff`:
+
+```
+% pyrediff 4.pattern 4.output
+4,5c4
+< l..e 4
+< line 5 extra
+---
+> line 4
+```
+
+(with an exit status of 1).
+
 Copyright
 ---------
 
-Copyright (c) 2013-2015 Luke Mewburn <luke@mewburn.net>
+Copyright (c) 2013-2016 Luke Mewburn <luke@mewburn.net>
 
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright

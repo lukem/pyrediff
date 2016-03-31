@@ -19,6 +19,7 @@ TESTSUITE_DEPS = \
 	09-example2.at \
 	10-example3.at \
 	11-group-escape.at \
+	12-example4.at \
 	local.at \
 	testsuite.at
 

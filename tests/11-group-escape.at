@@ -6,7 +6,8 @@ AT_DATA([11.re], [dnl
 r(?P<re>.*)ge(?P=re)x
 second
 reg\g<re>x
-
+fourth
+fifth missing
 ])
 
 dnl create output file
@@ -15,21 +16,28 @@ AT_DATA([11.out], [dnl
 r+*ge+*x
 second
 reg+*x
+fourth
 ])
 
 dnl AX_AT_DIFF_PYRE()
 dnl
-m4_if([
-AX_AT_DIFF_PYRE([11.re], [11.out], [0], [dnl
-])
+AX_AT_DIFF_PYRE([11.re], [11.out], [1], [dnl
+5d4
+< fifth missing
 ])
 
 dnl diff 11.re 11.out | pyrediff -f
 dnl
-AT_CHECK([diff 11.re 11.out | ${abs_top_srcdir}/src/pyrediff -f])
+AT_CHECK([diff 11.re 11.out | ${abs_top_srcdir}/src/pyrediff -f], [1], [dnl
+5d4
+< fifth missing
+])
 
 dnl pyrediff 11.re 11.out
 dnl
-AT_CHECK([${abs_top_srcdir}/src/pyrediff 11.re 11.out])
+AT_CHECK([${abs_top_srcdir}/src/pyrediff 11.re 11.out], [1], [dnl
+5d4
+< fifth missing
+])
 
 AT_CLEANUP()

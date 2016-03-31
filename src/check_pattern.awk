@@ -6,7 +6,7 @@
 # where the difference is a PATTERN line that exactly matches an OUTPUT line.
 #
 #
-# Copyright (c) 2013-2015 Luke Mewburn <luke@mewburn.net>
+# Copyright (c) 2013-2016 Luke Mewburn <luke@mewburn.net>
 #
 # Copying and distribution of this file, with or without modification,
 # are permitted in any medium without royalty provided the copyright
@@ -15,6 +15,13 @@
 #
 
 BEGIN { exitval=0 }
+
+function setmode(m)
+{
+	mode=m
+	lc=0
+	rc=0
+}
 
 function mismatch()
 {
@@ -26,21 +33,19 @@ function mismatch()
 	for (i = 0; i < rc; i++) {
 		print rl[i]
 	}
-	mode=""
+	setmode("")
 	exitval=1
 }
 
 $1 ~ /^[0-9]+(,[0-9]+)?[ad][0-9]+(,[0-9]+)?$/ {
 	print
-	mode=""
+	setmode("")
 	exitval=1
 	next
 }
 
 $1 ~ /^[0-9]+(,[0-9]+)?[c][0-9]+(,[0-9]+)?$/ {
-	mode=$1
-	lc=0
-	rc=0
+	setmode($1)
 	next
 }
 
@@ -73,9 +78,15 @@ $1 == ">" {
 	}
 	next
 }
+
 {
 	print "UNEXPECTED LINE: " $0
 	exit 10
 }
 
-END { exit exitval }
+END {
+	if (lc > rc) {
+		mismatch()
+	}
+	exit exitval
+}
