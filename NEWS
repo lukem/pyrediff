@@ -1,6 +1,13 @@
 NEWS
 ====
 
+release 10, 2016-03-31
+----------------------
+
+Correctly fail if the final diff block has a shorter output than
+the provided pattern.
+
+
 release 9, 2015-11-22
 ---------------------
 
