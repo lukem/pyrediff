@@ -1,5 +1,5 @@
 AC_PREREQ([2.69])
-AC_INIT([ax_at_check_pattern], [10], [luke@mewburn.net])
+AC_INIT([ax_at_check_pattern], [11], [luke@mewburn.net])
 
 AC_COPYRIGHT([[
 Copyright 2013-2017, Luke Mewburn <luke@mewburn.net>.

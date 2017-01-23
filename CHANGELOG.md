@@ -1,10 +1,11 @@
 # Change Log
 
 
-## [unreleased]
+## [11] - 2017-01-23
 
 ### Changed
 - Replace `NEWS` with `CHANGELOG.md`.
+- Simplify `pyrediff` -e escaping: no need to escape whitespace or characters: ! # $ & ' ; ` ~
 
 
 ## [10] - 2016-03-31

@@ -40,7 +40,7 @@
 #   notice and this notice are preserved.  This file is offered as-is,
 #   without any warranty.
 
-#serial 10
+#serial 11
 
 m4_define([_AX_AT_CHECK_PYREDIFF],
 [[import optparse
