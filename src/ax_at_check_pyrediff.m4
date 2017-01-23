@@ -220,7 +220,7 @@ AT_DATA([$1], [dnl
 # where the difference is a PYRE line that exactly matches an OUTPUT line.
 #
 #
-# Copyright (c) 2015-2016 Luke Mewburn <luke@mewburn.net>
+# Copyright (c) 2015-2017 Luke Mewburn <luke@mewburn.net>
 #
 # Copying and distribution of this file, with or without modification,
 # are permitted in any medium without royalty provided the copyright

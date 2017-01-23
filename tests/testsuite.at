@@ -1,7 +1,7 @@
 AT_INIT([ax_at_check_pattern])
 
 AT_COPYRIGHT([[
-Copyright 2013-2016, Luke Mewburn <luke@mewburn.net>.
+Copyright 2013-2017, Luke Mewburn <luke@mewburn.net>.
 All rights reserved.
 ]])
 

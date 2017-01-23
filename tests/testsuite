@@ -7,7 +7,7 @@
 # unlimited permission to copy, distribute and modify it.
 #
 #
-# Copyright 2013-2016, Luke Mewburn <luke@mewburn.net>.
+# Copyright 2013-2017, Luke Mewburn <luke@mewburn.net>.
 # All rights reserved.
 #
 ## -------------------- ##
@@ -1206,7 +1206,7 @@ This test suite is free software; the Free Software Foundation gives
 unlimited permission to copy, distribute and modify it.
 
 
-Copyright 2013-2016, Luke Mewburn <luke@mewburn.net>.
+Copyright 2013-2017, Luke Mewburn <luke@mewburn.net>.
 All rights reserved.
 
 _ATEOF
@@ -2891,7 +2891,7 @@ cat >check_pattern.awk <<'_ATEOF'
 # where the difference is a PATTERN line that exactly matches an OUTPUT line.
 #
 #
-# Copyright (c) 2013-2016 Luke Mewburn <luke@mewburn.net>
+# Copyright (c) 2013-2017 Luke Mewburn <luke@mewburn.net>
 #
 # Copying and distribution of this file, with or without modification,
 # are permitted in any medium without royalty provided the copyright
@@ -3005,7 +3005,7 @@ cat >pyrediff <<'_ATEOF'
 # where the difference is a PYRE line that exactly matches an OUTPUT line.
 #
 #
-# Copyright (c) 2015-2016 Luke Mewburn <luke@mewburn.net>
+# Copyright (c) 2015-2017 Luke Mewburn <luke@mewburn.net>
 #
 # Copying and distribution of this file, with or without modification,
 # are permitted in any medium without royalty provided the copyright
