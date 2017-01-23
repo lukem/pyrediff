@@ -68,7 +68,7 @@ class Pyrediff:
         try:
             for line in fp:
                 esc = re.escape(line)
-                esc = re.sub(r"\\(@<:@- \"%,/<=>:@_\n@:>@)", r"\1", esc)
+                esc = re.sub(r"\\(@<:@-\s!\"#@S|@&'%,/:;<=>@_`~@:>@)", r"\1", esc)
                 sys.stdout.write(esc)
         finally:
             fp.close()
@@ -187,7 +187,7 @@ AS_VAR_IF([PYTHON], [], [PYTHON=python])
 AS_REQUIRE_SHELL_FN([ax_at_diff_pyre],
   [AS_FUNCTION_DESCRIBE([ax_at_diff_pyre], [PYRE OUTPUT],
     [Diff PYRE OUTPUT and elide change lines where the python RE matches])],
-  [$PYTHON -c '_AX_AT_CHECK_PYREDIFF' "$[]1" "$[]2"])
+  [$PYTHON -c 'm4_bpatsubst(_AX_AT_CHECK_PYREDIFF,','\\'')' "$[]1" "$[]2"])
 ])dnl _AX_AT_CHECK_PYRE_PREPARE
 
 
