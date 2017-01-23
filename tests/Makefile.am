@@ -20,6 +20,7 @@ TESTSUITE_DEPS = \
 	10-example3.at \
 	11-group-escape.at \
 	12-example4.at \
+	13-escape.at \
 	local.at \
 	testsuite.at
 
@@ -28,7 +29,9 @@ DISTCLEANFILES = \
 
 EXTRA_DIST = \
 	$(TESTSUITE) \
-	$(TESTSUITE_DEPS)
+	$(TESTSUITE_DEPS) \
+	13-escape.in \
+	13-escape.re
 
 $(srcdir)/package.m4: $(top_srcdir)/configure.ac
 	:; { \
