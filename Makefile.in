@@ -36,7 +36,7 @@ POST_UNINSTALL = :
 subdir = .
 DIST_COMMON = $(am__configure_deps) $(dist_aclocal_DATA) \
 	$(dist_awk_DATA) $(dist_bin_SCRIPTS) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in $(top_srcdir)/configure NEWS \
+	$(srcdir)/Makefile.in $(top_srcdir)/configure \
 	buildaux/install-sh buildaux/missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
