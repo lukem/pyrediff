@@ -3,7 +3,7 @@ README
 
 This project contains a collection of scripts and autotest
 (part of [autoconf](https://www.gnu.org/software/autoconf/))
-macros offering the following functionality:
+macros:
 
   * [pyrediff](#pyrediff)
   * [check\_pattern.awk](#check_patternawk)
