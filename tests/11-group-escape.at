@@ -10,7 +10,7 @@ reg\g<re>x
 fourth
 fifth missing
 sixth \g<unknown>
-seven\g<re>
+seven(77|47)\g<re>\1\.
 ])
 
 dnl Create output file.
@@ -21,7 +21,7 @@ second
 reg+*x
 fourth
 sixth \g<unknown>
-seven+*
+seven47+*47.
 ])
 
 dnl AX_AT_DIFF_PYRE()

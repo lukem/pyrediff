@@ -5,42 +5,46 @@ dnl Group (?P=bad) is not defined, so there is an RE fault
 dnl
 AT_DATA([14.re], [dnl
 r(?P<re>.*)ge(?P=bad)x
+second
+(third|3) is \2
 ])
 
 dnl Create output file.
 dnl
 AT_DATA([14.out], [dnl
 r+*gex
+second
+third is third
 ])
+
+dnl Define PYRE_14 to the expected fault
+dnl
+m4_pushdef([PYRE_14], [dnl
+# ERROR: Pattern "r(?P<re>.*)ge(?P=bad)x": unknown group name
+1c1
+< r(?P<re>.*)ge(?P=bad)x
+---
+> r+*gex
+# ERROR: Pattern "(third|3) is \2": bogus escape: '\\2'
+3c3
+< (third|3) is \2
+---
+> third is third
+])dnl
 
 dnl AX_AT_DIFF_PYRE()
 dnl
-AX_AT_DIFF_PYRE([14.re], [14.out], [1], [dnl
-# ERROR: Pattern "r(?P<re>.*)ge(?P=bad)x": unknown group name
-1c1
-< r(?P<re>.*)ge(?P=bad)x
----
-> r+*gex
-])
+AX_AT_DIFF_PYRE([14.re], [14.out], [1], [PYRE_14])
 
 dnl diff 14.re 14.out | pyrediff -f
 dnl
-AT_CHECK([diff 14.re 14.out | ${abs_top_srcdir}/src/pyrediff -f], [1], [dnl
-# ERROR: Pattern "r(?P<re>.*)ge(?P=bad)x": unknown group name
-1c1
-< r(?P<re>.*)ge(?P=bad)x
----
-> r+*gex
-])
+AT_CHECK([diff 14.re 14.out | ${abs_top_srcdir}/src/pyrediff -f], [1], [PYRE_14])
 
 dnl pyrediff 14.re 14.out
 dnl
-AT_CHECK([${abs_top_srcdir}/src/pyrediff 14.re 14.out], [1], [dnl
-# ERROR: Pattern "r(?P<re>.*)ge(?P=bad)x": unknown group name
-1c1
-< r(?P<re>.*)ge(?P=bad)x
----
-> r+*gex
-])
+AT_CHECK([${abs_top_srcdir}/src/pyrediff 14.re 14.out], [1], [PYRE_14])
+
+
+m4_popdef([PYRE_14])dnl
 
 AT_CLEANUP()
