@@ -7,7 +7,7 @@ macros:
 
   * [pyrediff](#pyrediff)
   * [check\_pattern.awk](#check_patternawk)
-  * [autotest macros] (#autotest-macros)
+  * [autotest macros](#autotest-macros)
 
 ## pyrediff
 
