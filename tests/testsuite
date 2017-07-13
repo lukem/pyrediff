@@ -4004,80 +4004,104 @@ third is third
 _ATEOF
 
 
+cat >14.diffre <<'_ATEOF'
+# ERROR: Pattern "r\(\?P<re>\.\*\)ge\(\?P=bad\)x": unknown group name(: 'bad')?
+1c1
+< r\(\?P<re>\.\*\)ge\(\?P=bad\)x
+---
+> r\+\*gex
+# ERROR: Pattern "\(third\|3\) is \\2": bogus escape: '\\\\2'
+3c3
+< \(third\|3\) is \\2
+---
+> third is third
+_ATEOF
+
 
 
 { set +x
-$as_echo "$at_srcdir/14-group-unknown.at:37: ax_at_diff_pyre 14.re 14.out"
-at_fn_check_prepare_trace "14-group-unknown.at:37"
+$as_echo "$at_srcdir/14-group-unknown.at:38: ax_at_diff_pyre 14.re 14.out"
+at_fn_check_prepare_trace "14-group-unknown.at:38"
 ( $at_check_trace; ax_at_diff_pyre 14.re 14.out
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
-echo >>"$at_stdout"; $as_echo "# ERROR: Pattern \"r(?P<re>.*)ge(?P=bad)x\": unknown group name
-1c1
-< r(?P<re>.*)ge(?P=bad)x
----
-> r+*gex
-# ERROR: Pattern \"(third|3) is \\2\": bogus escape: '\\\\2'
-3c3
-< (third|3) is \\2
----
-> third is third
-" | \
-  $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/14-group-unknown.at:37"
+echo stdout:; tee stdout <"$at_stdout"
+at_fn_check_status 1 $at_status "$at_srcdir/14-group-unknown.at:38"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 
 { set +x
-$as_echo "$at_srcdir/14-group-unknown.at:41: diff 14.re 14.out | \${abs_top_srcdir}/src/pyrediff -f"
-at_fn_check_prepare_notrace 'a ${...} parameter expansion' "14-group-unknown.at:41"
+$as_echo "$at_srcdir/14-group-unknown.at:39: ax_at_diff_pyre 14.diffre stdout"
+at_fn_check_prepare_trace "14-group-unknown.at:39"
+( $at_check_trace; ax_at_diff_pyre 14.diffre stdout
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/14-group-unknown.at:39"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+{ set +x
+$as_echo "$at_srcdir/14-group-unknown.at:43: diff 14.re 14.out | \${abs_top_srcdir}/src/pyrediff -f"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "14-group-unknown.at:43"
 ( $at_check_trace; diff 14.re 14.out | ${abs_top_srcdir}/src/pyrediff -f
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
-echo >>"$at_stdout"; $as_echo "# ERROR: Pattern \"r(?P<re>.*)ge(?P=bad)x\": unknown group name
-1c1
-< r(?P<re>.*)ge(?P=bad)x
----
-> r+*gex
-# ERROR: Pattern \"(third|3) is \\2\": bogus escape: '\\\\2'
-3c3
-< (third|3) is \\2
----
-> third is third
-" | \
-  $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/14-group-unknown.at:41"
+echo stdout:; tee stdout <"$at_stdout"
+at_fn_check_status 1 $at_status "$at_srcdir/14-group-unknown.at:43"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-$as_echo "$at_srcdir/14-group-unknown.at:45: \${abs_top_srcdir}/src/pyrediff 14.re 14.out"
-at_fn_check_prepare_notrace 'a ${...} parameter expansion' "14-group-unknown.at:45"
+$as_echo "$at_srcdir/14-group-unknown.at:44: ax_at_diff_pyre 14.diffre stdout"
+at_fn_check_prepare_trace "14-group-unknown.at:44"
+( $at_check_trace; ax_at_diff_pyre 14.diffre stdout
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/14-group-unknown.at:44"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+{ set +x
+$as_echo "$at_srcdir/14-group-unknown.at:48: \${abs_top_srcdir}/src/pyrediff 14.re 14.out"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "14-group-unknown.at:48"
 ( $at_check_trace; ${abs_top_srcdir}/src/pyrediff 14.re 14.out
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
-echo >>"$at_stdout"; $as_echo "# ERROR: Pattern \"r(?P<re>.*)ge(?P=bad)x\": unknown group name
-1c1
-< r(?P<re>.*)ge(?P=bad)x
----
-> r+*gex
-# ERROR: Pattern \"(third|3) is \\2\": bogus escape: '\\\\2'
-3c3
-< (third|3) is \\2
----
-> third is third
-" | \
-  $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/14-group-unknown.at:45"
+echo stdout:; tee stdout <"$at_stdout"
+at_fn_check_status 1 $at_status "$at_srcdir/14-group-unknown.at:48"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+$as_echo "$at_srcdir/14-group-unknown.at:49: ax_at_diff_pyre 14.diffre stdout"
+at_fn_check_prepare_trace "14-group-unknown.at:49"
+( $at_check_trace; ax_at_diff_pyre 14.diffre stdout
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/14-group-unknown.at:49"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 

@@ -17,34 +17,36 @@ second
 third is third
 ])
 
-dnl Define PYRE_14 to the expected fault
+dnl Create diff re file.
+dnl The ERROR line changes between python 2.6 and 2.7.
 dnl
-m4_pushdef([PYRE_14], [dnl
-# ERROR: Pattern "r(?P<re>.*)ge(?P=bad)x": unknown group name
+AT_DATA([14.diffre], [dnl
+# ERROR: Pattern "r\(\?P<re>\.\*\)ge\(\?P=bad\)x": unknown group name(: 'bad')?
 1c1
-< r(?P<re>.*)ge(?P=bad)x
+< r\(\?P<re>\.\*\)ge\(\?P=bad\)x
 ---
-> r+*gex
-# ERROR: Pattern "(third|3) is \2": bogus escape: '\\2'
+> r\+\*gex
+# ERROR: Pattern "\(third\|3\) is \\2": bogus escape: '\\\\2'
 3c3
-< (third|3) is \2
+< \(third\|3\) is \\2
 ---
 > third is third
-])dnl
+])
 
 dnl AX_AT_DIFF_PYRE()
 dnl
-AX_AT_DIFF_PYRE([14.re], [14.out], [1], [PYRE_14])
+AX_AT_DIFF_PYRE([14.re], [14.out], [1], [stdout])
+AX_AT_DIFF_PYRE([14.diffre], [stdout])
 
 dnl diff 14.re 14.out | pyrediff -f
 dnl
-AT_CHECK([diff 14.re 14.out | ${abs_top_srcdir}/src/pyrediff -f], [1], [PYRE_14])
+AT_CHECK([diff 14.re 14.out | ${abs_top_srcdir}/src/pyrediff -f], [1], [stdout])
+AX_AT_DIFF_PYRE([14.diffre], [stdout])
 
 dnl pyrediff 14.re 14.out
 dnl
-AT_CHECK([${abs_top_srcdir}/src/pyrediff 14.re 14.out], [1], [PYRE_14])
+AT_CHECK([${abs_top_srcdir}/src/pyrediff 14.re 14.out], [1], [stdout])
+AX_AT_DIFF_PYRE([14.diffre], [stdout])
 
-
-m4_popdef([PYRE_14])dnl
 
 AT_CLEANUP()
