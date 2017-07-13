@@ -11,8 +11,8 @@ macros:
 
 ## pyrediff
 
-`pyrediff` is a Python script to perform pattern-aware comparison
-of PATTERN and OUTPUT to remove blocks that don't differ if a given
+`pyrediff` is a Python script to perform pattern-aware comparison of
+`PATTERN` and `OUTPUT` files to remove blocks that don't differ if a given
 [Python regular expression](https://docs.python.org/2/library/re.html)
 (*pyre*) line in `PATTERN` matches
 the equivalent line in `OUTPUT`.
