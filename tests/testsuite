@@ -473,8 +473,10 @@ import sys
 
 
 class Pyrediff:
-    apat = re.compile("^\d+(,\d+)?[ad]\d+(,\d+)?$")
-    cpat = re.compile("^\d+(,\d+)?[c]\d+(,\d+)?$")
+    _add_del_re = re.compile(r"^(\d+a\d+(,\d+)?|\d+(,\d+)?d\d+)$")
+    _change_re = re.compile(r"^\d+(,\d+)?c\d+(,\d+)?$")
+    _escape_re = re.compile(r"\\([-\s!\"#$&%,/:;<=>@_`'\''~])")
+    _group_re = re.compile(r"\\g<([^>]+)>")
 
     def diff(self, input):
         self.fail = False
@@ -491,38 +493,41 @@ class Pyrediff:
         try:
             for line in fp:
                 esc = re.escape(line)
-                esc = re.sub(r"\\([-\s!\"#$&'\''%,/:;<=>@_`~])", r"\1", esc)
+                esc = self._escape_re.sub(r"\1", esc)
                 sys.stdout.write(esc)
         finally:
             fp.close()
 
     def diff_line(self, line):
-        if self.apat.match(line):
+        if self._add_del_re.match(line):
             print line
             self.set_mode()
             self.fail = True
-        elif self.cpat.match(line):
+        elif self._change_re.match(line):
             self.set_mode(line)
         elif self.mode is None:
             print line
         elif line.startswith("< "):
             self.patlines.append(line)
         elif "---" == line:
-            pass
+            return
         elif line.startswith("> "):
             self.strlines.append(line)
-            if len(self.strlines) > len(self.patlines):
-                self.mismatch()
-            else:
-                pat = re.sub(r"\\g<([^>]+)>", self.repl_groups,
-                             self.patlines[len(self.strlines)-1][2:])
-                raw = line[2:]
-                match = re.search("^%s$" % pat, raw)
-                if match is None:
-                    self.mismatch()
-                elif match.lastgroup is not None:
-                    for k, v in match.groupdict().iteritems():
-                        self.groups[k] = re.escape(v)
+            idx = len(self.strlines)-1
+            if idx >= len(self.patlines):
+                return self.mismatch()
+            pat = self._group_re.sub(self.repl_groups, self.patlines[idx][2:])
+            raw = line[2:]
+            try:
+                match = re.match("^(?:%s)$" % pat, raw)
+            except re.error, e:
+                print "# ERROR: Pattern \"%s\": %s" % (pat, e)
+                return self.mismatch()
+            if match is None:
+                return self.mismatch()
+            elif match.lastgroup is not None:
+                for k, v in match.groupdict().iteritems():
+                    self.groups[k] = re.escape(v)
         else:
             raise NotImplementedError("unexpected line=%r" % line)
 
@@ -846,6 +851,8 @@ at_help_all="1;01-simple.at:1;simple (no pattern);;
 11;11-group-escape.at:1;pyre \\g<group> escaping;;
 12;12-example4.at:1;example 4: missing lines in output;;
 13;13-escape.at:1;pyrediff -e (escape);;
+14;14-group-unknown.at:1;pyre (?P=group) unknown;;
+15;15-alternation-bad.at:1;pyre alternation bad;;
 "
 # List of the all the test groups.
 at_groups_all=`$as_echo "$at_help_all" | sed 's/;.*//'`
@@ -859,7 +866,7 @@ at_fn_validate_ranges ()
   for at_grp
   do
     eval at_value=\$$at_grp
-    if test $at_value -lt 1 || test $at_value -gt 13; then
+    if test $at_value -lt 1 || test $at_value -gt 15; then
       $as_echo "invalid test group: $at_value" >&2
       exit 1
     fi
@@ -2768,53 +2775,6 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
-{ set +x
-$as_echo "$at_srcdir/05-complex-diffs.at:50: ax_at_diff_pattern 05.re 05.out"
-at_fn_check_prepare_trace "05-complex-diffs.at:50"
-( $at_check_trace; ax_at_diff_pattern 05.re 05.out
-) >>"$at_stdout" 2>>"$at_stderr" 5>&-
-at_status=$? at_failed=false
-$at_check_filter
-at_fn_diff_devnull "$at_stderr" || at_failed=:
-echo >>"$at_stdout"; $as_echo "0a1
-> new first line
-5c6,7
-< fourth line
----
-> fourth line change
-> fourth.2 new
-7d8
-< sixth line
-" | \
-  $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/05-complex-diffs.at:50"
-$at_failed && at_fn_log_failure
-$at_traceon; }
-
-
-{ set +x
-$as_echo "$at_srcdir/05-complex-diffs.at:64: ax_at_diff_pyre 05.re 05.out"
-at_fn_check_prepare_trace "05-complex-diffs.at:64"
-( $at_check_trace; ax_at_diff_pyre 05.re 05.out
-) >>"$at_stdout" 2>>"$at_stderr" 5>&-
-at_status=$? at_failed=false
-$at_check_filter
-at_fn_diff_devnull "$at_stderr" || at_failed=:
-echo >>"$at_stdout"; $as_echo "0a1
-> new first line
-5c6,7
-< fourth line
----
-> fourth line change
-> fourth.2 new
-7d8
-< sixth line
-" | \
-  $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/05-complex-diffs.at:64"
-$at_failed && at_fn_log_failure
-$at_traceon; }
-
 
 
 { set +x
@@ -2841,11 +2801,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
-
-
 { set +x
-$as_echo "$at_srcdir/05-complex-diffs.at:92: ax_at_diff_pyre 05.re 05.out"
-at_fn_check_prepare_trace "05-complex-diffs.at:92"
+$as_echo "$at_srcdir/05-complex-diffs.at:82: ax_at_diff_pyre 05.re 05.out"
+at_fn_check_prepare_trace "05-complex-diffs.at:82"
 ( $at_check_trace; ax_at_diff_pyre 05.re 05.out
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -2862,9 +2820,61 @@ echo >>"$at_stdout"; $as_echo "0a1
 < sixth line
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/05-complex-diffs.at:92"
+at_fn_check_status 1 $at_status "$at_srcdir/05-complex-diffs.at:82"
 $at_failed && at_fn_log_failure
 $at_traceon; }
+
+
+
+{ set +x
+$as_echo "$at_srcdir/05-complex-diffs.at:86: ax_at_diff_pattern 05.re 05.out"
+at_fn_check_prepare_trace "05-complex-diffs.at:86"
+( $at_check_trace; ax_at_diff_pattern 05.re 05.out
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "0a1
+> new first line
+5c6,7
+< fourth line
+---
+> fourth line change
+> fourth.2 new
+7d8
+< sixth line
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 1 $at_status "$at_srcdir/05-complex-diffs.at:86"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+
+{ set +x
+$as_echo "$at_srcdir/05-complex-diffs.at:90: ax_at_diff_pyre 05.re 05.out"
+at_fn_check_prepare_trace "05-complex-diffs.at:90"
+( $at_check_trace; ax_at_diff_pyre 05.re 05.out
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "0a1
+> new first line
+5c6,7
+< fourth line
+---
+> fourth line change
+> fourth.2 new
+7d8
+< sixth line
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 1 $at_status "$at_srcdir/05-complex-diffs.at:90"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
 
 
 
@@ -2997,13 +3007,16 @@ $at_traceon; }
 cat >pyrediff <<'_ATEOF'
 #!/usr/bin/env python
 #
-# pyrediff
-# Generated by AX_AT_DATA_PYREDIFF_PY()
-# from https://github.com/lukem/ax_at_check_pattern
+# pyrediff PATTERN OUTPUT
+# pyrediff -e INPUT
+# pyrediff -f
 #
-# python script to process the output of "diff PYRE OUTPUT" removing lines
-# where the difference is a PYRE line that exactly matches an OUTPUT line.
+# pyrediff is a Python script to perform pattern-aware diff comparison
+# of PATTERN and OUTPUT to remove blocks that don't differ if a given
+# Python regular expression (pyre) line in PATTERN matches the equivalent
+# line in OUTPUT.
 #
+# https://github.com/lukem/ax_at_check_pattern
 #
 # Copyright (c) 2015-2017 Luke Mewburn <luke@mewburn.net>
 #
@@ -3020,8 +3033,10 @@ import sys
 
 
 class Pyrediff:
-    apat = re.compile("^\d+(,\d+)?[ad]\d+(,\d+)?$")
-    cpat = re.compile("^\d+(,\d+)?[c]\d+(,\d+)?$")
+    _add_del_re = re.compile(r"^(\d+a\d+(,\d+)?|\d+(,\d+)?d\d+)$")
+    _change_re = re.compile(r"^\d+(,\d+)?c\d+(,\d+)?$")
+    _escape_re = re.compile(r"\\([-\s!\"#$&%,/:;<=>@_`'~])")
+    _group_re = re.compile(r"\\g<([^>]+)>")
 
     def diff(self, input):
         self.fail = False
@@ -3038,38 +3053,41 @@ class Pyrediff:
         try:
             for line in fp:
                 esc = re.escape(line)
-                esc = re.sub(r"\\([-\s!\"#$&'%,/:;<=>@_`~])", r"\1", esc)
+                esc = self._escape_re.sub(r"\1", esc)
                 sys.stdout.write(esc)
         finally:
             fp.close()
 
     def diff_line(self, line):
-        if self.apat.match(line):
+        if self._add_del_re.match(line):
             print line
             self.set_mode()
             self.fail = True
-        elif self.cpat.match(line):
+        elif self._change_re.match(line):
             self.set_mode(line)
         elif self.mode is None:
             print line
         elif line.startswith("< "):
             self.patlines.append(line)
         elif "---" == line:
-            pass
+            return
         elif line.startswith("> "):
             self.strlines.append(line)
-            if len(self.strlines) > len(self.patlines):
-                self.mismatch()
-            else:
-                pat = re.sub(r"\\g<([^>]+)>", self.repl_groups,
-                             self.patlines[len(self.strlines)-1][2:])
-                raw = line[2:]
-                match = re.search("^%s$" % pat, raw)
-                if match is None:
-                    self.mismatch()
-                elif match.lastgroup is not None:
-                    for k, v in match.groupdict().iteritems():
-                        self.groups[k] = re.escape(v)
+            idx = len(self.strlines)-1
+            if idx >= len(self.patlines):
+                return self.mismatch()
+            pat = self._group_re.sub(self.repl_groups, self.patlines[idx][2:])
+            raw = line[2:]
+            try:
+                match = re.match("^(?:%s)$" % pat, raw)
+            except re.error, e:
+                print "# ERROR: Pattern \"%s\": %s" % (pat, e)
+                return self.mismatch()
+            if match is None:
+                return self.mismatch()
+            elif match.lastgroup is not None:
+                for k, v in match.groupdict().iteritems():
+                    self.groups[k] = re.escape(v)
         else:
             raise NotImplementedError("unexpected line=%r" % line)
 
@@ -3671,6 +3689,8 @@ second
 reg\g<re>x
 fourth
 fifth missing
+sixth \g<unknown>
+seven(77|47)\g<re>\1\.
 _ATEOF
 
 
@@ -3679,13 +3699,16 @@ r+*ge+*x
 second
 reg+*x
 fourth
+sixth \g<unknown>
+seven47+*47.
 _ATEOF
 
 
 
+
 { set +x
-$as_echo "$at_srcdir/11-group-escape.at:24: ax_at_diff_pyre 11.re 11.out"
-at_fn_check_prepare_trace "11-group-escape.at:24"
+$as_echo "$at_srcdir/11-group-escape.at:36: ax_at_diff_pyre 11.re 11.out"
+at_fn_check_prepare_trace "11-group-escape.at:36"
 ( $at_check_trace; ax_at_diff_pyre 11.re 11.out
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3695,15 +3718,15 @@ echo >>"$at_stdout"; $as_echo "5d4
 < fifth missing
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/11-group-escape.at:24"
+at_fn_check_status 1 $at_status "$at_srcdir/11-group-escape.at:36"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 
 { set +x
-$as_echo "$at_srcdir/11-group-escape.at:31: diff 11.re 11.out | \${abs_top_srcdir}/src/pyrediff -f"
-at_fn_check_prepare_notrace 'a ${...} parameter expansion' "11-group-escape.at:31"
+$as_echo "$at_srcdir/11-group-escape.at:40: diff 11.re 11.out | \${abs_top_srcdir}/src/pyrediff -f"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "11-group-escape.at:40"
 ( $at_check_trace; diff 11.re 11.out | ${abs_top_srcdir}/src/pyrediff -f
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3713,14 +3736,14 @@ echo >>"$at_stdout"; $as_echo "5d4
 < fifth missing
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/11-group-escape.at:31"
+at_fn_check_status 1 $at_status "$at_srcdir/11-group-escape.at:40"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-$as_echo "$at_srcdir/11-group-escape.at:38: \${abs_top_srcdir}/src/pyrediff 11.re 11.out"
-at_fn_check_prepare_notrace 'a ${...} parameter expansion' "11-group-escape.at:38"
+$as_echo "$at_srcdir/11-group-escape.at:44: \${abs_top_srcdir}/src/pyrediff 11.re 11.out"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "11-group-escape.at:44"
 ( $at_check_trace; ${abs_top_srcdir}/src/pyrediff 11.re 11.out
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3730,9 +3753,10 @@ echo >>"$at_stdout"; $as_echo "5d4
 < fifth missing
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/11-group-escape.at:38"
+at_fn_check_status 1 $at_status "$at_srcdir/11-group-escape.at:44"
 $at_failed && at_fn_log_failure
 $at_traceon; }
+
 
 
   set +x
@@ -3957,3 +3981,205 @@ $at_traceon; }
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
 #AT_STOP_13
+#AT_START_14
+at_fn_group_banner 14 '14-group-unknown.at:1' \
+  "pyre (?P=group) unknown" "                        "
+at_xfail=no
+(
+  $as_echo "14. $at_setup_line: testing $at_desc ..."
+  $at_traceon
+
+
+cat >14.re <<'_ATEOF'
+r(?P<re>.*)ge(?P=bad)x
+second
+(third|3) is \2
+_ATEOF
+
+
+cat >14.out <<'_ATEOF'
+r+*gex
+second
+third is third
+_ATEOF
+
+
+
+
+{ set +x
+$as_echo "$at_srcdir/14-group-unknown.at:37: ax_at_diff_pyre 14.re 14.out"
+at_fn_check_prepare_trace "14-group-unknown.at:37"
+( $at_check_trace; ax_at_diff_pyre 14.re 14.out
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "# ERROR: Pattern \"r(?P<re>.*)ge(?P=bad)x\": unknown group name
+1c1
+< r(?P<re>.*)ge(?P=bad)x
+---
+> r+*gex
+# ERROR: Pattern \"(third|3) is \\2\": bogus escape: '\\\\2'
+3c3
+< (third|3) is \\2
+---
+> third is third
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 1 $at_status "$at_srcdir/14-group-unknown.at:37"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+{ set +x
+$as_echo "$at_srcdir/14-group-unknown.at:41: diff 14.re 14.out | \${abs_top_srcdir}/src/pyrediff -f"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "14-group-unknown.at:41"
+( $at_check_trace; diff 14.re 14.out | ${abs_top_srcdir}/src/pyrediff -f
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "# ERROR: Pattern \"r(?P<re>.*)ge(?P=bad)x\": unknown group name
+1c1
+< r(?P<re>.*)ge(?P=bad)x
+---
+> r+*gex
+# ERROR: Pattern \"(third|3) is \\2\": bogus escape: '\\\\2'
+3c3
+< (third|3) is \\2
+---
+> third is third
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 1 $at_status "$at_srcdir/14-group-unknown.at:41"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+$as_echo "$at_srcdir/14-group-unknown.at:45: \${abs_top_srcdir}/src/pyrediff 14.re 14.out"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "14-group-unknown.at:45"
+( $at_check_trace; ${abs_top_srcdir}/src/pyrediff 14.re 14.out
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "# ERROR: Pattern \"r(?P<re>.*)ge(?P=bad)x\": unknown group name
+1c1
+< r(?P<re>.*)ge(?P=bad)x
+---
+> r+*gex
+# ERROR: Pattern \"(third|3) is \\2\": bogus escape: '\\\\2'
+3c3
+< (third|3) is \\2
+---
+> third is third
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 1 $at_status "$at_srcdir/14-group-unknown.at:45"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+
+  set +x
+  $at_times_p && times >"$at_times_file"
+) 5>&1 2>&1 7>&- | eval $at_tee_pipe
+read at_status <"$at_status_file"
+#AT_STOP_14
+#AT_START_15
+at_fn_group_banner 15 '15-alternation-bad.at:1' \
+  "pyre alternation bad" "                           "
+at_xfail=no
+(
+  $as_echo "15. $at_setup_line: testing $at_desc ..."
+  $at_traceon
+
+
+cat >15.re <<'_ATEOF'
+first\|(?P<num>.*)\|(?P=num)\|
+second
+1|three|
+four
+5,\g<num>\|five
+_ATEOF
+
+
+cat >15.out <<'_ATEOF'
+first|1|1|
+second
+3|three|
+four
+5,1|five
+_ATEOF
+
+
+
+
+{ set +x
+$as_echo "$at_srcdir/15-alternation-bad.at:35: ax_at_diff_pyre 15.re 15.out"
+at_fn_check_prepare_trace "15-alternation-bad.at:35"
+( $at_check_trace; ax_at_diff_pyre 15.re 15.out
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "3c3
+< 1|three|
+---
+> 3|three|
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 1 $at_status "$at_srcdir/15-alternation-bad.at:35"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+{ set +x
+$as_echo "$at_srcdir/15-alternation-bad.at:39: diff 15.re 15.out | \${abs_top_srcdir}/src/pyrediff -f"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "15-alternation-bad.at:39"
+( $at_check_trace; diff 15.re 15.out | ${abs_top_srcdir}/src/pyrediff -f
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "3c3
+< 1|three|
+---
+> 3|three|
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 1 $at_status "$at_srcdir/15-alternation-bad.at:39"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+$as_echo "$at_srcdir/15-alternation-bad.at:43: \${abs_top_srcdir}/src/pyrediff 15.re 15.out"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "15-alternation-bad.at:43"
+( $at_check_trace; ${abs_top_srcdir}/src/pyrediff 15.re 15.out
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "3c3
+< 1|three|
+---
+> 3|three|
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 1 $at_status "$at_srcdir/15-alternation-bad.at:43"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+
+  set +x
+  $at_times_p && times >"$at_times_file"
+) 5>&1 2>&1 7>&- | eval $at_tee_pipe
+read at_status <"$at_status_file"
+#AT_STOP_15
