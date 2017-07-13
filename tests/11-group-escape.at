@@ -1,6 +1,7 @@
 AT_SETUP([pyre \g<group> escaping])
 
-dnl create pattern file
+dnl Create pattern file.
+dnl Group <unknown> is not defined, so it is matched literally in the output.
 dnl
 AT_DATA([11.re], [dnl
 r(?P<re>.*)ge(?P=re)x
@@ -8,15 +9,19 @@ second
 reg\g<re>x
 fourth
 fifth missing
+sixth \g<unknown>
+seven\g<re>
 ])
 
-dnl create output file
+dnl Create output file.
 dnl
 AT_DATA([11.out], [dnl
 r+*ge+*x
 second
 reg+*x
 fourth
+sixth \g<unknown>
+seven+*
 ])
 
 dnl AX_AT_DIFF_PYRE()
