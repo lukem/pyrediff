@@ -1,6 +1,15 @@
 # Change Log
 
 
+## [12] - 2017-07-13
+
+### Fixed
+- Gracefully handle regex errors in the PATTERN file, including
+  unknown `(?P=group)` or `\number` backreferences on the same line.
+- Prevent false matching when the pattern contains an empty alternation
+  at the start or end of the pattern.
+
+
 ## [11] - 2017-01-23
 
 ### Changed
