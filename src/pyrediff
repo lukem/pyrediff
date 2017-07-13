@@ -71,7 +71,11 @@ class Pyrediff:
                 return self.mismatch()
             pat = self._group_re.sub(self.repl_groups, self.patlines[idx][2:])
             raw = line[2:]
-            match = re.search("^%s$" % pat, raw)
+            try:
+                match = re.search("^%s$" % pat, raw)
+            except re.error, e:
+                print "# ERROR: Pattern \"%s\": %s" % (pat, e)
+                return self.mismatch()
             if match is None:
                 return self.mismatch()
             elif match.lastgroup is not None:

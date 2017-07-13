@@ -1,0 +1,46 @@
+AT_SETUP([pyre (?P=group) unknown])
+
+dnl Create pattern file.
+dnl Group (?P=bad) is not defined, so there is an RE fault
+dnl
+AT_DATA([14.re], [dnl
+r(?P<re>.*)ge(?P=bad)x
+])
+
+dnl Create output file.
+dnl
+AT_DATA([14.out], [dnl
+r+*gex
+])
+
+dnl AX_AT_DIFF_PYRE()
+dnl
+AX_AT_DIFF_PYRE([14.re], [14.out], [1], [dnl
+# ERROR: Pattern "r(?P<re>.*)ge(?P=bad)x": unknown group name
+1c1
+< r(?P<re>.*)ge(?P=bad)x
+---
+> r+*gex
+])
+
+dnl diff 14.re 14.out | pyrediff -f
+dnl
+AT_CHECK([diff 14.re 14.out | ${abs_top_srcdir}/src/pyrediff -f], [1], [dnl
+# ERROR: Pattern "r(?P<re>.*)ge(?P=bad)x": unknown group name
+1c1
+< r(?P<re>.*)ge(?P=bad)x
+---
+> r+*gex
+])
+
+dnl pyrediff 14.re 14.out
+dnl
+AT_CHECK([${abs_top_srcdir}/src/pyrediff 14.re 14.out], [1], [dnl
+# ERROR: Pattern "r(?P<re>.*)ge(?P=bad)x": unknown group name
+1c1
+< r(?P<re>.*)ge(?P=bad)x
+---
+> r+*gex
+])
+
+AT_CLEANUP()
