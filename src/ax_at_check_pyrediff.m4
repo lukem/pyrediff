@@ -96,7 +96,7 @@ class Pyrediff:
             pat = self._group_re.sub(self.repl_groups, self.patlines@<:@idx@:>@@<:@2:@:>@)
             raw = line@<:@2:@:>@
             try:
-                match = re.search("^%s@S|@" % pat, raw)
+                match = re.match("^(?:%s)@S|@" % pat, raw)
             except re.error, e:
                 print "# ERROR: Pattern \"%s\": %s" % (pat, e)
                 return self.mismatch()
