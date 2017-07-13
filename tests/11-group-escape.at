@@ -24,25 +24,25 @@ sixth \g<unknown>
 seven47+*47.
 ])
 
-dnl AX_AT_DIFF_PYRE()
+dnl define PYRE_11 for expected pyre output
 dnl
-AX_AT_DIFF_PYRE([11.re], [11.out], [1], [dnl
+m4_pushdef([PYRE_11], [dnl
 5d4
 < fifth missing
-])
+])dnl
+
+dnl AX_AT_DIFF_PYRE()
+dnl
+AX_AT_DIFF_PYRE([11.re], [11.out], [1], [PYRE_11])
 
 dnl diff 11.re 11.out | pyrediff -f
 dnl
-AT_CHECK([diff 11.re 11.out | ${abs_top_srcdir}/src/pyrediff -f], [1], [dnl
-5d4
-< fifth missing
-])
+AT_CHECK([diff 11.re 11.out | ${abs_top_srcdir}/src/pyrediff -f], [1], [PYRE_11])
 
 dnl pyrediff 11.re 11.out
 dnl
-AT_CHECK([${abs_top_srcdir}/src/pyrediff 11.re 11.out], [1], [dnl
-5d4
-< fifth missing
-])
+AT_CHECK([${abs_top_srcdir}/src/pyrediff 11.re 11.out], [1], [PYRE_11])
+
+m4_popdef([PYRE_11])dnl
 
 AT_CLEANUP()

@@ -45,9 +45,9 @@ AT_CHECK([diff 05.re 05.out], [1], [dnl
 < sixth line
 ])
 
-dnl ax_at_diff_pattern output; diff with the 'second' regexes elided
+dnl define PATT_05 for the pattern output; diff with the 'second' regexes elided
 dnl
-AT_CHECK([ax_at_diff_pattern 05.re 05.out], [1], [dnl
+m4_pushdef([PATT_05], [dnl
 0a1
 > new first line
 5c6,7
@@ -57,48 +57,39 @@ AT_CHECK([ax_at_diff_pattern 05.re 05.out], [1], [dnl
 > fourth.2 new
 7d8
 < sixth line
-])
+])dnl
+
+dnl define PYRE_05 for the pyre output; diff with the 'second' regexes elided
+dnl
+m4_pushdef([PYRE_05], [dnl
+0a1
+> new first line
+5c6,7
+< fourth line
+---
+> fourth line change
+> fourth.2 new
+7d8
+< sixth line
+])dnl
+
+dnl ax_at_diff_pattern output; diff with the 'second' regexes elided
+dnl
+AT_CHECK([ax_at_diff_pattern 05.re 05.out], [1], [PATT_05])
 
 dnl ax_at_diff_pyre output; diff with the 'second' regexes elided
 dnl
-AT_CHECK([ax_at_diff_pyre 05.re 05.out], [1], [dnl
-0a1
-> new first line
-5c6,7
-< fourth line
----
-> fourth line change
-> fourth.2 new
-7d8
-< sixth line
-])
+AT_CHECK([ax_at_diff_pyre 05.re 05.out], [1], [PYRE_05])
 
 dnl AX_AT_DIFF_PATTERN()
 dnl
-AX_AT_DIFF_PATTERN([05.re], [05.out], [1], [dnl
-0a1
-> new first line
-5c6,7
-< fourth line
----
-> fourth line change
-> fourth.2 new
-7d8
-< sixth line
-])
+AX_AT_DIFF_PATTERN([05.re], [05.out], [1], [PATT_05])
 
 dnl AX_AT_DIFF_PYRE()
 dnl
-AX_AT_DIFF_PYRE([05.re], [05.out], [1], [dnl
-0a1
-> new first line
-5c6,7
-< fourth line
----
-> fourth line change
-> fourth.2 new
-7d8
-< sixth line
-])
+AX_AT_DIFF_PYRE([05.re], [05.out], [1], [PYRE_05])
+
+m4_popdef([PATT_05])dnl
+m4_popdef([PYRE_05])dnl
 
 AT_CLEANUP()
