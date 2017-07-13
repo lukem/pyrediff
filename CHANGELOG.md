@@ -9,6 +9,9 @@
 - Prevent false matching when the pattern contains an empty alternation
   at the start or end of the pattern.
 
+### Changed
+- Renamed project to `pyrediff` (from `ax_at_check_pattern`).
+
 
 ## [11] - 2017-01-23
 

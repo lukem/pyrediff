@@ -28,7 +28,7 @@
 #
 #
 #   The latest version of this macro and a supporting test suite are at:
-#   https://github.com/lukem/ax_at_check_pattern
+#   https://github.com/lukem/pyrediff
 #
 #
 # LICENSE
@@ -226,7 +226,7 @@ AT_DATA([$1], [dnl
 # Python regular expression (pyre) line in PATTERN matches the equivalent
 # line in OUTPUT.
 #
-# https://github.com/lukem/ax_at_check_pattern
+# https://github.com/lukem/pyrediff
 #
 # Copyright (c) 2015-2017 Luke Mewburn <luke@mewburn.net>
 #
