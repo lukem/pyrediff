@@ -61,8 +61,7 @@ class Pyrediff:
         self.groups = {}
         for line in input:
             self.diff_line(line.rstrip("\n"))
-        if len(self.patlines) > len(self.strlines):
-            self.mismatch()
+        self.change_mode()
         return self.fail
 
     def escape(self, input_name):
@@ -77,11 +76,11 @@ class Pyrediff:
 
     def diff_line(self, line):
         if self._add_del_re.match(line):
+            self.change_mode()
             print line
-            self.set_mode()
             self.fail = True
         elif self._change_re.match(line):
-            self.set_mode(line)
+            self.change_mode(line)
         elif self.mode is None:
             print line
         elif line.startswith("< "):
@@ -107,6 +106,11 @@ class Pyrediff:
                     self.groups@<:@k@:>@ = re.escape(v)
         else:
             raise NotImplementedError("unexpected line=%r" % line)
+
+    def change_mode(self, mode=None):
+        if len(self.patlines) > len(self.strlines):
+            self.mismatch()
+        self.set_mode(mode)
 
     def mismatch(self):
         print self.mode

@@ -45,7 +45,7 @@
 m4_define([_AX_AT_CHECK_PATTERN_AWK],
 [[BEGIN { exitval=0 }
 
-function setmode(m)
+function set_mode(m)
 {
 	mode=m
 	lc=0
@@ -62,19 +62,27 @@ function mismatch()
 	for (i = 0; i < rc; i++) {
 		print rl@<:@i@:>@
 	}
-	setmode("")
+	set_mode("")
 	exitval=1
 }
 
+function change_mode(m)
+{
+	if (lc > rc) {
+		mismatch()
+	}
+	set_mode(m)
+}
+
 @S|@1 ~ /^@<:@0-9@:>@+(,@<:@0-9@:>@+)?@<:@ad@:>@@<:@0-9@:>@+(,@<:@0-9@:>@+)?@S|@/ {
+	change_mode("")
 	print
-	setmode("")
 	exitval=1
 	next
 }
 
 @S|@1 ~ /^@<:@0-9@:>@+(,@<:@0-9@:>@+)?@<:@c@:>@@<:@0-9@:>@+(,@<:@0-9@:>@+)?@S|@/ {
-	setmode(@S|@1)
+	change_mode(@S|@1)
 	next
 }
 
@@ -114,9 +122,7 @@ mode == "" {
 }
 
 END {
-	if (lc > rc) {
-		mismatch()
-	}
+	change_mode("")
 	exit exitval
 }
 ]])

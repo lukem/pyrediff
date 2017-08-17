@@ -16,7 +16,7 @@
 
 BEGIN { exitval=0 }
 
-function setmode(m)
+function set_mode(m)
 {
 	mode=m
 	lc=0
@@ -33,19 +33,27 @@ function mismatch()
 	for (i = 0; i < rc; i++) {
 		print rl[i]
 	}
-	setmode("")
+	set_mode("")
 	exitval=1
 }
 
+function change_mode(m)
+{
+	if (lc > rc) {
+		mismatch()
+	}
+	set_mode(m)
+}
+
 $1 ~ /^[0-9]+(,[0-9]+)?[ad][0-9]+(,[0-9]+)?$/ {
+	change_mode("")
 	print
-	setmode("")
 	exitval=1
 	next
 }
 
 $1 ~ /^[0-9]+(,[0-9]+)?[c][0-9]+(,[0-9]+)?$/ {
-	setmode($1)
+	change_mode($1)
 	next
 }
 
@@ -85,8 +93,6 @@ $1 == ">" {
 }
 
 END {
-	if (lc > rc) {
-		mismatch()
-	}
+	change_mode("")
 	exit exitval
 }

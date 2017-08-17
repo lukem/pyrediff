@@ -8,6 +8,10 @@ line 2
 line 3
 l..e 4
 line 5 extra
+line 6
+line 7.*
+line 8
+line 9
 ])
 
 dnl create 4.output
@@ -17,7 +21,22 @@ line 1 25.63s
 line 2
 line 3
 line 4
+line 6
+line 7 match any
+line 8
 ])
+
+dnl define PYRE_12 for expected pattern / pyre output
+dnl
+m4_pushdef([PYRE_12], [dnl
+4,5c4
+< l..e 4
+< line 5 extra
+---
+> line 4
+9d7
+< line 9
+])dnl
 
 dnl diff 4.pattern 4.output
 dnl
@@ -31,56 +50,34 @@ AT_CHECK([diff 4.pattern 4.output], [1], [dnl
 < line 5 extra
 ---
 > line 4
+7c6
+< line 7.*
+---
+> line 7 match any
+9d7
+< line 9
 ])
 
 dnl AX_AT_DIFF_PATTERN()
 dnl
-AX_AT_DIFF_PATTERN([4.pattern], [4.output], [1], [dnl
-4,5c4
-< l..e 4
-< line 5 extra
----
-> line 4
-])
+AX_AT_DIFF_PATTERN([4.pattern], [4.output], [1], [PYRE_12])
 
 dnl AX_AT_DIFF_PYRE()
 dnl
-AX_AT_DIFF_PYRE([4.pattern], [4.output], [1], [dnl
-4,5c4
-< l..e 4
-< line 5 extra
----
-> line 4
-])
+AX_AT_DIFF_PYRE([4.pattern], [4.output], [1], [PYRE_12])
 
 dnl diff 4.pattern 4.output | awk -f check_pattern.awk
 dnl
-AT_CHECK([diff 4.pattern 4.output | awk -f ${abs_top_srcdir}/src/check_pattern.awk], [1], [dnl
-4,5c4
-< l..e 4
-< line 5 extra
----
-> line 4
-])
+AT_CHECK([diff 4.pattern 4.output | awk -f ${abs_top_srcdir}/src/check_pattern.awk], [1], [PYRE_12])
 
 dnl diff 4.pattern 4.output | pyrediff -f
 dnl
-AT_CHECK([diff 4.pattern 4.output | ${abs_top_srcdir}/src/pyrediff -f], [1], [dnl
-4,5c4
-< l..e 4
-< line 5 extra
----
-> line 4
-])
+AT_CHECK([diff 4.pattern 4.output | ${abs_top_srcdir}/src/pyrediff -f], [1], [PYRE_12])
 
 dnl pyrediff 4.pattern 4.output
 dnl
-AT_CHECK([${abs_top_srcdir}/src/pyrediff 4.pattern 4.output], [1], [dnl
-4,5c4
-< l..e 4
-< line 5 extra
----
-> line 4
-])
+AT_CHECK([${abs_top_srcdir}/src/pyrediff 4.pattern 4.output], [1], [PYRE_12])
+
+m4_popdef([PYRE_12])dnl
 
 AT_CLEANUP()

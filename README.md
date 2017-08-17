@@ -235,6 +235,10 @@ line 2
 line 3
 l..e 4
 line 5 extra
+line 6
+line 7.*
+line 8
+line 9
 ```
 
 and output file `4.output`:
@@ -244,6 +248,9 @@ line 1 25.63s
 line 2
 line 3
 line 4
+line 6
+line 7 match any
+line 8
 ```
 
 the output of `diff 4.pattern 4.output` is:
@@ -259,9 +266,15 @@ the output of `diff 4.pattern 4.output` is:
 < line 5 extra
 ---
 > line 4
+7c6
+< line 7.*
+---
+> line 7 match any
+9d7
+< line 9
 ```
 
-and filtered with `awk -f check_pattern.awk` the output is missing `line 5 extra`:
+and filtered with `awk -f check_pattern.awk` the output is missing `line 5 extra` and `line 9`:
 
 ```
 % diff 4.pattern 4.output | awk -f check_pattern.awk
@@ -270,6 +283,8 @@ and filtered with `awk -f check_pattern.awk` the output is missing `line 5 extra
 < line 5 extra
 ---
 > line 4
+9d7
+< line 9
 ```
 
 (with an exit status of 1),
@@ -282,6 +297,8 @@ or filtered with `pyrediff`:
 < line 5 extra
 ---
 > line 4
+9d7
+< line 9
 ```
 
 (with an exit status of 1),
@@ -294,6 +311,8 @@ or processed with `pyrediff`:
 < line 5 extra
 ---
 > line 4
+9d7
+< line 9
 ```
 
 (with an exit status of 1).
