@@ -1,6 +1,13 @@
 # Change Log
 
 
+## [13] - 2017-08-17
+
+### Fixed
+- Correctly fail if the any diff change block has a shorter output than
+the provided pattern. (Improved version of fix in release/10)
+
+
 ## [12] - 2017-07-13
 
 ### Fixed
