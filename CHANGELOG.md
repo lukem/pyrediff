@@ -5,7 +5,7 @@
 
 ### Fixed
 - Correctly fail if the any diff change block has a shorter output than
-the provided pattern. (Improved version of fix in release/10)
+the provided pattern. (Improved version of fix in [release/10](#10---2016-03-31))
 
 
 ## [12] - 2017-07-13
