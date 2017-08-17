@@ -19,6 +19,13 @@ line 3b extra
 line 4
 ])
 
+dnl define PYRE_09 for expected pattern / pyre output
+dnl
+m4_pushdef([PYRE_09], [dnl
+3a4
+> line 3b extra
+])dnl
+
 dnl diff 2.pattern 2.output
 dnl
 AT_CHECK([diff 2.pattern 2.output], [1], [dnl
@@ -32,37 +39,24 @@ AT_CHECK([diff 2.pattern 2.output], [1], [dnl
 
 dnl AX_AT_DIFF_PATTERN()
 dnl
-AX_AT_DIFF_PATTERN([2.pattern], [2.output], [1], [dnl
-3a4
-> line 3b extra
-])
+AX_AT_DIFF_PATTERN([2.pattern], [2.output], [1], [PYRE_09])
 
 dnl AX_AT_DIFF_PYRE()
 dnl
-AX_AT_DIFF_PYRE([2.pattern], [2.output], [1], [dnl
-3a4
-> line 3b extra
-])
+AX_AT_DIFF_PYRE([2.pattern], [2.output], [1], [PYRE_09])
 
 dnl diff 2.pattern 2.output | awk -f check_pattern.awk
 dnl
-AT_CHECK([diff 2.pattern 2.output | awk -f ${abs_top_srcdir}/src/check_pattern.awk], [1], [dnl
-3a4
-> line 3b extra
-])
+AT_CHECK([diff 2.pattern 2.output | awk -f ${abs_top_srcdir}/src/check_pattern.awk], [1], [PYRE_09])
 
 dnl diff 2.pattern 2.output | pyrediff -f
 dnl
-AT_CHECK([diff 2.pattern 2.output | ${abs_top_srcdir}/src/pyrediff -f], [1], [dnl
-3a4
-> line 3b extra
-])
+AT_CHECK([diff 2.pattern 2.output | ${abs_top_srcdir}/src/pyrediff -f], [1], [PYRE_09])
 
 dnl pyrediff 2.pattern 2.output
 dnl
-AT_CHECK([${abs_top_srcdir}/src/pyrediff 2.pattern 2.output], [1], [dnl
-3a4
-> line 3b extra
-])
+AT_CHECK([${abs_top_srcdir}/src/pyrediff 2.pattern 2.output], [1], [PYRE_09])
+
+m4_popdef([PYRE_09])dnl
 
 AT_CLEANUP()
