@@ -384,7 +384,7 @@ ax_at_diff_pattern ()
 {
 diff "$1" "$2" | $AWK 'BEGIN { exitval=0 }
 
-function setmode(m)
+function set_mode(m)
 {
 	mode=m
 	lc=0
@@ -401,19 +401,27 @@ function mismatch()
 	for (i = 0; i < rc; i++) {
 		print rl[i]
 	}
-	setmode("")
+	set_mode("")
 	exitval=1
 }
 
+function change_mode(m)
+{
+	if (lc > rc) {
+		mismatch()
+	}
+	set_mode(m)
+}
+
 $1 ~ /^[0-9]+(,[0-9]+)?[ad][0-9]+(,[0-9]+)?$/ {
+	change_mode("")
 	print
-	setmode("")
 	exitval=1
 	next
 }
 
 $1 ~ /^[0-9]+(,[0-9]+)?[c][0-9]+(,[0-9]+)?$/ {
-	setmode($1)
+	change_mode($1)
 	next
 }
 
@@ -453,9 +461,7 @@ $1 == ">" {
 }
 
 END {
-	if (lc > rc) {
-		mismatch()
-	}
+	change_mode("")
 	exit exitval
 }
 '
@@ -484,8 +490,7 @@ class Pyrediff:
         self.groups = {}
         for line in input:
             self.diff_line(line.rstrip("\n"))
-        if len(self.patlines) > len(self.strlines):
-            self.mismatch()
+        self.change_mode()
         return self.fail
 
     def escape(self, input_name):
@@ -500,11 +505,11 @@ class Pyrediff:
 
     def diff_line(self, line):
         if self._add_del_re.match(line):
+            self.change_mode()
             print line
-            self.set_mode()
             self.fail = True
         elif self._change_re.match(line):
-            self.set_mode(line)
+            self.change_mode(line)
         elif self.mode is None:
             print line
         elif line.startswith("< "):
@@ -530,6 +535,11 @@ class Pyrediff:
                     self.groups[k] = re.escape(v)
         else:
             raise NotImplementedError("unexpected line=%r" % line)
+
+    def change_mode(self, mode=None):
+        if len(self.patlines) > len(self.strlines):
+            self.mismatch()
+        self.set_mode(mode)
 
     def mismatch(self):
         print self.mode
@@ -2776,10 +2786,9 @@ $at_traceon; }
 
 
 
-
 { set +x
-$as_echo "$at_srcdir/05-complex-diffs.at:78: ax_at_diff_pattern 05.re 05.out"
-at_fn_check_prepare_trace "05-complex-diffs.at:78"
+$as_echo "$at_srcdir/05-complex-diffs.at:65: ax_at_diff_pattern 05.re 05.out"
+at_fn_check_prepare_trace "05-complex-diffs.at:65"
 ( $at_check_trace; ax_at_diff_pattern 05.re 05.out
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -2796,14 +2805,14 @@ echo >>"$at_stdout"; $as_echo "0a1
 < sixth line
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/05-complex-diffs.at:78"
+at_fn_check_status 1 $at_status "$at_srcdir/05-complex-diffs.at:65"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-$as_echo "$at_srcdir/05-complex-diffs.at:82: ax_at_diff_pyre 05.re 05.out"
-at_fn_check_prepare_trace "05-complex-diffs.at:82"
+$as_echo "$at_srcdir/05-complex-diffs.at:69: ax_at_diff_pyre 05.re 05.out"
+at_fn_check_prepare_trace "05-complex-diffs.at:69"
 ( $at_check_trace; ax_at_diff_pyre 05.re 05.out
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -2820,15 +2829,15 @@ echo >>"$at_stdout"; $as_echo "0a1
 < sixth line
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/05-complex-diffs.at:82"
+at_fn_check_status 1 $at_status "$at_srcdir/05-complex-diffs.at:69"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 
 { set +x
-$as_echo "$at_srcdir/05-complex-diffs.at:86: ax_at_diff_pattern 05.re 05.out"
-at_fn_check_prepare_trace "05-complex-diffs.at:86"
+$as_echo "$at_srcdir/05-complex-diffs.at:73: ax_at_diff_pattern 05.re 05.out"
+at_fn_check_prepare_trace "05-complex-diffs.at:73"
 ( $at_check_trace; ax_at_diff_pattern 05.re 05.out
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -2845,7 +2854,7 @@ echo >>"$at_stdout"; $as_echo "0a1
 < sixth line
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/05-complex-diffs.at:86"
+at_fn_check_status 1 $at_status "$at_srcdir/05-complex-diffs.at:73"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
@@ -2853,8 +2862,8 @@ $at_traceon; }
 
 
 { set +x
-$as_echo "$at_srcdir/05-complex-diffs.at:90: ax_at_diff_pyre 05.re 05.out"
-at_fn_check_prepare_trace "05-complex-diffs.at:90"
+$as_echo "$at_srcdir/05-complex-diffs.at:77: ax_at_diff_pyre 05.re 05.out"
+at_fn_check_prepare_trace "05-complex-diffs.at:77"
 ( $at_check_trace; ax_at_diff_pyre 05.re 05.out
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -2871,7 +2880,7 @@ echo >>"$at_stdout"; $as_echo "0a1
 < sixth line
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/05-complex-diffs.at:90"
+at_fn_check_status 1 $at_status "$at_srcdir/05-complex-diffs.at:77"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
@@ -2911,7 +2920,7 @@ cat >check_pattern.awk <<'_ATEOF'
 
 BEGIN { exitval=0 }
 
-function setmode(m)
+function set_mode(m)
 {
 	mode=m
 	lc=0
@@ -2928,19 +2937,27 @@ function mismatch()
 	for (i = 0; i < rc; i++) {
 		print rl[i]
 	}
-	setmode("")
+	set_mode("")
 	exitval=1
 }
 
+function change_mode(m)
+{
+	if (lc > rc) {
+		mismatch()
+	}
+	set_mode(m)
+}
+
 $1 ~ /^[0-9]+(,[0-9]+)?[ad][0-9]+(,[0-9]+)?$/ {
+	change_mode("")
 	print
-	setmode("")
 	exitval=1
 	next
 }
 
 $1 ~ /^[0-9]+(,[0-9]+)?[c][0-9]+(,[0-9]+)?$/ {
-	setmode($1)
+	change_mode($1)
 	next
 }
 
@@ -2980,9 +2997,7 @@ $1 == ">" {
 }
 
 END {
-	if (lc > rc) {
-		mismatch()
-	}
+	change_mode("")
 	exit exitval
 }
 _ATEOF
@@ -3044,8 +3059,7 @@ class Pyrediff:
         self.groups = {}
         for line in input:
             self.diff_line(line.rstrip("\n"))
-        if len(self.patlines) > len(self.strlines):
-            self.mismatch()
+        self.change_mode()
         return self.fail
 
     def escape(self, input_name):
@@ -3060,11 +3074,11 @@ class Pyrediff:
 
     def diff_line(self, line):
         if self._add_del_re.match(line):
+            self.change_mode()
             print line
-            self.set_mode()
             self.fail = True
         elif self._change_re.match(line):
-            self.set_mode(line)
+            self.change_mode(line)
         elif self.mode is None:
             print line
         elif line.startswith("< "):
@@ -3090,6 +3104,11 @@ class Pyrediff:
                     self.groups[k] = re.escape(v)
         else:
             raise NotImplementedError("unexpected line=%r" % line)
+
+    def change_mode(self, mode=None):
+        if len(self.patlines) > len(self.strlines):
+            self.mismatch()
+        self.set_mode(mode)
 
     def mismatch(self):
         print self.mode
@@ -3479,9 +3498,10 @@ line 4
 _ATEOF
 
 
+
 { set +x
-$as_echo "$at_srcdir/09-example2.at:24: diff 2.pattern 2.output"
-at_fn_check_prepare_trace "09-example2.at:24"
+$as_echo "$at_srcdir/09-example2.at:31: diff 2.pattern 2.output"
+at_fn_check_prepare_trace "09-example2.at:31"
 ( $at_check_trace; diff 2.pattern 2.output
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3495,35 +3515,16 @@ echo >>"$at_stdout"; $as_echo "1c1
 > line 3b extra
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/09-example2.at:24"
+at_fn_check_status 1 $at_status "$at_srcdir/09-example2.at:31"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 
 { set +x
-$as_echo "$at_srcdir/09-example2.at:35: ax_at_diff_pattern 2.pattern 2.output"
-at_fn_check_prepare_trace "09-example2.at:35"
-( $at_check_trace; ax_at_diff_pattern 2.pattern 2.output
-) >>"$at_stdout" 2>>"$at_stderr" 5>&-
-at_status=$? at_failed=false
-$at_check_filter
-at_fn_diff_devnull "$at_stderr" || at_failed=:
-echo >>"$at_stdout"; $as_echo "3a4
-> line 3b extra
-" | \
-  $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/09-example2.at:35"
-$at_failed && at_fn_log_failure
-$at_traceon; }
-
-
-
-
-{ set +x
-$as_echo "$at_srcdir/09-example2.at:42: ax_at_diff_pyre 2.pattern 2.output"
+$as_echo "$at_srcdir/09-example2.at:42: ax_at_diff_pattern 2.pattern 2.output"
 at_fn_check_prepare_trace "09-example2.at:42"
-( $at_check_trace; ax_at_diff_pyre 2.pattern 2.output
+( $at_check_trace; ax_at_diff_pattern 2.pattern 2.output
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -3538,9 +3539,28 @@ $at_traceon; }
 
 
 
+
 { set +x
-$as_echo "$at_srcdir/09-example2.at:49: diff 2.pattern 2.output | awk -f \${abs_top_srcdir}/src/check_pattern.awk"
-at_fn_check_prepare_notrace 'a ${...} parameter expansion' "09-example2.at:49"
+$as_echo "$at_srcdir/09-example2.at:46: ax_at_diff_pyre 2.pattern 2.output"
+at_fn_check_prepare_trace "09-example2.at:46"
+( $at_check_trace; ax_at_diff_pyre 2.pattern 2.output
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "3a4
+> line 3b extra
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 1 $at_status "$at_srcdir/09-example2.at:46"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+{ set +x
+$as_echo "$at_srcdir/09-example2.at:50: diff 2.pattern 2.output | awk -f \${abs_top_srcdir}/src/check_pattern.awk"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "09-example2.at:50"
 ( $at_check_trace; diff 2.pattern 2.output | awk -f ${abs_top_srcdir}/src/check_pattern.awk
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3550,14 +3570,14 @@ echo >>"$at_stdout"; $as_echo "3a4
 > line 3b extra
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/09-example2.at:49"
+at_fn_check_status 1 $at_status "$at_srcdir/09-example2.at:50"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-$as_echo "$at_srcdir/09-example2.at:56: diff 2.pattern 2.output | \${abs_top_srcdir}/src/pyrediff -f"
-at_fn_check_prepare_notrace 'a ${...} parameter expansion' "09-example2.at:56"
+$as_echo "$at_srcdir/09-example2.at:54: diff 2.pattern 2.output | \${abs_top_srcdir}/src/pyrediff -f"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "09-example2.at:54"
 ( $at_check_trace; diff 2.pattern 2.output | ${abs_top_srcdir}/src/pyrediff -f
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3567,14 +3587,14 @@ echo >>"$at_stdout"; $as_echo "3a4
 > line 3b extra
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/09-example2.at:56"
+at_fn_check_status 1 $at_status "$at_srcdir/09-example2.at:54"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-$as_echo "$at_srcdir/09-example2.at:63: \${abs_top_srcdir}/src/pyrediff 2.pattern 2.output"
-at_fn_check_prepare_notrace 'a ${...} parameter expansion' "09-example2.at:63"
+$as_echo "$at_srcdir/09-example2.at:58: \${abs_top_srcdir}/src/pyrediff 2.pattern 2.output"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "09-example2.at:58"
 ( $at_check_trace; ${abs_top_srcdir}/src/pyrediff 2.pattern 2.output
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3584,9 +3604,10 @@ echo >>"$at_stdout"; $as_echo "3a4
 > line 3b extra
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/09-example2.at:63"
+at_fn_check_status 1 $at_status "$at_srcdir/09-example2.at:58"
 $at_failed && at_fn_log_failure
 $at_traceon; }
+
 
 
   set +x
@@ -3779,6 +3800,10 @@ line 2
 line 3
 l..e 4
 line 5 extra
+line 6
+line 7.*
+line 8
+line 9
 _ATEOF
 
 
@@ -3787,12 +3812,16 @@ line 1 25.63s
 line 2
 line 3
 line 4
+line 6
+line 7 match any
+line 8
 _ATEOF
 
 
+
 { set +x
-$as_echo "$at_srcdir/12-example4.at:24: diff 4.pattern 4.output"
-at_fn_check_prepare_trace "12-example4.at:24"
+$as_echo "$at_srcdir/12-example4.at:43: diff 4.pattern 4.output"
+at_fn_check_prepare_trace "12-example4.at:43"
 ( $at_check_trace; diff 4.pattern 4.output
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3807,17 +3836,23 @@ echo >>"$at_stdout"; $as_echo "1c1
 < line 5 extra
 ---
 > line 4
+7c6
+< line 7.*
+---
+> line 7 match any
+9d7
+< line 9
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/12-example4.at:24"
+at_fn_check_status 1 $at_status "$at_srcdir/12-example4.at:43"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 
 { set +x
-$as_echo "$at_srcdir/12-example4.at:38: ax_at_diff_pattern 4.pattern 4.output"
-at_fn_check_prepare_trace "12-example4.at:38"
+$as_echo "$at_srcdir/12-example4.at:63: ax_at_diff_pattern 4.pattern 4.output"
+at_fn_check_prepare_trace "12-example4.at:63"
 ( $at_check_trace; ax_at_diff_pattern 4.pattern 4.output
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3828,9 +3863,11 @@ echo >>"$at_stdout"; $as_echo "4,5c4
 < line 5 extra
 ---
 > line 4
+9d7
+< line 9
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/12-example4.at:38"
+at_fn_check_status 1 $at_status "$at_srcdir/12-example4.at:63"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
@@ -3838,8 +3875,8 @@ $at_traceon; }
 
 
 { set +x
-$as_echo "$at_srcdir/12-example4.at:48: ax_at_diff_pyre 4.pattern 4.output"
-at_fn_check_prepare_trace "12-example4.at:48"
+$as_echo "$at_srcdir/12-example4.at:67: ax_at_diff_pyre 4.pattern 4.output"
+at_fn_check_prepare_trace "12-example4.at:67"
 ( $at_check_trace; ax_at_diff_pyre 4.pattern 4.output
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3850,17 +3887,19 @@ echo >>"$at_stdout"; $as_echo "4,5c4
 < line 5 extra
 ---
 > line 4
+9d7
+< line 9
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/12-example4.at:48"
+at_fn_check_status 1 $at_status "$at_srcdir/12-example4.at:67"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 
 { set +x
-$as_echo "$at_srcdir/12-example4.at:58: diff 4.pattern 4.output | awk -f \${abs_top_srcdir}/src/check_pattern.awk"
-at_fn_check_prepare_notrace 'a ${...} parameter expansion' "12-example4.at:58"
+$as_echo "$at_srcdir/12-example4.at:71: diff 4.pattern 4.output | awk -f \${abs_top_srcdir}/src/check_pattern.awk"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "12-example4.at:71"
 ( $at_check_trace; diff 4.pattern 4.output | awk -f ${abs_top_srcdir}/src/check_pattern.awk
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3871,16 +3910,18 @@ echo >>"$at_stdout"; $as_echo "4,5c4
 < line 5 extra
 ---
 > line 4
+9d7
+< line 9
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/12-example4.at:58"
+at_fn_check_status 1 $at_status "$at_srcdir/12-example4.at:71"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-$as_echo "$at_srcdir/12-example4.at:68: diff 4.pattern 4.output | \${abs_top_srcdir}/src/pyrediff -f"
-at_fn_check_prepare_notrace 'a ${...} parameter expansion' "12-example4.at:68"
+$as_echo "$at_srcdir/12-example4.at:75: diff 4.pattern 4.output | \${abs_top_srcdir}/src/pyrediff -f"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "12-example4.at:75"
 ( $at_check_trace; diff 4.pattern 4.output | ${abs_top_srcdir}/src/pyrediff -f
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3891,16 +3932,18 @@ echo >>"$at_stdout"; $as_echo "4,5c4
 < line 5 extra
 ---
 > line 4
+9d7
+< line 9
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/12-example4.at:68"
+at_fn_check_status 1 $at_status "$at_srcdir/12-example4.at:75"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-$as_echo "$at_srcdir/12-example4.at:78: \${abs_top_srcdir}/src/pyrediff 4.pattern 4.output"
-at_fn_check_prepare_notrace 'a ${...} parameter expansion' "12-example4.at:78"
+$as_echo "$at_srcdir/12-example4.at:79: \${abs_top_srcdir}/src/pyrediff 4.pattern 4.output"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "12-example4.at:79"
 ( $at_check_trace; ${abs_top_srcdir}/src/pyrediff 4.pattern 4.output
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3911,11 +3954,14 @@ echo >>"$at_stdout"; $as_echo "4,5c4
 < line 5 extra
 ---
 > line 4
+9d7
+< line 9
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/12-example4.at:78"
+at_fn_check_status 1 $at_status "$at_srcdir/12-example4.at:79"
 $at_failed && at_fn_log_failure
 $at_traceon; }
+
 
 
   set +x
