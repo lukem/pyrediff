@@ -6,7 +6,7 @@
 # where the difference is a PATTERN line that exactly matches an OUTPUT line.
 #
 #
-# Copyright (c) 2013-2017 Luke Mewburn <luke@mewburn.net>
+# Copyright (c) 2013-2019 Luke Mewburn <luke@mewburn.net>
 #
 # Copying and distribution of this file, with or without modification,
 # are permitted in any medium without royalty provided the copyright
@@ -89,10 +89,13 @@ $1 == ">" {
 
 {
 	print "UNEXPECTED LINE: " $0
-	exit 10
+	exitval=10
+	exit
 }
 
 END {
-	change_mode("")
+	if (exitval != 10) {
+		change_mode("")
+	}
 	exit exitval
 }
