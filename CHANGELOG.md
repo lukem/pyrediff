@@ -1,6 +1,13 @@
 # Change Log
 
 
+## [14] - (unreleased)
+
+### Fixed
+- Fix `AX_AT_CHECK_PATTERN()` exit value handling for unexpected lines.
+- Distribute `CHANGELOG.md` and `README.md` in make dist.
+
+
 ## [13] - 2017-08-17
 
 ### Fixed
