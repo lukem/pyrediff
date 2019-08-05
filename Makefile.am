@@ -18,3 +18,8 @@ awkdir = $(datadir)/awk
 
 dist_awk_DATA = \
 	src/check_pattern.awk
+
+
+EXTRA_DIST = \
+	CHANGELOG.md \
+	README.md
