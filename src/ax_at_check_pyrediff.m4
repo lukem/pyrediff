@@ -33,7 +33,7 @@
 #
 # LICENSE
 #
-#   Copyright (c) 2015-2017 Luke Mewburn <luke@mewburn.net>
+#   Copyright (c) 2015-2020 Luke Mewburn <luke@mewburn.net>
 #
 #   Copying and distribution of this file, with or without modification,
 #   are permitted in any medium without royalty provided the copyright
@@ -43,7 +43,8 @@
 #serial 13
 
 m4_define([_AX_AT_CHECK_PYREDIFF],
-[[import optparse
+[[import io
+import optparse
 import re
 import subprocess
 import sys
@@ -77,12 +78,12 @@ class Pyrediff:
     def diff_line(self, line):
         if self._add_del_re.match(line):
             self.change_mode()
-            print line
+            print(line)
             self.fail = True
         elif self._change_re.match(line):
             self.change_mode(line)
         elif self.mode is None:
-            print line
+            print(line)
         elif line.startswith("< "):
             self.patlines.append(line)
         elif "---" == line:
@@ -96,13 +97,13 @@ class Pyrediff:
             raw = line@<:@2:@:>@
             try:
                 match = re.match("^(?:%s)@S|@" % pat, raw)
-            except re.error, e:
-                print "# ERROR: Pattern \"%s\": %s" % (pat, e)
+            except re.error as e:
+                print("# ERROR: Pattern \"%s\": %s" % (pat, e))
                 return self.mismatch()
             if match is None:
                 return self.mismatch()
             elif match.lastgroup is not None:
-                for k, v in match.groupdict().iteritems():
+                for k, v in match.groupdict().items():
                     self.groups@<:@k@:>@ = re.escape(v)
         else:
             raise NotImplementedError("unexpected line=%r" % line)
@@ -113,10 +114,10 @@ class Pyrediff:
         self.set_mode(mode)
 
     def mismatch(self):
-        print self.mode
-        print "\n".join(self.patlines)
-        print "---"
-        print "\n".join(self.strlines)
+        print(self.mode)
+        print("\n".join(self.patlines))
+        print("---")
+        print("\n".join(self.strlines))
         self.set_mode()
         self.fail = True
 
@@ -141,7 +142,7 @@ class Pyrediff:
 Pattern-aware comparison of PATTERN and OUTPUT.
 Similar to diff(1), except that PATTERN may contain python regular expressions.
 Strings captured in a named group using (?P<name>...) can be used in subsequent
-pattern lines with \g<name>; occurrences of \g<name> in the pattern line will
+pattern lines with \\g<name>; occurrences of \\g<name> in the pattern line will
 be replaced with a previously captured value before the pattern is applied.
 """)
         parser.add_option(
@@ -178,11 +179,16 @@ be replaced with a previously captured value before the pattern is applied.
         else:
             pipe = subprocess.Popen(@<:@"diff", self.args@<:@0@:>@, self.args@<:@1@:>@@:>@,
                                     stdout=subprocess.PIPE)
-            if self.diff(pipe.stdout):
+            if sys.version_info < (3, 0):
+                pout = pipe.stdout
+            else:
+                pout = io.TextIOWrapper(pipe.stdout)
+            if self.diff(pout):
                 sys.exit(1)
             prv = pipe.wait()
             if prv > 1:
                 sys.exit(prv)
+
 
 if "__main__" == __name__:
     Pyrediff().main()
@@ -232,7 +238,7 @@ AT_DATA([$1], [dnl
 #
 # https://github.com/lukem/pyrediff
 #
-# Copyright (c) 2015-2017 Luke Mewburn <luke@mewburn.net>
+# Copyright (c) 2015-2020 Luke Mewburn <luke@mewburn.net>
 #
 # Copying and distribution of this file, with or without modification,
 # are permitted in any medium without royalty provided the copyright

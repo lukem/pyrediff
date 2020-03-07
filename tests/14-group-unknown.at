@@ -18,15 +18,15 @@ third is third
 ])
 
 dnl Create diff re file.
-dnl The ERROR line changes between python 2.6 and 2.7.
+dnl The ERROR line changes between python 2.6, 2.7, and 3.7.
 dnl
 AT_DATA([14.diffre], [dnl
-# ERROR: Pattern "r\(\?P<re>\.\*\)ge\(\?P=bad\)x": unknown group name(: 'bad')?
+# ERROR: Pattern "r\(\?P<re>\.\*\)ge\(\?P=bad\)x": unknown group name(: 'bad'| 'bad' at position 21)?
 1c1
 < r\(\?P<re>\.\*\)ge\(\?P=bad\)x
 ---
 > r\+\*gex
-# ERROR: Pattern "\(third\|3\) is \\2": bogus escape: '\\\\2'
+# ERROR: Pattern "\(third\|3\) is \\2": (bogus escape: '\\\\2'|invalid group reference 2 at position 18)
 3c3
 < \(third\|3\) is \\2
 ---

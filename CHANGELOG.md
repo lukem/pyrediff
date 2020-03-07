@@ -6,6 +6,7 @@
 ### Fixed
 - Fix `AX_AT_CHECK_PATTERN()` exit value handling for unexpected lines.
 - Distribute `CHANGELOG.md` and `README.md` in make dist.
+- Support python 3 as well as python 2.6 or newer.
 
 
 ## [13] - 2017-08-17
