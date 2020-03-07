@@ -33,7 +33,7 @@
 #
 # LICENSE
 #
-#   Copyright (c) 2015-2020 Luke Mewburn <luke@mewburn.net>
+#   Copyright (c) 2015-2020, Luke Mewburn <luke@mewburn.net>
 #
 #   Copying and distribution of this file, with or without modification,
 #   are permitted in any medium without royalty provided the copyright
@@ -238,7 +238,7 @@ AT_DATA([$1], [dnl
 #
 # https://github.com/lukem/pyrediff
 #
-# Copyright (c) 2015-2020 Luke Mewburn <luke@mewburn.net>
+# Copyright (c) 2015-2020, Luke Mewburn <luke@mewburn.net>
 #
 # Copying and distribution of this file, with or without modification,
 # are permitted in any medium without royalty provided the copyright
