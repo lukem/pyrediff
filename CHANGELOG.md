@@ -1,7 +1,7 @@
 # Change Log
 
 
-## [14] - (unreleased)
+## [14] - 2020-03-07
 
 ### Fixed
 - Fix `AX_AT_CHECK_PATTERN()` exit value handling for unexpected lines.
