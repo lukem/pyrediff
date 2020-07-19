@@ -475,7 +475,8 @@ END {
 # Diff PYRE OUTPUT and elide change lines where the python RE matches
 ax_at_diff_pyre ()
 {
-$PYTHON -c 'import io
+$PYTHON -c 'from __future__ import print_function
+import io
 import optparse
 import re
 import subprocess
@@ -485,7 +486,7 @@ import sys
 class Pyrediff:
     _add_del_re = re.compile(r"^(\d+a\d+(,\d+)?|\d+(,\d+)?d\d+)$")
     _change_re = re.compile(r"^\d+(,\d+)?c\d+(,\d+)?$")
-    _escape_re = re.compile(r"\\([-\s!\"#$&%,/:;<=>@_`'\''~])")
+    _escape_re = re.compile(r"\\([-\s!\"#&%,/:;<=>@_`'\''~])")
     _group_re = re.compile(r"\\g<([^>]+)>")
 
     def diff(self, input):
@@ -3053,6 +3054,7 @@ cat >pyrediff <<'_ATEOF'
 # without any warranty.
 #
 
+from __future__ import print_function
 import io
 import optparse
 import re
@@ -3063,7 +3065,7 @@ import sys
 class Pyrediff:
     _add_del_re = re.compile(r"^(\d+a\d+(,\d+)?|\d+(,\d+)?d\d+)$")
     _change_re = re.compile(r"^\d+(,\d+)?c\d+(,\d+)?$")
-    _escape_re = re.compile(r"\\([-\s!\"#$&%,/:;<=>@_`'~])")
+    _escape_re = re.compile(r"\\([-\s!\"#&%,/:;<=>@_`'~])")
     _group_re = re.compile(r"\\g<([^>]+)>")
 
     def diff(self, input):
