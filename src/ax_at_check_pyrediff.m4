@@ -43,7 +43,8 @@
 #serial 14
 
 m4_define([_AX_AT_CHECK_PYREDIFF],
-[[import io
+[[from __future__ import print_function
+import io
 import optparse
 import re
 import subprocess
@@ -53,7 +54,7 @@ import sys
 class Pyrediff:
     _add_del_re = re.compile(r"^(\d+a\d+(,\d+)?|\d+(,\d+)?d\d+)@S|@")
     _change_re = re.compile(r"^\d+(,\d+)?c\d+(,\d+)?@S|@")
-    _escape_re = re.compile(r"\\(@<:@-\s!\"#@S|@&%,/:;<=>@_`'~@:>@)")
+    _escape_re = re.compile(r"\\(@<:@-\s!\"#&%,/:;<=>@_`'~@:>@)")
     _group_re = re.compile(r"\\g<(@<:@^>@:>@+)>")
 
     def diff(self, input):

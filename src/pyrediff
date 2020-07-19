@@ -19,6 +19,7 @@
 # without any warranty.
 #
 
+from __future__ import print_function
 import io
 import optparse
 import re
@@ -29,7 +30,7 @@ import sys
 class Pyrediff:
     _add_del_re = re.compile(r"^(\d+a\d+(,\d+)?|\d+(,\d+)?d\d+)$")
     _change_re = re.compile(r"^\d+(,\d+)?c\d+(,\d+)?$")
-    _escape_re = re.compile(r"\\([-\s!\"#$&%,/:;<=>@_`'~])")
+    _escape_re = re.compile(r"\\([-\s!\"#&%,/:;<=>@_`'~])")
     _group_re = re.compile(r"\\g<([^>]+)>")
 
     def diff(self, input):
