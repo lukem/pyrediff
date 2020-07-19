@@ -37,7 +37,7 @@ the provided pattern. (Improved version of fix in [release/10](#10---2016-03-31)
 
 ### Changed
 - Replace `NEWS` with `CHANGELOG.md`.
-- Simplify `pyrediff` -e escaping: no need to escape whitespace or characters: `! # $ & ' ; \` ~`
+- Simplify `pyrediff` -e escaping: no need to escape whitespace or characters: ``! # $ & ' ; ` ~``
 
 
 ## [10] - 2016-03-31
