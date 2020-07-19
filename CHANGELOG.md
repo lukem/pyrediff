@@ -3,7 +3,7 @@
 ## [unreleased] - unreleased
 
 ### Fixed
-- Fix `pyrediff` -e escaping to escape $.
+- Fix `pyrediff` -e escaping to escape `$`.
 - Import print_function.
 
 ## [14] - 2020-03-07
@@ -37,7 +37,7 @@ the provided pattern. (Improved version of fix in [release/10](#10---2016-03-31)
 
 ### Changed
 - Replace `NEWS` with `CHANGELOG.md`.
-- Simplify `pyrediff` -e escaping: no need to escape whitespace or characters: ! # $ & ' ; ` ~
+- Simplify `pyrediff` -e escaping: no need to escape whitespace or characters: `! # $ & ' ; \` ~`
 
 
 ## [10] - 2016-03-31
@@ -53,7 +53,7 @@ the provided pattern.
 - Fix \g<> handling when patterns are captured in `pyrediff`.
 
 ### Changed
-- Simplify `pyrediff` -e escaping: no need to escape: " < >
+- Simplify `pyrediff` -e escaping: no need to escape: `" < >`
 
 
 ## [8] - 2015-09-22
