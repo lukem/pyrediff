@@ -1,5 +1,10 @@
 # Change Log
 
+## [unreleased] - unreleased
+
+### Fixed
+- Fix `pyrediff` -e escaping to escape $.
+- Import print_function.
 
 ## [14] - 2020-03-07
 
