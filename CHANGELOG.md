@@ -1,6 +1,6 @@
 # Change Log
 
-## [unreleased] - unreleased
+## [15] - 2020-07-22
 
 ### Fixed
 - Fix `pyrediff -e` escaping to escape `$`. (Fixes regression in [release/11](#11---2017-01-23))
