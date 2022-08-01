@@ -225,6 +225,7 @@ TESTSUITE_DEPS = \
 	13-escape.at \
 	14-group-unknown.at \
 	15-alternation-bad.at \
+	16-alternation-optional.at \
 	local.at \
 	testsuite.at
 
