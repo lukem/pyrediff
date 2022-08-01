@@ -72,14 +72,11 @@ class Pyrediff:
         return self.fail
 
     def escape(self, input_name):
-        output_fp = open(input_name, "r")
-        try:
+        with io.open(input_name, "r", encoding="utf-8") as output_fp:
             for line in output_fp:
                 esc = re.escape(line)
                 esc = self._escape_re.sub(r"\1", esc)
                 sys.stdout.write(esc)
-        finally:
-            output_fp.close()
 
     def diff_line(self, line):
         if self._add_del_re.match(line):
@@ -102,16 +99,16 @@ class Pyrediff:
             pat = self._group_re.sub(self.repl_groups, self.patlines@<:@idx@:>@@<:@2:@:>@)
             raw = line@<:@2:@:>@
             try:
-                match = re.match("^(?:%s)@S|@" % pat, raw)
+                match = re.match("^(?:{0})@S|@".format(pat), raw)
             except re.error as exc:
-                print("# ERROR: Pattern \"%s\": %s" % (pat, exc))
+                print("# ERROR: Pattern \"{0}\": {1}".format(pat, exc))
                 return self.mismatch()
             if match is None:
                 return self.mismatch()
             for key, val in match.groupdict('').items():
                 self.groups@<:@key@:>@ = re.escape(val)
         else:
-            raise NotImplementedError("unexpected line=%r" % line)
+            raise NotImplementedError("unexpected line={0!r}".format(line))
         return None
 
     def change_mode(self, mode=None):
@@ -130,7 +127,7 @@ class Pyrediff:
     def repl_groups(self, match):
         if match.group(1) in self.groups:
             return self.groups@<:@match.group(1)@:>@
-        print("# ERROR: Pattern \\g<%s>: %s" % (
+        print("# ERROR: Pattern \\g<{0}>: {1}".format(
             match.group(1), "Unknown group"))
         return re.escape(match.string)
 
@@ -185,6 +182,7 @@ be replaced with a previously captured value before the pattern is applied.
             if self.diff(sys.stdin):
                 sys.exit(1)
         else:
+            # pylint: disable-consider-using-with
             pipe = subprocess.Popen(@<:@"diff", args@<:@0@:>@, args@<:@1@:>@@:>@,
                                     stdout=subprocess.PIPE)
             if sys.version_info < (3, 0):
