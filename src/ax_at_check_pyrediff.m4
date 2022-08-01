@@ -50,6 +50,9 @@ import re
 import subprocess
 import sys
 
+# pylint: disable=missing-class-docstring
+# pylint: disable=missing-function-docstring
+
 
 class Pyrediff:
     _add_del_re = re.compile(r"^(\d+a\d+(,\d+)?|\d+(,\d+)?d\d+)@S|@")
@@ -228,25 +231,26 @@ m4_defun([AX_AT_DATA_PYREDIFF_PY], [dnl
 m4_if([$1], [], [m4_fatal([$0: argument 1: empty filename])])
 AT_DATA([$1], [dnl
 #!/usr/bin/env python
-#
-# pyrediff PATTERN OUTPUT
-# pyrediff -e INPUT
-# pyrediff -f
-#
-# pyrediff is a Python script to perform pattern-aware diff comparison
-# of PATTERN and OUTPUT to remove blocks that don't differ if a given
-# Python regular expression (pyre) line in PATTERN matches the equivalent
-# line in OUTPUT.
-#
-# https://github.com/lukem/pyrediff
-#
-# Copyright (c) 2015-2022, Luke Mewburn <luke@mewburn.net>
-#
-# Copying and distribution of this file, with or without modification,
-# are permitted in any medium without royalty provided the copyright
-# notice and this notice are preserved.  This file is offered as-is,
-# without any warranty.
-#
+
+"""
+pyrediff PATTERN OUTPUT
+pyrediff -e INPUT
+pyrediff -f
+
+pyrediff is a Python script to perform pattern-aware diff comparison
+of PATTERN and OUTPUT to remove blocks that don't differ if a given
+Python regular expression (pyre) line in PATTERN matches the equivalent
+line in OUTPUT.
+
+https://github.com/lukem/pyrediff
+
+Copyright (c) 2015-2022, Luke Mewburn <luke@mewburn.net>
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.  This file is offered as-is,
+without any warranty.
+"""
 ]
 _AX_AT_CHECK_PYREDIFF)
 ])dnl AX_AT_DATA_PYREDIFF_PY
