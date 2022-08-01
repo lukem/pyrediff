@@ -325,3 +325,10 @@ Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
 notice and this notice are preserved.  This file is offered as-is,
 without any warranty.
+
+---
+
+## Workflow status
+
+![Build](https://github.com/lukem/pyrediff/actions/workflows/makefile.yml/badge.svg)
+![Pylint workflow](https://github.com/lukem/pyrediff/actions/workflows/pylint.yml/badge.svg)
