@@ -18,7 +18,7 @@
 
 ### Fixed
 - Correctly fail if the any diff change block has a shorter output than
-the provided pattern. (Improved version of fix in [release/10](#10---2016-03-31))
+  the provided pattern. (Improved version of fix in [release/10](#10---2016-03-31))
 
 
 ## [12] - 2017-07-13
@@ -44,7 +44,7 @@ the provided pattern. (Improved version of fix in [release/10](#10---2016-03-31)
 
 ### Fixed
 - Correctly fail if the final diff block has a shorter output than
-the provided pattern.
+  the provided pattern.
 
 
 ## [9] - 2015-11-22
@@ -83,10 +83,10 @@ the provided pattern.
 
 ### Added
 - Provide `AX_AT_CHECK_PYREDIFF()` to use python RE (instead of awk RE),
-also known as "pyrediff".
+  also known as "pyrediff".
 - Provide `AX_AT_DIFF_PYRE()`.
 - Provide `AX_AT_DATA_PYREDIFF_PY()` to write a python script
-containing the diff post-processor to a file.
+  containing the diff post-processor to a file.
 - Provide `pyrediff.py` implementing the pyrediff functionality.
 - Describe `check_pattern.awk`.
 
@@ -98,7 +98,7 @@ containing the diff post-processor to a file.
 
 ### Added
 - Provide `AX_AT_DATA_CHECK_PATTERN_AWK()` to write an awk script
-containing the diff post-processor to a file.
+  containing the diff post-processor to a file.
 - Add `README`.
 
 ### Changed
