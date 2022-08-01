@@ -60,10 +60,12 @@ class Pyrediff:
     _escape_re = re.compile(r"\\(@<:@-\s!\"#&%,/:;<=>@_`'~@:>@)")
     _group_re = re.compile(r"\\g<(@<:@^>@:>@+)>")
 
-    def diff(self, input_fp):
+    def __init__(self):
         self.fail = False
-        self.set_mode()
         self.groups = {}
+        self.set_mode()
+
+    def diff(self, input_fp):
         for line in input_fp:
             self.diff_line(line.rstrip("\n"))
         self.change_mode()
@@ -137,7 +139,7 @@ class Pyrediff:
         self.patlines = @<:@@:>@
         self.strlines = @<:@@:>@
 
-    def parse_args(self):
+    def parse_args(self):       # pylint: disable=no-self-use
         parser = optparse.OptionParser(
             usage="""%prog PATTERN OUTPUT
        %prog -e INPUT
@@ -159,30 +161,31 @@ be replaced with a previously captured value before the pattern is applied.
             action="store_true",
             default=False,
             help="filter stdin, which is the output of `diff PATTERN OUTPUT`")
-        (self.opts, self.args) = parser.parse_args()
+        (opts, args) = parser.parse_args()
         modes = 0
-        if self.opts.escape is not None:
+        if opts.escape is not None:
             modes += 1
-        if self.opts.filter:
+        if opts.filter:
             modes += 1
         if modes > 1:
             parser.error("-e and -f and mutually exclusive")
         elif modes == 1:
-            if len(self.args) != 0:
+            if len(args) != 0:
                 parser.error("incorrect number of arguments")
         else:
-            if len(self.args) != 2:
+            if len(args) != 2:
                 parser.error("incorrect number of arguments")
+        return (opts, args)
 
     def main(self):
-        self.parse_args()
-        if self.opts.escape is not None:
-            self.escape(self.opts.escape)
-        elif self.opts.filter:
+        (opts, args) = self.parse_args()
+        if opts.escape is not None:
+            self.escape(opts.escape)
+        elif opts.filter:
             if self.diff(sys.stdin):
                 sys.exit(1)
         else:
-            pipe = subprocess.Popen(@<:@"diff", self.args@<:@0@:>@, self.args@<:@1@:>@@:>@,
+            pipe = subprocess.Popen(@<:@"diff", args@<:@0@:>@, args@<:@1@:>@@:>@,
                                     stdout=subprocess.PIPE)
             if sys.version_info < (3, 0):
                 pout = pipe.stdout
