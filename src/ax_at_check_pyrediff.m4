@@ -52,6 +52,7 @@ import sys
 
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
+# pylint: disable=bad-option-value,consider-using-f-string
 
 
 class Pyrediff:
@@ -136,7 +137,8 @@ class Pyrediff:
         self.patlines = @<:@@:>@
         self.strlines = @<:@@:>@
 
-    def parse_args(self):       # pylint: disable=no-self-use
+    def parse_args(self):
+        # pylint: disable=bad-option-value,useless-option-value,no-self-use
         parser = optparse.OptionParser(
             usage="""%prog PATTERN OUTPUT
        %prog -e INPUT
