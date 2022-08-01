@@ -33,7 +33,7 @@
 #
 # LICENSE
 #
-#   Copyright (c) 2015-2020, Luke Mewburn <luke@mewburn.net>
+#   Copyright (c) 2015-2022, Luke Mewburn <luke@mewburn.net>
 #
 #   Copying and distribution of this file, with or without modification,
 #   are permitted in any medium without royalty provided the copyright
@@ -126,7 +126,9 @@ class Pyrediff:
         if match.group(1) in self.groups:
             return self.groups@<:@match.group(1)@:>@
         else:
-            return match.string
+            print("# ERROR: Pattern \\g<%s>: %s" % (
+                match.group(1), "Unknown group"))
+            return re.escape(match.string)
 
     def set_mode(self, mode=None):
         self.mode = mode
@@ -239,7 +241,7 @@ AT_DATA([$1], [dnl
 #
 # https://github.com/lukem/pyrediff
 #
-# Copyright (c) 2015-2020, Luke Mewburn <luke@mewburn.net>
+# Copyright (c) 2015-2022, Luke Mewburn <luke@mewburn.net>
 #
 # Copying and distribution of this file, with or without modification,
 # are permitted in any medium without royalty provided the copyright

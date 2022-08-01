@@ -1,4 +1,4 @@
-AT_SETUP([pyre (?P=group) unknown])
+AT_SETUP([pyre (?P=group) \g<group2> unknown])
 
 dnl Create pattern file.
 dnl Group (?P=bad) is not defined, so there is an RE fault
@@ -7,6 +7,8 @@ AT_DATA([14.re], [dnl
 r(?P<re>.*)ge(?P=bad)x
 second
 (third|3) is \2
+fourth
+\g<fifth>
 ])
 
 dnl Create output file.
@@ -15,6 +17,8 @@ AT_DATA([14.out], [dnl
 r+*gex
 second
 third is third
+fourth
+5
 ])
 
 dnl Create diff re file.
@@ -31,6 +35,11 @@ AT_DATA([14.diffre], [dnl
 < \(third\|3\) is \\2
 ---
 > third is third
+# ERROR: Pattern \g<fifth>: Unknown group
+5c5
+< \g<fifth>
+---
+> 5
 ])
 
 dnl AX_AT_DIFF_PYRE()

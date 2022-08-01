@@ -1,10 +1,17 @@
 # Change Log
 
+## [16] - (unreleased)
+
+### Fixed
+- Gracefully handle unknown `\g<group>` references in the PATTERN file.
+
+
 ## [15] - 2020-07-22
 
 ### Fixed
 - Fix `pyrediff -e` escaping to escape `$`. (Fixes regression in [release/11](#11---2017-01-23))
 - Improve python 3 support by importing `print_function`.
+
 
 ## [14] - 2020-03-07
 
