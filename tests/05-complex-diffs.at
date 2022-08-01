@@ -1,6 +1,6 @@
 AT_SETUP([complex diffs])
 
-dnl create pattern file
+dnl Create pattern file.
 dnl
 AT_DATA([05.re], [dnl
 first line is ok
@@ -12,7 +12,7 @@ fifth line
 sixth line
 ])
 
-dnl create output file
+dnl Create output file.
 dnl
 AT_DATA([05.out], [dnl
 new first line
@@ -25,8 +25,6 @@ fourth.2 new
 fifth line
 ])
 
-dnl normal diff output
-dnl
 AT_CHECK([diff 05.re 05.out], [1], [dnl
 0a1
 > new first line
@@ -45,8 +43,8 @@ AT_CHECK([diff 05.re 05.out], [1], [dnl
 < sixth line
 ])
 
-dnl define PYRE_05 for expected pattern / pyre output;
-dnl diff with the 'second' regexes elided
+dnl Define PYRE_05 for expected pattern / pyre output;
+dnl diff with the 'second' regexes elided.
 dnl
 m4_pushdef([PYRE_05], [dnl
 0a1
@@ -60,20 +58,12 @@ m4_pushdef([PYRE_05], [dnl
 < sixth line
 ])dnl
 
-dnl ax_at_diff_pattern output; diff with the 'second' regexes elided
-dnl
 AT_CHECK([ax_at_diff_pattern 05.re 05.out], [1], [PYRE_05])
 
-dnl ax_at_diff_pyre output; diff with the 'second' regexes elided
-dnl
 AT_CHECK([ax_at_diff_pyre 05.re 05.out], [1], [PYRE_05])
 
-dnl AX_AT_DIFF_PATTERN()
-dnl
 AX_AT_DIFF_PATTERN([05.re], [05.out], [1], [PYRE_05])
 
-dnl AX_AT_DIFF_PYRE()
-dnl
 AX_AT_DIFF_PYRE([05.re], [05.out], [1], [PYRE_05])
 
 m4_popdef([PYRE_05])dnl

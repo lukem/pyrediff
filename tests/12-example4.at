@@ -1,6 +1,6 @@
 AT_SETUP([example 4: missing lines in output])
 
-dnl create 4.pattern
+dnl Create pattern file.
 dnl
 AT_DATA([4.pattern], [dnl
 line 1 @<:@0-9@:>@+\.@<:@0-9@:>@+s
@@ -14,7 +14,7 @@ line 8
 line 9
 ])
 
-dnl create 4.output
+dnl Create output file.
 dnl
 AT_DATA([4.output], [dnl
 line 1 25.63s
@@ -26,7 +26,7 @@ line 7 match any
 line 8
 ])
 
-dnl define PYRE_12 for expected pattern / pyre output
+dnl Define PYRE_12 for expected pattern / pyre output.
 dnl
 m4_pushdef([PYRE_12], [dnl
 4,5c4
@@ -38,8 +38,6 @@ m4_pushdef([PYRE_12], [dnl
 < line 9
 ])dnl
 
-dnl diff 4.pattern 4.output
-dnl
 AT_CHECK([diff 4.pattern 4.output], [1], [dnl
 1c1
 < line 1 @<:@0-9@:>@+\.@<:@0-9@:>@+s
@@ -58,24 +56,14 @@ AT_CHECK([diff 4.pattern 4.output], [1], [dnl
 < line 9
 ])
 
-dnl AX_AT_DIFF_PATTERN()
-dnl
 AX_AT_DIFF_PATTERN([4.pattern], [4.output], [1], [PYRE_12])
 
-dnl AX_AT_DIFF_PYRE()
-dnl
 AX_AT_DIFF_PYRE([4.pattern], [4.output], [1], [PYRE_12])
 
-dnl diff 4.pattern 4.output | awk -f check_pattern.awk
-dnl
 AT_CHECK([diff 4.pattern 4.output | awk -f ${abs_top_srcdir}/src/check_pattern.awk], [1], [PYRE_12])
 
-dnl diff 4.pattern 4.output | pyrediff -f
-dnl
 AT_CHECK([diff 4.pattern 4.output | ${abs_top_srcdir}/src/pyrediff -f], [1], [PYRE_12])
 
-dnl pyrediff 4.pattern 4.output
-dnl
 AT_CHECK([${abs_top_srcdir}/src/pyrediff 4.pattern 4.output], [1], [PYRE_12])
 
 m4_popdef([PYRE_12])dnl

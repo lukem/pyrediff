@@ -1,7 +1,7 @@
 AT_SETUP([pyre (?P=group) \g<group2> unknown])
 
 dnl Create pattern file.
-dnl Group (?P=bad) is not defined, so there is an RE fault
+dnl Group (?P=bad) is not defined, so there is an RE fault.
 dnl
 AT_DATA([14.re], [dnl
 r(?P<re>.*)ge(?P=bad)x
@@ -42,20 +42,13 @@ AT_DATA([14.diffre], [dnl
 > 5
 ])
 
-dnl AX_AT_DIFF_PYRE()
-dnl
 AX_AT_DIFF_PYRE([14.re], [14.out], [1], [stdout])
 AX_AT_DIFF_PYRE([14.diffre], [stdout])
 
-dnl diff 14.re 14.out | pyrediff -f
-dnl
 AT_CHECK([diff 14.re 14.out | ${abs_top_srcdir}/src/pyrediff -f], [1], [stdout])
 AX_AT_DIFF_PYRE([14.diffre], [stdout])
 
-dnl pyrediff 14.re 14.out
-dnl
 AT_CHECK([${abs_top_srcdir}/src/pyrediff 14.re 14.out], [1], [stdout])
 AX_AT_DIFF_PYRE([14.diffre], [stdout])
-
 
 AT_CLEANUP()

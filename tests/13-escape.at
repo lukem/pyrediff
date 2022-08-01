@@ -1,12 +1,15 @@
 AT_SETUP([pyrediff -e (escape)])
 
-dnl Generate escaped pattern file
+dnl Generate escaped pattern file.
+dnl
 AT_CHECK([${abs_top_srcdir}/src/pyrediff -e ${abs_srcdir}/13-escape.in > 13.re])
 
-dnl Diff from the expected escaped pattern file
+dnl Diff from the expected escaped pattern file.
+dnl
 AT_CHECK([diff ${abs_srcdir}/13-escape.re 13.re])
 
-dnl Check the generated pattern applies
+dnl Check the generated pattern applies.
+dnl
 AX_AT_DIFF_PYRE([13.re], [${abs_srcdir}/13-escape.in])
 
 AT_CLEANUP()

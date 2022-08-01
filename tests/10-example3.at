@@ -1,6 +1,6 @@
 AT_SETUP([example 3: pyre (?P<group>) and \g<group>])
 
-dnl create 3.pattern
+dnl Create pattern file.
 dnl
 AT_DATA([3.pattern], [dnl
 pid (?P<Pid>\d+) again=(?P=Pid)
@@ -8,22 +8,16 @@ second
 third,\g<Pid>\g<Pid>
 ])
 
-dnl create 3.output
+dnl Create output file.
 dnl
 AT_CHECK([echo "pid $$ again=$$"; echo "second"; echo "third,$$$$"], [0], [stdout])
 mv stdout 3.output
 
-dnl AX_AT_DIFF_PYRE()
-dnl
 AX_AT_DIFF_PYRE([3.pattern], [3.output], [0], [dnl
 ])
 
-dnl diff 3.pattern 3.output | pyrediff -f
-dnl
 AT_CHECK([diff 3.pattern 3.output | ${abs_top_srcdir}/src/pyrediff -f])
 
-dnl pyrediff 3.pattern 3.output
-dnl
 AT_CHECK([${abs_top_srcdir}/src/pyrediff 3.pattern 3.output])
 
 AT_CLEANUP()

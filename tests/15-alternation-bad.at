@@ -21,7 +21,7 @@ four
 5,1|five
 ])
 
-dnl Define PYRE_15 to the expected fault
+dnl Define PYRE_15 to the expected fault.
 dnl
 m4_pushdef([PYRE_15], [dnl
 3c3
@@ -30,18 +30,11 @@ m4_pushdef([PYRE_15], [dnl
 > 3|three|
 ])dnl
 
-dnl AX_AT_DIFF_PYRE()
-dnl
 AX_AT_DIFF_PYRE([15.re], [15.out], [1], [PYRE_15])
 
-dnl diff 15.re 15.out | pyrediff -f
-dnl
 AT_CHECK([diff 15.re 15.out | ${abs_top_srcdir}/src/pyrediff -f], [1], [PYRE_15])
 
-dnl pyrediff 15.re 15.out
-dnl
 AT_CHECK([${abs_top_srcdir}/src/pyrediff 15.re 15.out], [1], [PYRE_15])
-
 
 m4_popdef([PYRE_15])dnl
 
