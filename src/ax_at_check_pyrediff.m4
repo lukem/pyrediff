@@ -45,7 +45,7 @@
 m4_define([_AX_AT_CHECK_PYREDIFF],
 [[from __future__ import print_function
 import io
-import optparse
+import optparse         # pylint: disable=deprecated-module
 import re
 import subprocess
 import sys
@@ -57,24 +57,24 @@ class Pyrediff:
     _escape_re = re.compile(r"\\(@<:@-\s!\"#&%,/:;<=>@_`'~@:>@)")
     _group_re = re.compile(r"\\g<(@<:@^>@:>@+)>")
 
-    def diff(self, input):
+    def diff(self, input_fp):
         self.fail = False
         self.set_mode()
         self.groups = {}
-        for line in input:
+        for line in input_fp:
             self.diff_line(line.rstrip("\n"))
         self.change_mode()
         return self.fail
 
     def escape(self, input_name):
-        fp = open(input_name, "r")
+        output_fp = open(input_name, "r")
         try:
-            for line in fp:
+            for line in output_fp:
                 esc = re.escape(line)
                 esc = self._escape_re.sub(r"\1", esc)
                 sys.stdout.write(esc)
         finally:
-            fp.close()
+            output_fp.close()
 
     def diff_line(self, line):
         if self._add_del_re.match(line):
@@ -87,8 +87,8 @@ class Pyrediff:
             print(line)
         elif line.startswith("< "):
             self.patlines.append(line)
-        elif "---" == line:
-            return
+        elif line == "---":
+            return None
         elif line.startswith("> "):
             self.strlines.append(line)
             idx = len(self.strlines)-1
@@ -98,16 +98,16 @@ class Pyrediff:
             raw = line@<:@2:@:>@
             try:
                 match = re.match("^(?:%s)@S|@" % pat, raw)
-            except re.error as e:
-                print("# ERROR: Pattern \"%s\": %s" % (pat, e))
+            except re.error as exc:
+                print("# ERROR: Pattern \"%s\": %s" % (pat, exc))
                 return self.mismatch()
             if match is None:
                 return self.mismatch()
-            else:
-                for k, v in match.groupdict('').items():
-                    self.groups@<:@k@:>@ = re.escape(v)
+            for key, val in match.groupdict('').items():
+                self.groups@<:@key@:>@ = re.escape(val)
         else:
             raise NotImplementedError("unexpected line=%r" % line)
+        return None
 
     def change_mode(self, mode=None):
         if len(self.patlines) > len(self.strlines):
@@ -125,10 +125,9 @@ class Pyrediff:
     def repl_groups(self, match):
         if match.group(1) in self.groups:
             return self.groups@<:@match.group(1)@:>@
-        else:
-            print("# ERROR: Pattern \\g<%s>: %s" % (
-                match.group(1), "Unknown group"))
-            return re.escape(match.string)
+        print("# ERROR: Pattern \\g<%s>: %s" % (
+            match.group(1), "Unknown group"))
+        return re.escape(match.string)
 
     def set_mode(self, mode=None):
         self.mode = mode
@@ -193,7 +192,7 @@ be replaced with a previously captured value before the pattern is applied.
                 sys.exit(prv)
 
 
-if "__main__" == __name__:
+if __name__ == "__main__":
     Pyrediff().main()
 ]])
 
