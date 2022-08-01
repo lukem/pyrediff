@@ -1,7 +1,7 @@
 AT_INIT([pyrediff])
 
 AT_COPYRIGHT([[
-Copyright 2013-2020, Luke Mewburn <luke@mewburn.net>.
+Copyright 2013-2022, Luke Mewburn <luke@mewburn.net>.
 All rights reserved.
 ]])
 
@@ -22,3 +22,4 @@ m4_include([12-example4.at])
 m4_include([13-escape.at])
 m4_include([14-group-unknown.at])
 m4_include([15-alternation-bad.at])
+m4_include([16-alternation-optional.at])

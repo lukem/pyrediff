@@ -79,8 +79,8 @@ class Pyrediff:
                 return self.mismatch()
             if match is None:
                 return self.mismatch()
-            elif match.lastgroup is not None:
-                for k, v in match.groupdict().items():
+            else:
+                for k, v in match.groupdict('').items():
                     self.groups[k] = re.escape(v)
         else:
             raise NotImplementedError("unexpected line=%r" % line)

@@ -4,6 +4,10 @@
 
 ### Fixed
 - Gracefully handle unknown `\g<group>` references in the PATTERN file.
+- Capture unmatched optional `(?P<group>)` as empty strings,
+  to avoid unknown `\g<group>` errors.
+  For example, the pattern `(matched|(?P<other>))` that matches `matched`
+  allows `\g<other>` to be used in a later pattern to match the empty string.
 
 
 ## [15] - 2020-07-22

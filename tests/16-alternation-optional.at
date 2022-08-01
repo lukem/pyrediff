@@ -1,0 +1,52 @@
+AT_SETUP([pyre alternation optional])
+
+dnl Create pattern file.
+dnl Line 1 has an optional capture
+dnl Line 3 optionally uses optional capture
+dnl
+AT_DATA([16.re], [dnl
+(first|(?P<num>.*))
+second
+3,\g<num>\|five
+])
+
+dnl
+dnl Check 1:
+dnl - line 1 matches "first"
+dnl - line 3 matches empty optional, \g<num> is ignored
+dnl
+
+AT_DATA([16-1.out], [dnl
+first
+second
+3,|five
+])
+
+AX_AT_DIFF_PYRE([16.re], [16-1.out])
+
+AT_CHECK([diff 16.re 16-1.out | ${abs_top_srcdir}/src/pyrediff -f])
+
+AT_CHECK([${abs_top_srcdir}/src/pyrediff 16.re 16-1.out])
+
+
+dnl
+dnl Check 2:
+dnl - line 1 matches "111" as <num>
+dnl - line 3 matches "\g<num>" (as 111) optional
+dnl
+
+AT_DATA([16-2.out], [dnl
+111
+second
+3,111|five
+])
+
+AX_AT_DIFF_PYRE([16.re], [16-2.out])
+
+AT_CHECK([diff 16.re 16-2.out | ${abs_top_srcdir}/src/pyrediff -f])
+
+AT_CHECK([${abs_top_srcdir}/src/pyrediff 16.re 16-2.out])
+
+
+
+AT_CLEANUP()
