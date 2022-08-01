@@ -184,7 +184,7 @@ be replaced with a previously captured value before the pattern is applied.
             if self.diff(sys.stdin):
                 sys.exit(1)
         else:
-            # pylint: disable-consider-using-with
+            # pylint: disable=bad-option-value,consider-using-with
             pipe = subprocess.Popen(@<:@"diff", args@<:@0@:>@, args@<:@1@:>@@:>@,
                                     stdout=subprocess.PIPE)
             if sys.version_info < (3, 0):
