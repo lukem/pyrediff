@@ -19,7 +19,7 @@
 ## [15] - 2020-07-22
 
 ### Fixed
-- Fix `pyrediff -e` escaping to escape `$`. (Fixes regression in [release/11](#11---2017-01-23))
+- Fix `pyrediff -e` escaping to escape `$`. (Fixes regression in [release/11](#11---2017-01-23)).
 - Improve python 3 support by importing `print_function`.
 
 
@@ -35,7 +35,7 @@
 
 ### Fixed
 - Correctly fail if the any diff change block has a shorter output than
-  the provided pattern. (Improved version of fix in [release/10](#10---2016-03-31))
+  the provided pattern. (Improved version of fix in [release/10](#10---2016-03-31)).
 
 
 ## [12] - 2017-07-13
