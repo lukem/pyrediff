@@ -1,6 +1,6 @@
 # Change Log
 
-## [16] - (unreleased)
+## [16] - 2022-08-02
 
 ### Fixed
 - Gracefully handle unknown `\g<group>` references in the PATTERN file.

@@ -1192,7 +1192,7 @@ fi
 # List of tests.
 if $at_list_p; then
   cat <<_ATEOF || at_write_fail=1
-pyrediff 15 test suite: pyrediff test groups:
+pyrediff 16 test suite: pyrediff test groups:
 
  NUM: FILE-NAME:LINE     TEST-GROUP-NAME
       KEYWORDS
@@ -1233,7 +1233,7 @@ _ATEOF
   exit $at_write_fail
 fi
 if $at_version_p; then
-  $as_echo "$as_me (pyrediff 15)" &&
+  $as_echo "$as_me (pyrediff 16)" &&
   cat <<\_ATEOF || at_write_fail=1
 
 Copyright (C) 2012 Free Software Foundation, Inc.
@@ -1415,11 +1415,11 @@ exec 5>>"$at_suite_log"
 
 # Banners and logs.
 $as_echo "## --------------------------------- ##
-## pyrediff 15 test suite: pyrediff. ##
+## pyrediff 16 test suite: pyrediff. ##
 ## --------------------------------- ##"
 {
   $as_echo "## --------------------------------- ##
-## pyrediff 15 test suite: pyrediff. ##
+## pyrediff 16 test suite: pyrediff. ##
 ## --------------------------------- ##"
   echo
 
@@ -2263,7 +2263,7 @@ _ASBOX
   $as_echo "Please send $at_msg and all information you think might help:
 
    To: <luke@mewburn.net>
-   Subject: [pyrediff 15] $as_me: $at_fail_list${at_fail_list:+ failed${at_xpass_list:+, }}$at_xpass_list${at_xpass_list:+ passed unexpectedly}
+   Subject: [pyrediff 16] $as_me: $at_fail_list${at_fail_list:+ failed${at_xpass_list:+, }}$at_xpass_list${at_xpass_list:+ passed unexpectedly}
 
 You may investigate any problem if you feel able to do so, in which
 case the test suite provides a good starting point.  Its output may
@@ -2928,7 +2928,7 @@ cat >check_pattern.awk <<'_ATEOF'
 # where the difference is a PATTERN line that exactly matches an OUTPUT line.
 #
 #
-# Copyright (c) 2013-2020, Luke Mewburn <luke@mewburn.net>
+# Copyright (c) 2013-2022, Luke Mewburn <luke@mewburn.net>
 #
 # Copying and distribution of this file, with or without modification,
 # are permitted in any medium without royalty provided the copyright
