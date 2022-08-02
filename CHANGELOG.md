@@ -8,6 +8,12 @@
   to avoid unknown `\g<group>` errors.
   For example, the pattern `(matched|(?P<other>))` that matches `matched`
   allows `\g<other>` to be used in a later pattern to match the empty string.
+- Fix various pylint issues, maintaining python2 and python3 compatibility.
+
+### Changed
+- Enable github workflows:
+  - Build: runs `configure`, `make`, `make check`.
+  - Pylint: runs `pylint` for `pyrediff`.
 
 
 ## [15] - 2020-07-22
