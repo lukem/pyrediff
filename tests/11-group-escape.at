@@ -33,9 +33,9 @@ m4_pushdef([PYRE_11], [dnl
 
 AX_AT_DIFF_PYRE([11.re], [11.out], [1], [PYRE_11])
 
-AT_CHECK([diff 11.re 11.out | ${abs_top_srcdir}/src/pyrediff -f], [1], [PYRE_11])
+AT_CHECK([diff 11.re 11.out | ${PYTHON} ${abs_top_srcdir}/src/pyrediff -f], [1], [PYRE_11])
 
-AT_CHECK([${abs_top_srcdir}/src/pyrediff 11.re 11.out], [1], [PYRE_11])
+AT_CHECK([${PYTHON} ${abs_top_srcdir}/src/pyrediff 11.re 11.out], [1], [PYRE_11])
 
 m4_popdef([PYRE_11])dnl
 

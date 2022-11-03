@@ -16,8 +16,8 @@ mv stdout 3.output
 AX_AT_DIFF_PYRE([3.pattern], [3.output], [0], [dnl
 ])
 
-AT_CHECK([diff 3.pattern 3.output | ${abs_top_srcdir}/src/pyrediff -f])
+AT_CHECK([diff 3.pattern 3.output | ${PYTHON} ${abs_top_srcdir}/src/pyrediff -f])
 
-AT_CHECK([${abs_top_srcdir}/src/pyrediff 3.pattern 3.output])
+AT_CHECK([${PYTHON} ${abs_top_srcdir}/src/pyrediff 3.pattern 3.output])
 
 AT_CLEANUP()

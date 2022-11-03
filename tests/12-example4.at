@@ -60,11 +60,11 @@ AX_AT_DIFF_PATTERN([4.pattern], [4.output], [1], [PYRE_12])
 
 AX_AT_DIFF_PYRE([4.pattern], [4.output], [1], [PYRE_12])
 
-AT_CHECK([diff 4.pattern 4.output | awk -f ${abs_top_srcdir}/src/check_pattern.awk], [1], [PYRE_12])
+AT_CHECK([diff 4.pattern 4.output | ${AWK} -f ${abs_top_srcdir}/src/check_pattern.awk], [1], [PYRE_12])
 
-AT_CHECK([diff 4.pattern 4.output | ${abs_top_srcdir}/src/pyrediff -f], [1], [PYRE_12])
+AT_CHECK([diff 4.pattern 4.output | ${PYTHON} ${abs_top_srcdir}/src/pyrediff -f], [1], [PYRE_12])
 
-AT_CHECK([${abs_top_srcdir}/src/pyrediff 4.pattern 4.output], [1], [PYRE_12])
+AT_CHECK([${PYTHON} ${abs_top_srcdir}/src/pyrediff 4.pattern 4.output], [1], [PYRE_12])
 
 m4_popdef([PYRE_12])dnl
 

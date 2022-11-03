@@ -25,10 +25,10 @@ AX_AT_DIFF_PATTERN([1.pattern], [1.output])
 
 AX_AT_DIFF_PYRE([1.pattern], [1.output])
 
-AT_CHECK([diff 1.pattern 1.output | awk -f ${abs_top_srcdir}/src/check_pattern.awk])
+AT_CHECK([diff 1.pattern 1.output | ${AWK} -f ${abs_top_srcdir}/src/check_pattern.awk])
 
-AT_CHECK([diff 1.pattern 1.output | ${abs_top_srcdir}/src/pyrediff -f])
+AT_CHECK([diff 1.pattern 1.output | ${PYTHON} ${abs_top_srcdir}/src/pyrediff -f])
 
-AT_CHECK([${abs_top_srcdir}/src/pyrediff 1.pattern 1.output])
+AT_CHECK([${PYTHON} ${abs_top_srcdir}/src/pyrediff 1.pattern 1.output])
 
 AT_CLEANUP()

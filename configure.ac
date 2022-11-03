@@ -23,12 +23,13 @@ AM_MISSING_PROG([AUTOM4TE], [autom4te])
 AC_CONFIG_FILES([
 	Makefile
 	tests/Makefile
+	tests/atlocal
 ])
 
 AC_OUTPUT()
 
 AC_MSG_NOTICE([ === Configuration results ===])
 AC_MSG_NOTICE([Version:             $PACKAGE_VERSION])
-AC_MSG_NOTICE([awk:                 $AWK])
-AC_MSG_NOTICE([python:              $PYTHON])
+AC_MSG_NOTICE([AWK:                 $AWK])
+AC_MSG_NOTICE([PYTHON:              $PYTHON])
 AC_MSG_NOTICE([ =============================])

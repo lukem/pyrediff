@@ -24,9 +24,9 @@ second
 
 AX_AT_DIFF_PYRE([16.re], [16-1.out])
 
-AT_CHECK([diff 16.re 16-1.out | ${abs_top_srcdir}/src/pyrediff -f])
+AT_CHECK([diff 16.re 16-1.out | ${PYTHON} ${abs_top_srcdir}/src/pyrediff -f])
 
-AT_CHECK([${abs_top_srcdir}/src/pyrediff 16.re 16-1.out])
+AT_CHECK([${PYTHON} ${abs_top_srcdir}/src/pyrediff 16.re 16-1.out])
 
 
 dnl
@@ -43,9 +43,9 @@ second
 
 AX_AT_DIFF_PYRE([16.re], [16-2.out])
 
-AT_CHECK([diff 16.re 16-2.out | ${abs_top_srcdir}/src/pyrediff -f])
+AT_CHECK([diff 16.re 16-2.out | ${PYTHON} ${abs_top_srcdir}/src/pyrediff -f])
 
-AT_CHECK([${abs_top_srcdir}/src/pyrediff 16.re 16-2.out])
+AT_CHECK([${PYTHON} ${abs_top_srcdir}/src/pyrediff 16.re 16-2.out])
 
 
 

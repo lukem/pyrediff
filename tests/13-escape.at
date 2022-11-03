@@ -2,7 +2,7 @@ AT_SETUP([pyrediff -e (escape)])
 
 dnl Generate escaped pattern file.
 dnl
-AT_CHECK([${abs_top_srcdir}/src/pyrediff -e ${abs_srcdir}/13-escape.in > 13.re])
+AT_CHECK([${PYTHON} ${abs_top_srcdir}/src/pyrediff -e ${abs_srcdir}/13-escape.in > 13.re])
 
 dnl Diff from the expected escaped pattern file.
 dnl

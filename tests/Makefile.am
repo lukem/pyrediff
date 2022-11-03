@@ -28,13 +28,15 @@ TESTSUITE_DEPS = \
 	testsuite.at
 
 DISTCLEANFILES = \
-	atconfig
+	atconfig \
+	atlocal
 
 EXTRA_DIST = \
 	$(TESTSUITE) \
 	$(TESTSUITE_DEPS) \
 	13-escape.in \
-	13-escape.re
+	13-escape.re \
+	atlocal.in
 
 $(srcdir)/package.m4: $(top_srcdir)/configure.ac
 	:; { \
@@ -48,7 +50,7 @@ $(srcdir)/package.m4: $(top_srcdir)/configure.ac
 
 all-local: $(TESTSUITE)
 
-check-local: atconfig $(TESTSUITE)
+check-local: atconfig atlocal $(TESTSUITE)
 	$(SHELL) '$(TESTSUITE)' $(TESTSUITEFLAGS)
 
 clean-local:

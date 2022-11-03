@@ -45,10 +45,10 @@ AT_DATA([14.diffre], [dnl
 AX_AT_DIFF_PYRE([14.re], [14.out], [1], [stdout])
 AX_AT_DIFF_PYRE([14.diffre], [stdout])
 
-AT_CHECK([diff 14.re 14.out | ${abs_top_srcdir}/src/pyrediff -f], [1], [stdout])
+AT_CHECK([diff 14.re 14.out | ${PYTHON} ${abs_top_srcdir}/src/pyrediff -f], [1], [stdout])
 AX_AT_DIFF_PYRE([14.diffre], [stdout])
 
-AT_CHECK([${abs_top_srcdir}/src/pyrediff 14.re 14.out], [1], [stdout])
+AT_CHECK([${PYTHON} ${abs_top_srcdir}/src/pyrediff 14.re 14.out], [1], [stdout])
 AX_AT_DIFF_PYRE([14.diffre], [stdout])
 
 AT_CLEANUP()
