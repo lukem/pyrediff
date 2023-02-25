@@ -1,5 +1,5 @@
 AC_PREREQ([2.69])
-AC_INIT([pyrediff], [16], [luke@mewburn.net])
+AC_INIT([pyrediff], [17], [luke@mewburn.net])
 
 AC_COPYRIGHT([[
 Copyright 2013-2023, Luke Mewburn <luke@mewburn.net>.

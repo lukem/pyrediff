@@ -1,6 +1,6 @@
 # Change Log
 
-## [unreleased] - unreleased
+## [17] - 2023-02-25
 
 ### Fixed
 - Modify testsuite to use `$AWK` and `$PYTHON` detected by `configure`,
