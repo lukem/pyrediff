@@ -45,7 +45,7 @@
 m4_define([_AX_AT_CHECK_PYREDIFF],
 [[from __future__ import print_function
 import io
-import optparse         # pylint: disable=deprecated-module
+import optparse  # pylint: disable=deprecated-module
 import re
 import subprocess
 import sys
@@ -94,7 +94,7 @@ class Pyrediff:
             return None
         elif line.startswith("> "):
             self.strlines.append(line)
-            idx = len(self.strlines)-1
+            idx = len(self.strlines) - 1
             if idx >= len(self.patlines):
                 return self.mismatch()
             pat = self._group_re.sub(self.repl_groups, self.patlines@<:@idx@:>@@<:@2:@:>@)
@@ -102,11 +102,11 @@ class Pyrediff:
             try:
                 match = re.match("^(?:{0})@S|@".format(pat), raw)
             except re.error as exc:
-                print("# ERROR: Pattern \"{0}\": {1}".format(pat, exc))
+                print('# ERROR: Pattern "{0}": {1}'.format(pat, exc))
                 return self.mismatch()
             if match is None:
                 return self.mismatch()
-            for key, val in match.groupdict('').items():
+            for key, val in match.groupdict("").items():
                 self.groups@<:@key@:>@ = re.escape(val)
         else:
             raise NotImplementedError("unexpected line={0!r}".format(line))
@@ -128,8 +128,11 @@ class Pyrediff:
     def repl_groups(self, match):
         if match.group(1) in self.groups:
             return self.groups@<:@match.group(1)@:>@
-        print("# ERROR: Pattern \\g<{0}>: {1}".format(
-            match.group(1), "Unknown group"))
+        print(
+            "# ERROR: Pattern \\g<{0}>: {1}".format(
+                match.group(1), "Unknown group"
+            )
+        )
         return re.escape(match.string)
 
     def set_mode(self, mode=None):
@@ -150,16 +153,21 @@ Similar to diff(1), except that PATTERN may contain python regular expressions.
 Strings captured in a named group using (?P<name>...) can be used in subsequent
 pattern lines with \\g<name>; occurrences of \\g<name> in the pattern line will
 be replaced with a previously captured value before the pattern is applied.
-""")
+""",
+        )
         parser.add_option(
-            "-e", "--escape",
+            "-e",
+            "--escape",
             metavar="INPUT",
-            help="escape INPUT to stdout instead of diffing")
+            help="escape INPUT to stdout instead of diffing",
+        )
         parser.add_option(
-            "-f", "--filter",
+            "-f",
+            "--filter",
             action="store_true",
             default=False,
-            help="filter stdin, which is the output of `diff PATTERN OUTPUT`")
+            help="filter stdin, which is the output of `diff PATTERN OUTPUT`",
+        )
         (opts, args) = parser.parse_args()
         modes = 0
         if opts.escape is not None:
@@ -185,8 +193,9 @@ be replaced with a previously captured value before the pattern is applied.
                 sys.exit(1)
         else:
             # pylint: disable=bad-option-value,consider-using-with
-            pipe = subprocess.Popen(@<:@"diff", args@<:@0@:>@, args@<:@1@:>@@:>@,
-                                    stdout=subprocess.PIPE)
+            pipe = subprocess.Popen(
+                @<:@"diff", args@<:@0@:>@, args@<:@1@:>@@:>@, stdout=subprocess.PIPE
+            )
             if sys.version_info < (3, 0):
                 pout = pipe.stdout
             else:

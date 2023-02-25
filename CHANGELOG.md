@@ -6,6 +6,9 @@
 - Modify testsuite to use `$AWK` and `$PYTHON` detected by `configure`,
   fixing the testsuite on systems that only have `python3` and not `python`.
 
+### Changed
+- Reformat `pyrediff` with `black -l 80`.
+
 
 ## [16] - 2022-08-02
 
