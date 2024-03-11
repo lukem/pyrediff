@@ -319,7 +319,7 @@ or processed with `pyrediff`:
 
 ## Copyright
 
-Copyright (c) 2013-2023, Luke Mewburn <luke@mewburn.net>
+Copyright (c) 2013-2024, Luke Mewburn <luke@mewburn.net>
 
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
