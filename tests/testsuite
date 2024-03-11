@@ -1,13 +1,13 @@
 #! /bin/sh
-# Generated from testsuite.at by GNU Autoconf 2.71.
+# Generated from testsuite.at by GNU Autoconf 2.72.
 #
-# Copyright (C) 2009-2017, 2020-2021 Free Software Foundation, Inc.
+# Copyright (C) 2009-2017, 2020-2023 Free Software Foundation, Inc.
 #
 # This test suite is free software; the Free Software Foundation gives
 # unlimited permission to copy, distribute and modify it.
 #
 #
-# Copyright 2013-2023, Luke Mewburn <luke@mewburn.net>.
+# Copyright 2013-2024, Luke Mewburn <luke@mewburn.net>.
 # All rights reserved.
 #
 ## -------------------- ##
@@ -16,7 +16,6 @@
 
 # Be more Bourne compatible
 DUALCASE=1; export DUALCASE # for MKS sh
-as_nop=:
 if test ${ZSH_VERSION+y} && (emulate sh) >/dev/null 2>&1
 then :
   emulate sh
@@ -25,12 +24,13 @@ then :
   # is contrary to our usage.  Disable this feature.
   alias -g '${1+"$@"}'='"$@"'
   setopt NO_GLOB_SUBST
-else $as_nop
-  case `(set -o) 2>/dev/null` in #(
+else case e in #(
+  e) case `(set -o) 2>/dev/null` in #(
   *posix*) :
     set -o posix ;; #(
   *) :
      ;;
+esac ;;
 esac
 fi
 
@@ -102,7 +102,7 @@ IFS=$as_save_IFS
 
      ;;
 esac
-# We did not find ourselves, most probably we were run as `sh COMMAND'
+# We did not find ourselves, most probably we were run as 'sh COMMAND'
 # in which case we are not to be found in the path.
 if test "x$as_myself" = x; then
   as_myself=$0
@@ -114,8 +114,7 @@ fi
 
 
 if test "x$CONFIG_SHELL" = x; then
-  as_bourne_compatible="as_nop=:
-if test \${ZSH_VERSION+y} && (emulate sh) >/dev/null 2>&1
+  as_bourne_compatible="if test \${ZSH_VERSION+y} && (emulate sh) >/dev/null 2>&1
 then :
   emulate sh
   NULLCMD=:
@@ -123,12 +122,13 @@ then :
   # is contrary to our usage.  Disable this feature.
   alias -g '\${1+\"\$@\"}'='\"\$@\"'
   setopt NO_GLOB_SUBST
-else \$as_nop
-  case \`(set -o) 2>/dev/null\` in #(
+else case e in #(
+  e) case \`(set -o) 2>/dev/null\` in #(
   *posix*) :
     set -o posix ;; #(
   *) :
      ;;
+esac ;;
 esac
 fi
 "
@@ -146,8 +146,9 @@ as_fn_ret_failure && { exitcode=1; echo as_fn_ret_failure succeeded.; }
 if ( set x; as_fn_ret_success y && test x = \"\$1\" )
 then :
 
-else \$as_nop
-  exitcode=1; echo positional parameters were not saved.
+else case e in #(
+  e) exitcode=1; echo positional parameters were not saved. ;;
+esac
 fi
 test x\$exitcode = x0 || exit 1
 blah=\$(echo \$(echo blah))
@@ -161,14 +162,15 @@ test \$(( 1 + 1 )) = 2 || exit 1"
   if (eval "$as_required") 2>/dev/null
 then :
   as_have_required=yes
-else $as_nop
-  as_have_required=no
+else case e in #(
+  e) as_have_required=no ;;
+esac
 fi
   if test x$as_have_required = xyes && (eval "$as_suggested") 2>/dev/null
 then :
 
-else $as_nop
-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+else case e in #(
+  e) as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
 as_found=false
 for as_dir in /bin$PATH_SEPARATOR/usr/bin$PATH_SEPARATOR$PATH
 do
@@ -201,12 +203,13 @@ IFS=$as_save_IFS
 if $as_found
 then :
 
-else $as_nop
-  if { test -f "$SHELL" || test -f "$SHELL.exe"; } &&
+else case e in #(
+  e) if { test -f "$SHELL" || test -f "$SHELL.exe"; } &&
 	      as_run=a "$SHELL" -c "$as_bourne_compatible""$as_required" 2>/dev/null
 then :
   CONFIG_SHELL=$SHELL as_have_required=yes
-fi
+fi ;;
+esac
 fi
 
 
@@ -228,7 +231,7 @@ case $- in # ((((
 esac
 exec $CONFIG_SHELL $as_opts "$as_myself" ${1+"$@"}
 # Admittedly, this is quite paranoid, since all the known shells bail
-# out after a failed `exec'.
+# out after a failed 'exec'.
 printf "%s\n" "$0: could not re-execute with $CONFIG_SHELL" >&2
 exit 255
 fi
@@ -247,7 +250,8 @@ $0: message. Then install a modern shell, or manually run
 $0: the script under such a shell if you do have one."
   fi
   exit 1
-fi
+fi ;;
+esac
 fi
 fi
 SHELL=${CONFIG_SHELL-/bin/sh}
@@ -286,14 +290,6 @@ as_fn_exit ()
   as_fn_set_status $1
   exit $1
 } # as_fn_exit
-# as_fn_nop
-# ---------
-# Do nothing but, unlike ":", preserve the value of $?.
-as_fn_nop ()
-{
-  return $?
-}
-as_nop=as_fn_nop
 
 # as_fn_mkdir_p
 # -------------
@@ -338,7 +334,7 @@ printf "%s\n" X"$as_dir" |
       test -d "$as_dir" && break
     done
     test -z "$as_dirs" || eval "mkdir $as_dirs"
-  } || test -d "$as_dir" || as_fn_error $? "cannot create directory $as_dir"
+  } || test -d "$as_dir" || as_fn_error $? "cannot create directory $as_dir" "$LINENO" 5
 
 
 } # as_fn_mkdir_p
@@ -362,11 +358,12 @@ then :
   {
     eval $1+=\$2
   }'
-else $as_nop
-  as_fn_append ()
+else case e in #(
+  e) as_fn_append ()
   {
     eval $1=\$$1\$2
-  }
+  } ;;
+esac
 fi # as_fn_append
 
 # as_fn_arith ARG...
@@ -380,11 +377,12 @@ then :
   {
     as_val=$(( $* ))
   }'
-else $as_nop
-  as_fn_arith ()
+else case e in #(
+  e) as_fn_arith ()
   {
     as_val=`expr "$@" || test $? -eq 1`
-  }
+  } ;;
+esac
 fi # as_fn_arith
 
 
@@ -493,6 +491,8 @@ import re
 import subprocess
 import sys
 
+__version__ = "17"
+
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
 # pylint: disable=bad-option-value,consider-using-f-string
@@ -501,7 +501,8 @@ import sys
 class Pyrediff:
     _add_del_re = re.compile(r"^(\d+a\d+(,\d+)?|\d+(,\d+)?d\d+)$")
     _change_re = re.compile(r"^\d+(,\d+)?c\d+(,\d+)?$")
-    _escape_re = re.compile(r"\\([-\s!\"#&%,/:;<=>@_`'\''~])")
+    _ws_eol_re = re.compile(r"\\(\s)$")
+    _escape_re = re.compile(r"(?<!\\)\\([-\s!\"#&%,/:;<=>@_`'\''~])")
     _group_re = re.compile(r"\\g<([^>]+)>")
 
     def __init__(self):
@@ -519,6 +520,7 @@ class Pyrediff:
         with io.open(input_name, "r", encoding="utf-8") as output_fp:
             for line in output_fp:
                 esc = re.escape(line)
+                esc = self._ws_eol_re.sub(r"\1", esc)
                 esc = self._escape_re.sub(r"\1", esc)
                 sys.stdout.write(esc)
 
@@ -597,6 +599,7 @@ Strings captured in a named group using (?P<name>...) can be used in subsequent
 pattern lines with \\g<name>; occurrences of \\g<name> in the pattern line will
 be replaced with a previously captured value before the pattern is applied.
 """,
+            version="%prog " + __version__,
         )
         parser.add_option(
             "-e",
@@ -727,6 +730,8 @@ as_cr_alnum=$as_cr_Letters$as_cr_digits
     /[$]LINENO/=
   ' <$as_myself |
     sed '
+      t clear
+      :clear
       s/[$]LINENO.*/&-/
       t lineno
       b
@@ -775,7 +780,6 @@ esac
 as_echo='printf %s\n'
 as_echo_n='printf %s'
 
-
 rm -f conf$$ conf$$.exe conf$$.file
 if test -d conf$$.dir; then
   rm -f conf$$.dir/conf$$.file
@@ -787,9 +791,9 @@ if (echo >conf$$.file) 2>/dev/null; then
   if ln -s conf$$.file conf$$ 2>/dev/null; then
     as_ln_s='ln -s'
     # ... but there are two gotchas:
-    # 1) On MSYS, both `ln -s file dir' and `ln file dir' fail.
-    # 2) DJGPP < 2.04 has no symlinks; `ln -s' creates a wrapper executable.
-    # In both cases, we have to default to `cp -pR'.
+    # 1) On MSYS, both 'ln -s file dir' and 'ln file dir' fail.
+    # 2) DJGPP < 2.04 has no symlinks; 'ln -s' creates a wrapper executable.
+    # In both cases, we have to default to 'cp -pR'.
     ln -s conf$$.file conf$$.dir 2>/dev/null && test ! -f conf$$.exe ||
       as_ln_s='cp -pR'
   elif ln conf$$.file conf$$ 2>/dev/null; then
@@ -814,10 +818,12 @@ as_test_x='test -x'
 as_executable_p=as_fn_executable_p
 
 # Sed expression to map a string onto a valid CPP name.
-as_tr_cpp="eval sed 'y%*$as_cr_letters%P$as_cr_LETTERS%;s%[^_$as_cr_alnum]%_%g'"
+as_sed_cpp="y%*$as_cr_letters%P$as_cr_LETTERS%;s%[^_$as_cr_alnum]%_%g"
+as_tr_cpp="eval sed '$as_sed_cpp'" # deprecated
 
 # Sed expression to map a string onto a valid variable name.
-as_tr_sh="eval sed 'y%*+%pp%;s%[^_$as_cr_alnum]%_%g'"
+as_sed_sh="y%*+%pp%;s%[^_$as_cr_alnum]%_%g"
+as_tr_sh="eval sed '$as_sed_sh'" # deprecated
 
 if ${AWK:+false} :
 then :
@@ -861,7 +867,7 @@ at_traceon=:
 at_trace_echo=:
 at_check_filter_trace=:
 
-# Shall we keep the debug scripts?  Must be `:' when the suite is
+# Shall we keep the debug scripts?  Must be ':' when the suite is
 # run by a debug script, so that the script doesn't remove itself.
 at_debug_p=false
 # Display help message?
@@ -892,7 +898,7 @@ at_change_dir=false
 # Whether to enable colored test results.
 at_color=auto
 # As many question marks as there are digits in the last test group number.
-# Used to normalize the test group numbers so that `ls' lists them in
+# Used to normalize the test group numbers so that 'ls' lists them in
 # numerical order.
 at_format='??'
 # Description of all the test groups.
@@ -906,12 +912,13 @@ at_help_all="1;01-simple.at:1;simple (no pattern);;
 8;08-example1.at:1;example 1: simple example;;
 9;09-example2.at:1;example 2: extra lines in output;;
 10;10-example3.at:1;example 3: pyre (?P<group>) and \\g<group>;;
-11;11-group-escape.at:1;pyre \\g<group> escaping;;
+11;11-group-escape.at:1;pyre \\g<group> escaping;group escape;
 12;12-example4.at:1;example 4: missing lines in output;;
-13;13-escape.at:1;pyrediff -e (escape);;
-14;14-group-unknown.at:1;pyre (?P=group) \\g<group2> unknown;;
+13;13-escape.at:1;pyrediff -e (escape);escape;
+14;14-group-unknown.at:1;pyre (?P=group) \\g<group2> unknown;group;
 15;15-alternation-bad.at:1;pyre alternation bad;;
 16;16-alternation-optional.at:1;pyre alternation optional;;
+17;17-version.at:1;pyrediff --version;;
 "
 # List of the all the test groups.
 at_groups_all=`printf "%s\n" "$at_help_all" | sed 's/;.*//'`
@@ -925,7 +932,7 @@ at_fn_validate_ranges ()
   for at_grp
   do
     eval at_value=\$$at_grp
-    if test $at_value -lt 1 || test $at_value -gt 16; then
+    if test $at_value -lt 1 || test $at_value -gt 17; then
       printf "%s\n" "invalid test group: $at_value" >&2
       exit 1
     fi
@@ -980,7 +987,7 @@ do
 	auto | tty | if-tty) at_color=auto ;;
 	always | yes | force) at_color=always ;;
 	*) at_optname=`echo " $at_option" | sed 's/^ //; s/=.*//'`
-	   as_fn_error $? "unrecognized argument to $at_optname: $at_optarg" ;;
+	   as_fn_error $? "unrecognized argument to $at_optname: $at_optarg" "$LINENO" 5 ;;
 	esac
 	;;
 
@@ -1068,7 +1075,7 @@ do
 	fi
 	case $at_jobs in *[!0-9]*)
 	  at_optname=`echo " $at_option" | sed 's/^ //; s/[0-9=].*//'`
-	  as_fn_error $? "non-numeric argument to $at_optname: $at_jobs" ;;
+	  as_fn_error $? "non-numeric argument to $at_optname: $at_jobs" "$LINENO" 5 ;;
 	esac
 	;;
 
@@ -1109,7 +1116,7 @@ do
 	# Reject names that are not valid shell variable names.
 	case $at_envvar in
 	  '' | [0-9]* | *[!_$as_cr_alnum]* )
-	    as_fn_error $? "invalid variable name: \`$at_envvar'" ;;
+	    as_fn_error $? "invalid variable name: '$at_envvar'" "$LINENO" 5 ;;
 	esac
 	at_value=`printf "%s\n" "$at_optarg" | sed "s/'/'\\\\\\\\''/g"`
 	# Export now, but save eval for later and for debug scripts.
@@ -1118,7 +1125,7 @@ do
 	;;
 
      *) printf "%s\n" "$as_me: invalid option: $at_option" >&2
-	printf "%s\n" "Try \`$0 --help' for more information." >&2
+	printf "%s\n" "Try '$0 --help' for more information." >&2
 	exit 1
 	;;
   esac
@@ -1127,7 +1134,7 @@ done
 # Verify our last option didn't require an argument
 if test -n "$at_prev"
 then :
-  as_fn_error $? "\`$at_prev' requires an argument"
+  as_fn_error $? "'$at_prev' requires an argument" "$LINENO" 5
 fi
 
 # The file containing the suite.
@@ -1173,7 +1180,7 @@ Run all the tests, or the selected TESTS, given by numeric ranges, and
 save a detailed log file.  Upon failure, create debugging scripts.
 
 Do not change environment variables directly.  Instead, set them via
-command line arguments.  Set \`AUTOTEST_PATH' to select the executables
+command line arguments.  Set 'AUTOTEST_PATH' to select the executables
 to exercise.  Each relative directory is expanded as build and source
 directories relative to the top level of this distribution.
 E.g., from within the build directory /tmp/foo-1.0, invoking this:
@@ -1203,7 +1210,7 @@ Execution tuning:
                  Allow N jobs at once; infinite jobs with no arg (default 1)
   -k, --keywords=KEYWORDS
                  select the tests matching all the comma-separated KEYWORDS
-                 multiple \`-k' accumulate; prefixed \`!' negates a KEYWORD
+                 multiple '-k' accumulate; prefixed '!' negates a KEYWORD
       --recheck  select all tests that failed or passed unexpectedly last time
   -e, --errexit  abort as soon as a test fails; implies --debug
   -v, --verbose  force more detailed output
@@ -1222,7 +1229,7 @@ fi
 # List of tests.
 if $at_list_p; then
   cat <<_ATEOF || at_write_fail=1
-pyrediff 16 test suite: pyrediff test groups:
+pyrediff 17 test suite: pyrediff test groups:
 
  NUM: FILE-NAME:LINE     TEST-GROUP-NAME
       KEYWORDS
@@ -1263,15 +1270,15 @@ _ATEOF
   exit $at_write_fail
 fi
 if $at_version_p; then
-  printf "%s\n" "$as_me (pyrediff 16)" &&
+  printf "%s\n" "$as_me (pyrediff 17)" &&
   cat <<\_ATEOF || at_write_fail=1
 
-Copyright (C) 2021 Free Software Foundation, Inc.
+Copyright (C) 2023 Free Software Foundation, Inc.
 This test suite is free software; the Free Software Foundation gives
 unlimited permission to copy, distribute and modify it.
 
 
-Copyright 2013-2023, Luke Mewburn <luke@mewburn.net>.
+Copyright 2013-2024, Luke Mewburn <luke@mewburn.net>.
 All rights reserved.
 
 _ATEOF
@@ -1289,7 +1296,7 @@ esac
 # Take any -C into account.
 if $at_change_dir ; then
   test x != "x$at_dir" && cd "$at_dir" \
-    || as_fn_error $? "unable to change directory"
+    || as_fn_error $? "unable to change directory" "$LINENO" 5
   at_dir=`pwd`
 fi
 
@@ -1297,7 +1304,7 @@ fi
 for at_file in atconfig atlocal
 do
   test -r $at_file || continue
-  . ./$at_file || as_fn_error $? "invalid content: $at_file"
+  . ./$at_file || as_fn_error $? "invalid content: $at_file" "$LINENO" 5
 done
 
 # Autoconf <=2.59b set at_top_builddir instead of at_top_build_prefix:
@@ -1352,7 +1359,7 @@ fi
 # | + ...           - files created during the group
 
 # The directory the whole suite works in.
-# Should be absolute to let the user `cd' at will.
+# Should be absolute to let the user 'cd' at will.
 at_suite_dir=$at_dir/$as_me.dir
 # The file containing the suite ($at_dir might have changed since earlier).
 at_suite_log=$at_dir/$as_me.log
@@ -1373,7 +1380,7 @@ fi
 # Don't take risks: use only absolute directories in PATH.
 #
 # For stand-alone test suites (ie. atconfig was not found),
-# AUTOTEST_PATH is relative to `.'.
+# AUTOTEST_PATH is relative to '.'.
 #
 # For embedded test suites, AUTOTEST_PATH is relative to the top level
 # of the package.  Then expand it into build/src parts, since users
@@ -1440,10 +1447,7 @@ PATH=$at_new_path
 export PATH
 
 # Setting up the FDs.
-
-
-
-# 5 is the log file.  Not to be overwritten if `-d'.
+# 5 is the log file.  Not to be overwritten if '-d'.
 if $at_debug_p; then
   at_suite_log=/dev/null
 else
@@ -1453,11 +1457,11 @@ exec 5>>"$at_suite_log"
 
 # Banners and logs.
 printf "%s\n" "## --------------------------------- ##
-## pyrediff 16 test suite: pyrediff. ##
+## pyrediff 17 test suite: pyrediff. ##
 ## --------------------------------- ##"
 {
   printf "%s\n" "## --------------------------------- ##
-## pyrediff 16 test suite: pyrediff. ##
+## pyrediff 17 test suite: pyrediff. ##
 ## --------------------------------- ##"
   echo
 
@@ -1691,9 +1695,9 @@ printf "%s\n" "$as_me: starting at: $at_start_date" >&5
 
 # Create the master directory if it doesn't already exist.
 as_dir="$at_suite_dir"; as_fn_mkdir_p ||
-  as_fn_error $? "cannot create \`$at_suite_dir'" "$LINENO" 5
+  as_fn_error $? "cannot create '$at_suite_dir'" "$LINENO" 5
 
-# Can we diff with `/dev/null'?  DU 5.0 refuses.
+# Can we diff with '/dev/null'?  DU 5.0 refuses.
 if diff /dev/null /dev/null >/dev/null 2>&1; then
   at_devnull=/dev/null
 else
@@ -1701,7 +1705,7 @@ else
   >"$at_devnull"
 fi
 
-# Use `diff -u' when possible.
+# Use 'diff -u' when possible.
 if at_diff=`diff -u "$at_devnull" "$at_devnull" 2>&1` && test -z "$at_diff"
 then
   at_diff='diff -u'
@@ -1728,7 +1732,7 @@ BEGIN { FS="" }
   as_fn_error $? "cannot create test line number cache" "$LINENO" 5
 rm -f "$at_suite_dir/at-source-lines"
 
-# Set number of jobs for `-j'; avoid more jobs than test groups.
+# Set number of jobs for '-j'; avoid more jobs than test groups.
 set X $at_groups; shift; at_max_jobs=$#
 if test $at_max_jobs -eq 0; then
   at_jobs=1
@@ -1805,7 +1809,7 @@ then
 fi ||
     { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: test directory for $at_group_normalized could not be cleaned" >&5
 printf "%s\n" "$as_me: WARNING: test directory for $at_group_normalized could not be cleaned" >&2;}
-  # Be tolerant if the above `rm' was not able to remove the directory.
+  # Be tolerant if the above 'rm' was not able to remove the directory.
   as_dir="$at_group_dir"; as_fn_mkdir_p
 
   echo 0 > "$at_status_file"
@@ -1844,7 +1848,7 @@ at_fn_group_banner ()
 at_fn_group_postprocess ()
 {
   # Be sure to come back to the suite directory, in particular
-  # since below we might `rm' the group directory we are in currently.
+  # since below we might 'rm' the group directory we are in currently.
   cd "$at_suite_dir"
 
   if test ! -f "$at_check_line_file"; then
@@ -2265,7 +2269,7 @@ _ASBOX
   if $at_debug_p; then
     at_msg='per-test log files'
   else
-    at_msg="\`${at_testdir+${at_testdir}/}$as_me.log'"
+    at_msg="'${at_testdir+${at_testdir}/}$as_me.log'"
   fi
   at_msg1a=${at_xpass_list:+', '}
   at_msg1=$at_fail_list${at_fail_list:+" failed$at_msg1a"}
@@ -2274,11 +2278,11 @@ _ASBOX
   printf "%s\n" "Please send $at_msg and all information you think might help:
 
    To: <luke@mewburn.net>
-   Subject: [pyrediff 16] $as_me: $at_msg1$at_msg2
+   Subject: [pyrediff 17] $as_me: $at_msg1$at_msg2
 
 You may investigate any problem if you feel able to do so, in which
 case the test suite provides a good starting point.  Its output may
-be found below \`${at_testdir+${at_testdir}/}$as_me.dir'.
+be found below '${at_testdir+${at_testdir}/}$as_me.dir'.
 "
   exit 1
 fi
@@ -2316,8 +2320,9 @@ at_fn_check_status 0 $at_status "$at_srcdir/01-simple.at:3"
 if $at_failed
 then :
   at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
-else $as_nop
-  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
+else case e in #(
+  e) at_diff="$_ax_at_check_pattern_prepare_original_at_diff"; ;;
+esac
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
@@ -2343,8 +2348,9 @@ at_fn_check_status 0 $at_status "$at_srcdir/01-simple.at:8"
 if $at_failed
 then :
   at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";
-else $as_nop
-  at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";
+else case e in #(
+  e) at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff"; ;;
+esac
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
@@ -2384,8 +2390,9 @@ at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:3"
 if $at_failed
 then :
   at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
-else $as_nop
-  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
+else case e in #(
+  e) at_diff="$_ax_at_check_pattern_prepare_original_at_diff"; ;;
+esac
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
@@ -2449,8 +2456,9 @@ at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:19"
 if $at_failed
 then :
   at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";
-else $as_nop
-  at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";
+else case e in #(
+  e) at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff"; ;;
+esac
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
@@ -2519,8 +2527,9 @@ at_fn_check_status 0 $at_status "$at_srcdir/03-complex.at:3"
 if $at_failed
 then :
   at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
-else $as_nop
-  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
+else case e in #(
+  e) at_diff="$_ax_at_check_pattern_prepare_original_at_diff"; ;;
+esac
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
@@ -2545,8 +2554,9 @@ at_fn_check_status 0 $at_status "$at_srcdir/03-complex.at:7"
 if $at_failed
 then :
   at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";
-else $as_nop
-  at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";
+else case e in #(
+  e) at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff"; ;;
+esac
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
@@ -2711,8 +2721,9 @@ at_fn_check_status 0 $at_status "$at_srcdir/04-trivial-bad.at:4"
 if $at_failed
 then :
   at_diff="$_ax_at_check_pattern_prepare_original_at_diff";echo expected mismatch;exit 0
-else $as_nop
-  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";echo unexpected match;fault=true
+else case e in #(
+  e) at_diff="$_ax_at_check_pattern_prepare_original_at_diff";echo unexpected match;fault=true ;;
+esac
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
@@ -2743,8 +2754,9 @@ at_fn_check_status 0 $at_status "$at_srcdir/04-trivial-bad.at:15"
 if $at_failed
 then :
   at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";echo expected mismatch;exit 0
-else $as_nop
-  at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";echo unexpected match;fault=true
+else case e in #(
+  e) at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";echo unexpected match;fault=true ;;
+esac
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
@@ -3074,7 +3086,7 @@ line in OUTPUT.
 
 https://github.com/lukem/pyrediff
 
-Copyright (c) 2015-2023, Luke Mewburn <luke@mewburn.net>
+Copyright (c) 2015-2024, Luke Mewburn <luke@mewburn.net>
 
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
@@ -3089,6 +3101,8 @@ import re
 import subprocess
 import sys
 
+__version__ = "17"
+
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
 # pylint: disable=bad-option-value,consider-using-f-string
@@ -3097,7 +3111,8 @@ import sys
 class Pyrediff:
     _add_del_re = re.compile(r"^(\d+a\d+(,\d+)?|\d+(,\d+)?d\d+)$")
     _change_re = re.compile(r"^\d+(,\d+)?c\d+(,\d+)?$")
-    _escape_re = re.compile(r"\\([-\s!\"#&%,/:;<=>@_`'~])")
+    _ws_eol_re = re.compile(r"\\(\s)$")
+    _escape_re = re.compile(r"(?<!\\)\\([-\s!\"#&%,/:;<=>@_`'~])")
     _group_re = re.compile(r"\\g<([^>]+)>")
 
     def __init__(self):
@@ -3115,6 +3130,7 @@ class Pyrediff:
         with io.open(input_name, "r", encoding="utf-8") as output_fp:
             for line in output_fp:
                 esc = re.escape(line)
+                esc = self._ws_eol_re.sub(r"\1", esc)
                 esc = self._escape_re.sub(r"\1", esc)
                 sys.stdout.write(esc)
 
@@ -3193,6 +3209,7 @@ Strings captured in a named group using (?P<name>...) can be used in subsequent
 pattern lines with \\g<name>; occurrences of \\g<name> in the pattern line will
 be replaced with a previously captured value before the pattern is applied.
 """,
+            version="%prog " + __version__,
         )
         parser.add_option(
             "-e",
@@ -3314,8 +3331,9 @@ at_fn_check_status 0 $at_status "$at_srcdir/07-quoting.at:7"
 if $at_failed
 then :
   at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
-else $as_nop
-  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
+else case e in #(
+  e) at_diff="$_ax_at_check_pattern_prepare_original_at_diff"; ;;
+esac
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
@@ -3340,8 +3358,9 @@ at_fn_check_status 0 $at_status "$at_srcdir/07-quoting.at:11"
 if $at_failed
 then :
   at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";
-else $as_nop
-  at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";
+else case e in #(
+  e) at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff"; ;;
+esac
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
@@ -3382,8 +3401,9 @@ at_fn_check_status 0 $at_status "$at_srcdir/07-quoting.at:19"
 if $at_failed
 then :
   at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
-else $as_nop
-  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
+else case e in #(
+  e) at_diff="$_ax_at_check_pattern_prepare_original_at_diff"; ;;
+esac
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
@@ -3408,8 +3428,9 @@ at_fn_check_status 0 $at_status "$at_srcdir/07-quoting.at:23"
 if $at_failed
 then :
   at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";
-else $as_nop
-  at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";
+else case e in #(
+  e) at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff"; ;;
+esac
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
@@ -3772,6 +3793,7 @@ at_xfail=no
   $at_traceon
 
 
+
 cat >11.re <<'_ATEOF'
 r(?P<re>.*)ge(?P=re)x
 second
@@ -3796,8 +3818,8 @@ _ATEOF
 
 
 { set +x
-printf "%s\n" "$at_srcdir/11-group-escape.at:34: ax_at_diff_pyre 11.re 11.out"
-at_fn_check_prepare_trace "11-group-escape.at:34"
+printf "%s\n" "$at_srcdir/11-group-escape.at:35: ax_at_diff_pyre 11.re 11.out"
+at_fn_check_prepare_trace "11-group-escape.at:35"
 ( $at_check_trace; ax_at_diff_pyre 11.re 11.out
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3807,15 +3829,15 @@ echo >>"$at_stdout"; printf "%s\n" "5d4
 < fifth missing
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/11-group-escape.at:34"
+at_fn_check_status 1 $at_status "$at_srcdir/11-group-escape.at:35"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 
 { set +x
-printf "%s\n" "$at_srcdir/11-group-escape.at:36: diff 11.re 11.out | \${PYTHON} \${abs_top_srcdir}/src/pyrediff -f"
-at_fn_check_prepare_notrace 'a ${...} parameter expansion' "11-group-escape.at:36"
+printf "%s\n" "$at_srcdir/11-group-escape.at:37: diff 11.re 11.out | \${PYTHON} \${abs_top_srcdir}/src/pyrediff -f"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "11-group-escape.at:37"
 ( $at_check_trace; diff 11.re 11.out | ${PYTHON} ${abs_top_srcdir}/src/pyrediff -f
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3825,14 +3847,14 @@ echo >>"$at_stdout"; printf "%s\n" "5d4
 < fifth missing
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/11-group-escape.at:36"
+at_fn_check_status 1 $at_status "$at_srcdir/11-group-escape.at:37"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/11-group-escape.at:38: \${PYTHON} \${abs_top_srcdir}/src/pyrediff 11.re 11.out"
-at_fn_check_prepare_notrace 'a ${...} parameter expansion' "11-group-escape.at:38"
+printf "%s\n" "$at_srcdir/11-group-escape.at:39: \${PYTHON} \${abs_top_srcdir}/src/pyrediff 11.re 11.out"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "11-group-escape.at:39"
 ( $at_check_trace; ${PYTHON} ${abs_top_srcdir}/src/pyrediff 11.re 11.out
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3842,7 +3864,7 @@ echo >>"$at_stdout"; printf "%s\n" "5d4
 < fifth missing
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 1 $at_status "$at_srcdir/11-group-escape.at:38"
+at_fn_check_status 1 $at_status "$at_srcdir/11-group-escape.at:39"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
@@ -4046,45 +4068,46 @@ at_xfail=no
   $at_traceon
 
 
+
 { set +x
-printf "%s\n" "$at_srcdir/13-escape.at:5: \${PYTHON} \${abs_top_srcdir}/src/pyrediff -e \${abs_srcdir}/13-escape.in > 13.re"
-at_fn_check_prepare_notrace 'a ${...} parameter expansion' "13-escape.at:5"
+printf "%s\n" "$at_srcdir/13-escape.at:6: \${PYTHON} \${abs_top_srcdir}/src/pyrediff -e \${abs_srcdir}/13-escape.in > 13.re"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "13-escape.at:6"
 ( $at_check_trace; ${PYTHON} ${abs_top_srcdir}/src/pyrediff -e ${abs_srcdir}/13-escape.in > 13.re
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
 at_fn_diff_devnull "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/13-escape.at:5"
+at_fn_check_status 0 $at_status "$at_srcdir/13-escape.at:6"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/13-escape.at:9: diff \${abs_srcdir}/13-escape.re 13.re"
-at_fn_check_prepare_notrace 'a ${...} parameter expansion' "13-escape.at:9"
+printf "%s\n" "$at_srcdir/13-escape.at:10: diff \${abs_srcdir}/13-escape.re 13.re"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "13-escape.at:10"
 ( $at_check_trace; diff ${abs_srcdir}/13-escape.re 13.re
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
 at_fn_diff_devnull "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/13-escape.at:9"
+at_fn_check_status 0 $at_status "$at_srcdir/13-escape.at:10"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 
 { set +x
-printf "%s\n" "$at_srcdir/13-escape.at:13: ax_at_diff_pyre 13.re \${abs_srcdir}/13-escape.in"
-at_fn_check_prepare_notrace 'a ${...} parameter expansion' "13-escape.at:13"
+printf "%s\n" "$at_srcdir/13-escape.at:14: ax_at_diff_pyre 13.re \${abs_srcdir}/13-escape.in"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "13-escape.at:14"
 ( $at_check_trace; ax_at_diff_pyre 13.re ${abs_srcdir}/13-escape.in
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
 at_fn_diff_devnull "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/13-escape.at:13"
+at_fn_check_status 0 $at_status "$at_srcdir/13-escape.at:14"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
@@ -4102,6 +4125,7 @@ at_xfail=no
 (
   printf "%s\n" "14. $at_setup_line: testing $at_desc ..."
   $at_traceon
+
 
 
 cat >14.re <<'_ATEOF'
@@ -4143,88 +4167,88 @@ _ATEOF
 
 
 { set +x
-printf "%s\n" "$at_srcdir/14-group-unknown.at:45: ax_at_diff_pyre 14.re 14.out"
-at_fn_check_prepare_trace "14-group-unknown.at:45"
+printf "%s\n" "$at_srcdir/14-group-unknown.at:46: ax_at_diff_pyre 14.re 14.out"
+at_fn_check_prepare_trace "14-group-unknown.at:46"
 ( $at_check_trace; ax_at_diff_pyre 14.re 14.out
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
 echo stdout:; tee stdout <"$at_stdout"
-at_fn_check_status 1 $at_status "$at_srcdir/14-group-unknown.at:45"
+at_fn_check_status 1 $at_status "$at_srcdir/14-group-unknown.at:46"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 
 { set +x
-printf "%s\n" "$at_srcdir/14-group-unknown.at:46: ax_at_diff_pyre 14.diffre stdout"
-at_fn_check_prepare_trace "14-group-unknown.at:46"
+printf "%s\n" "$at_srcdir/14-group-unknown.at:47: ax_at_diff_pyre 14.diffre stdout"
+at_fn_check_prepare_trace "14-group-unknown.at:47"
 ( $at_check_trace; ax_at_diff_pyre 14.diffre stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
 at_fn_diff_devnull "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/14-group-unknown.at:46"
+at_fn_check_status 0 $at_status "$at_srcdir/14-group-unknown.at:47"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 
 { set +x
-printf "%s\n" "$at_srcdir/14-group-unknown.at:48: diff 14.re 14.out | \${PYTHON} \${abs_top_srcdir}/src/pyrediff -f"
-at_fn_check_prepare_notrace 'a ${...} parameter expansion' "14-group-unknown.at:48"
+printf "%s\n" "$at_srcdir/14-group-unknown.at:49: diff 14.re 14.out | \${PYTHON} \${abs_top_srcdir}/src/pyrediff -f"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "14-group-unknown.at:49"
 ( $at_check_trace; diff 14.re 14.out | ${PYTHON} ${abs_top_srcdir}/src/pyrediff -f
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
 echo stdout:; tee stdout <"$at_stdout"
-at_fn_check_status 1 $at_status "$at_srcdir/14-group-unknown.at:48"
+at_fn_check_status 1 $at_status "$at_srcdir/14-group-unknown.at:49"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/14-group-unknown.at:49: ax_at_diff_pyre 14.diffre stdout"
-at_fn_check_prepare_trace "14-group-unknown.at:49"
+printf "%s\n" "$at_srcdir/14-group-unknown.at:50: ax_at_diff_pyre 14.diffre stdout"
+at_fn_check_prepare_trace "14-group-unknown.at:50"
 ( $at_check_trace; ax_at_diff_pyre 14.diffre stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
 at_fn_diff_devnull "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/14-group-unknown.at:49"
+at_fn_check_status 0 $at_status "$at_srcdir/14-group-unknown.at:50"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 
 { set +x
-printf "%s\n" "$at_srcdir/14-group-unknown.at:51: \${PYTHON} \${abs_top_srcdir}/src/pyrediff 14.re 14.out"
-at_fn_check_prepare_notrace 'a ${...} parameter expansion' "14-group-unknown.at:51"
+printf "%s\n" "$at_srcdir/14-group-unknown.at:52: \${PYTHON} \${abs_top_srcdir}/src/pyrediff 14.re 14.out"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "14-group-unknown.at:52"
 ( $at_check_trace; ${PYTHON} ${abs_top_srcdir}/src/pyrediff 14.re 14.out
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
 echo stdout:; tee stdout <"$at_stdout"
-at_fn_check_status 1 $at_status "$at_srcdir/14-group-unknown.at:51"
+at_fn_check_status 1 $at_status "$at_srcdir/14-group-unknown.at:52"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/14-group-unknown.at:52: ax_at_diff_pyre 14.diffre stdout"
-at_fn_check_prepare_trace "14-group-unknown.at:52"
+printf "%s\n" "$at_srcdir/14-group-unknown.at:53: ax_at_diff_pyre 14.diffre stdout"
+at_fn_check_prepare_trace "14-group-unknown.at:53"
 ( $at_check_trace; ax_at_diff_pyre 14.diffre stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
 at_fn_diff_devnull "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/14-group-unknown.at:52"
+at_fn_check_status 0 $at_status "$at_srcdir/14-group-unknown.at:53"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
@@ -4456,3 +4480,33 @@ $at_traceon; }
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
 #AT_STOP_16
+#AT_START_17
+at_fn_group_banner 17 '17-version.at:1' \
+  "pyrediff --version" "                             "
+at_xfail=no
+(
+  printf "%s\n" "17. $at_setup_line: testing $at_desc ..."
+  $at_traceon
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/17-version.at:3: \${PYTHON} \${abs_top_srcdir}/src/pyrediff --version"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "17-version.at:3"
+( $at_check_trace; ${PYTHON} ${abs_top_srcdir}/src/pyrediff --version
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; printf "%s\n" "pyrediff ${PACKAGE_VERSION}
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/17-version.at:3"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+  set +x
+  $at_times_p && times >"$at_times_file"
+) 5>&1 2>&1 7>&- | eval $at_tee_pipe
+read at_status <"$at_status_file"
+#AT_STOP_17
