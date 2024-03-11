@@ -60,7 +60,8 @@ __version__ = "17"
 class Pyrediff:
     _add_del_re = re.compile(r"^(\d+a\d+(,\d+)?|\d+(,\d+)?d\d+)@S|@")
     _change_re = re.compile(r"^\d+(,\d+)?c\d+(,\d+)?@S|@")
-    _escape_re = re.compile(r"\\(@<:@-\s!\"#&%,/:;<=>@_`'~@:>@)")
+    _ws_eol_re = re.compile(r"\\(\s)$")
+    _escape_re = re.compile(r"(?<!\\)\\(@<:@-\s!\"#&%,/:;<=>@_`'~@:>@)")
     _group_re = re.compile(r"\\g<(@<:@^>@:>@+)>")
 
     def __init__(self):
@@ -78,6 +79,7 @@ class Pyrediff:
         with io.open(input_name, "r", encoding="utf-8") as output_fp:
             for line in output_fp:
                 esc = re.escape(line)
+                esc = self._ws_eol_re.sub(r"\1", esc)
                 esc = self._escape_re.sub(r"\1", esc)
                 sys.stdout.write(esc)
 
