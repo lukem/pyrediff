@@ -1,4 +1,5 @@
 AT_SETUP([pyrediff -e (escape)])
+AT_KEYWORDS([escape])
 
 dnl Generate escaped pattern file.
 dnl

@@ -1,4 +1,5 @@
 AT_SETUP([pyre \g<group> escaping])
+AT_KEYWORDS([group escape])
 
 dnl Create pattern file.
 dnl Group <unknown> is not defined, so it is matched literally in the output.

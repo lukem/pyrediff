@@ -1,4 +1,5 @@
 AT_SETUP([pyre (?P=group) \g<group2> unknown])
+AT_KEYWORDS([group])
 
 dnl Create pattern file.
 dnl Group (?P=bad) is not defined, so there is an RE fault.
