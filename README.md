@@ -35,6 +35,12 @@ In the latter, occurrences of `\g<name>` in the pattern line will be
 replaced with a previously captured value before the pattern is applied.
 See [example 3](#example-3-pyre-pgroup-and-ggroup).
 
+> **Note**: `pyrediff PATTERN OUTPUT` post-processes the output of `diff`.
+> Complex regular expressions, and/or lots of non-alphanumeric escaping
+> in `PATTERN` may cause `diff` to generate output as added and removed
+> lines at different line offsets (instead of changed lines),
+> preventing `pyrediff` from applying the `PATTERN` correctly.
+
 ## check\_pattern.awk
 
 `check_pattern.awk` is an AWK script to post-process the output of
