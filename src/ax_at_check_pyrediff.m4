@@ -33,7 +33,7 @@
 #
 # LICENSE
 #
-#   Copyright (c) 2015-2023, Luke Mewburn <luke@mewburn.net>
+#   Copyright (c) 2015-2024, Luke Mewburn <luke@mewburn.net>
 #
 #   Copying and distribution of this file, with or without modification,
 #   are permitted in any medium without royalty provided the copyright
@@ -49,6 +49,8 @@ import optparse  # pylint: disable=deprecated-module
 import re
 import subprocess
 import sys
+
+__version__ = "17"
 
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
@@ -154,6 +156,7 @@ Strings captured in a named group using (?P<name>...) can be used in subsequent
 pattern lines with \\g<name>; occurrences of \\g<name> in the pattern line will
 be replaced with a previously captured value before the pattern is applied.
 """,
+            version="%prog " + __version__,
         )
         parser.add_option(
             "-e",
@@ -256,7 +259,7 @@ line in OUTPUT.
 
 https://github.com/lukem/pyrediff
 
-Copyright (c) 2015-2023, Luke Mewburn <luke@mewburn.net>
+Copyright (c) 2015-2024, Luke Mewburn <luke@mewburn.net>
 
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright

@@ -24,6 +24,7 @@ TESTSUITE_DEPS = \
 	14-group-unknown.at \
 	15-alternation-bad.at \
 	16-alternation-optional.at \
+	17-version.at \
 	local.at \
 	testsuite.at
 

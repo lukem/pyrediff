@@ -1,0 +1,7 @@
+AT_SETUP([pyrediff --version])
+
+AT_CHECK_UNQUOTED([${PYTHON} ${abs_top_srcdir}/src/pyrediff --version], [0], [dnl
+pyrediff ${PACKAGE_VERSION}
+])
+
+AT_CLEANUP()
