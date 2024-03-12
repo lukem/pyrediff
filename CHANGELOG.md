@@ -6,9 +6,12 @@
 - Support `--version` option to `pyrediff`.
 
 ### Fixed
-- Fix `pyrediff -e` to ensure `\` is escaped correctly if the next character
-  is unescaped.
+- Fix `pyrediff -e` with Python 3.3 and newer to ensure `\` is
+  escaped correctly if the next character is unescaped.
   I.e., `don\'t` is now correctly escaped as `don\\'t`.
+
+### Changed
+- Update Python references to Python 3.
 
 
 ## [17] - 2023-02-25

@@ -13,7 +13,7 @@ macros:
 
 `pyrediff` is a Python script to perform pattern-aware comparison of
 `PATTERN` and `OUTPUT` files to remove blocks that don't differ if a given
-[Python regular expression](https://docs.python.org/2/library/re.html)
+[Python regular expression](https://docs.python.org/3/library/re.html)
 (*pyre*) line in `PATTERN` matches
 the equivalent line in `OUTPUT`.
 
@@ -77,7 +77,7 @@ Macros that support AWK regular expressions in the pattern:
 ### Python regular expression (pyre) patterns
 
 Macros that support
-[Python regular expressions](https://docs.python.org/2/library/re.html):
+[Python regular expressions](https://docs.python.org/3/library/re.html):
 
   * `AX_AT_CHECK_PYREDIFF()`: similar to `AT_CHECK()`,
    except that stdout and stderr are Python regular expressions (pyre).
