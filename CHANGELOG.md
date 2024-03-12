@@ -12,6 +12,7 @@
 
 ### Changed
 - Update Python references to Python 3.
+- Update github workflows to v4 and to use the main branch.
 
 
 ## [17] - 2023-02-25
