@@ -27,7 +27,7 @@ import re
 import subprocess
 import sys
 
-__version__ = "17"
+__version__ = "18"
 
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring

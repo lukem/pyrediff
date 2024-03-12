@@ -40,7 +40,7 @@
 #   notice and this notice are preserved.  This file is offered as-is,
 #   without any warranty.
 
-#serial 17
+#serial 18
 
 m4_define([_AX_AT_CHECK_PYREDIFF],
 [[from __future__ import print_function
@@ -50,7 +50,7 @@ import re
 import subprocess
 import sys
 
-__version__ = "17"
+__version__ = "18"
 
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring

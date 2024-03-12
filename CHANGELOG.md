@@ -1,6 +1,6 @@
 # Change Log
 
-## [unreleased] - unreleased
+## [18] - 2024-03-12
 
 ### Added
 - Support `--version` option to `pyrediff`.

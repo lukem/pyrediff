@@ -491,7 +491,7 @@ import re
 import subprocess
 import sys
 
-__version__ = "17"
+__version__ = "18"
 
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
@@ -1236,7 +1236,7 @@ fi
 # List of tests.
 if $at_list_p; then
   cat <<_ATEOF || at_write_fail=1
-pyrediff 17 test suite: pyrediff test groups:
+pyrediff 18 test suite: pyrediff test groups:
 
  NUM: FILE-NAME:LINE     TEST-GROUP-NAME
       KEYWORDS
@@ -1277,7 +1277,7 @@ _ATEOF
   exit $at_write_fail
 fi
 if $at_version_p; then
-  printf "%s\n" "$as_me (pyrediff 17)" &&
+  printf "%s\n" "$as_me (pyrediff 18)" &&
   cat <<\_ATEOF || at_write_fail=1
 
 Copyright (C) 2023 Free Software Foundation, Inc.
@@ -1464,11 +1464,11 @@ exec 5>>"$at_suite_log"
 
 # Banners and logs.
 printf "%s\n" "## --------------------------------- ##
-## pyrediff 17 test suite: pyrediff. ##
+## pyrediff 18 test suite: pyrediff. ##
 ## --------------------------------- ##"
 {
   printf "%s\n" "## --------------------------------- ##
-## pyrediff 17 test suite: pyrediff. ##
+## pyrediff 18 test suite: pyrediff. ##
 ## --------------------------------- ##"
   echo
 
@@ -2285,7 +2285,7 @@ _ASBOX
   printf "%s\n" "Please send $at_msg and all information you think might help:
 
    To: <luke@mewburn.net>
-   Subject: [pyrediff 17] $as_me: $at_msg1$at_msg2
+   Subject: [pyrediff 18] $as_me: $at_msg1$at_msg2
 
 You may investigate any problem if you feel able to do so, in which
 case the test suite provides a good starting point.  Its output may
@@ -3108,7 +3108,7 @@ import re
 import subprocess
 import sys
 
-__version__ = "17"
+__version__ = "18"
 
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
