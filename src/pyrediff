@@ -38,9 +38,9 @@ class Pyrediff:
     _add_del_re = re.compile(r"^(\d+a\d+(,\d+)?|\d+(,\d+)?d\d+)$")
     _change_re = re.compile(r"^\d+(,\d+)?c\d+(,\d+)?$")
     _group_re = re.compile(r"\\g<([^>]+)>")
-    if sys.version_info < (3,3):
+    if sys.version_info < (3, 3):
         _escape_re = re.compile(r"\\([-\s!\"#&%,/:;<=>@_`'~])")
-    elif sys.version_info < (3,7):
+    elif sys.version_info < (3, 7):
         # 3.3 .. 3.6 doesn't escape "_"
         _escape_re = re.compile(r"\\([-\s!\"#&%,/:;<=>@`'~])")
     else:
@@ -182,7 +182,8 @@ be replaced with a previously captured value before the pattern is applied.
         else:
             # pylint: disable=bad-option-value,consider-using-with
             pipe = subprocess.Popen(
-                ["diff", args[0], args[1]], stdout=subprocess.PIPE
+                ["diff", args[0], args[1]],
+                stdout=subprocess.PIPE,
             )
             if sys.version_info < (3, 0):
                 pout = pipe.stdout
