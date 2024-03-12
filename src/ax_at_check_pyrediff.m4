@@ -60,9 +60,16 @@ __version__ = "17"
 class Pyrediff:
     _add_del_re = re.compile(r"^(\d+a\d+(,\d+)?|\d+(,\d+)?d\d+)@S|@")
     _change_re = re.compile(r"^\d+(,\d+)?c\d+(,\d+)?@S|@")
-    _ws_eol_re = re.compile(r"\\(\s)$")
-    _escape_re = re.compile(r"(?<!\\)\\(@<:@-\s!\"#&%,/:;<=>@_`'~@:>@)")
     _group_re = re.compile(r"\\g<(@<:@^>@:>@+)>")
+    if sys.version_info < (3,3):
+        _escape_re = re.compile(r"\\(@<:@-\s!\"#&%,/:;<=>@_`'~@:>@)")
+    elif sys.version_info < (3,7):
+        # 3.3 .. 3.6 doesn't escape "_"
+        _escape_re = re.compile(r"\\(@<:@-\s!\"#&%,/:;<=>@`'~@:>@)")
+    else:
+        # 3.7+ doesn't escape '!', '"', '%', "'", ',', '/', ':', ';',
+        # '<', '=', '>', '@', and "`"
+        _escape_re = re.compile(r"\\(@<:@-\s#&%,~@:>@)")
 
     def __init__(self):
         self.fail = False
@@ -79,7 +86,6 @@ class Pyrediff:
         with io.open(input_name, "r", encoding="utf-8") as output_fp:
             for line in output_fp:
                 esc = re.escape(line)
-                esc = self._ws_eol_re.sub(r"\1", esc)
                 esc = self._escape_re.sub(r"\1", esc)
                 sys.stdout.write(esc)
 
