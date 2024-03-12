@@ -6,9 +6,9 @@
 - Support `--version` option to `pyrediff`.
 
 ### Fixed
-- Fix `pyrediff -e` to ensure `\\` is escaped correctly if the next character
+- Fix `pyrediff -e` to ensure `\` is escaped correctly if the next character
   is unescaped.
-  I.e., `don\\'t` is now correctly escaped as `don\\\\'t`.
+  I.e., `don\'t` is now correctly escaped as `don\\'t`.
 
 
 ## [17] - 2023-02-25
