@@ -1,9 +1,11 @@
 README
 ======
 
-This project contains a collection of scripts and autotest
-(part of [autoconf](https://www.gnu.org/software/autoconf/))
-macros:
+This project contains a collection of AWK scripts, Python scripts,
+and autotest (part of [autoconf](https://www.gnu.org/software/autoconf/))
+m4 macros.
+
+## Table of Contents
 
   * [`pyrediff`](#pyrediff)
   * [`check_pattern.awk`](#check_patternawk)
@@ -12,6 +14,9 @@ macros:
     * [`AX_AT_DIFF_PATTERN()`](#macro-ax_at_diff_patternpattern-file-test-file-status0-differences-run-if-fail-run-if-pass)
     * [`AX_AT_CHECK_PYREDIFF()`](#macro-ax_at_check_pyrediffcommands-status0-stdout-re-stderr-re-run-if-fail-run-if-pass)
     * [`AX_AT_DIFF_PYRE()`](#macro-ax_at_diff_pyrepyre-file-test-file-status0-differences-run-if-fail-run-if-pass)
+  * [Examples](#examples)
+  * [Copyright](#copyright)
+  * [Workflow status](#workflow-status)
 
 ## pyrediff
 
