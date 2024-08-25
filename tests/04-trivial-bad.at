@@ -1,25 +1,21 @@
 AT_SETUP([trivial bad pattern])
 
-fault=false
+dnl
+dnl Also exercises RUN-IF-FAIL and RUN-IF-PASS support.
+dnl
+
 AX_AT_CHECK_PATTERN([echo ab; echo c], [0], [dnl
-ab?d?
+ab?c?
 C
-],
-                    [],
-                    [echo expected mismatch;exit 0],
-                    [echo unexpected match;fault=true])
-AT_FAIL_IF([$fault])
+], [],
+ [echo expected mismatch;at_failed=false],
+ [echo unexpected match;at_failed=:])
 
-
-fault=false
 AX_AT_CHECK_PYREDIFF([echo ab; echo c], [0], [dnl
 ab?d?
 C
-],
-                    [],
-                    [echo expected mismatch;exit 0],
-                    [echo unexpected match;fault=true])
-AT_FAIL_IF([$fault])
-
+], [],
+ [echo expected mismatch;at_failed=false],
+ [echo unexpected match;at_failed=:])
 
 AT_CLEANUP()
