@@ -2379,11 +2379,12 @@ at_xfail=no
 
 
 
+
 _ax_at_check_pattern_prepare_original_at_diff="$at_diff"
 at_diff='ax_at_diff_pattern'
 { set +x
-printf "%s\n" "$at_srcdir/02-trivial.at:3: echo ab; echo c"
-at_fn_check_prepare_trace "02-trivial.at:3"
+printf "%s\n" "$at_srcdir/02-trivial.at:7: echo ab; echo c"
+at_fn_check_prepare_trace "02-trivial.at:7"
 ( $at_check_trace; echo ab; echo c
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -2393,7 +2394,7 @@ echo >>"$at_stdout"; printf "%s\n" "ab?d?
 c
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:3"
+at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:7"
 if $at_failed
 then :
   at_diff="$_ax_at_check_pattern_prepare_original_at_diff";
@@ -2406,50 +2407,13 @@ $at_traceon; }
 
 
 
+pass=false
 
-cat >02.re <<'_ATEOF'
-ab?d?
-c
-_ATEOF
-
-
+_ax_at_check_pattern_prepare_original_at_diff="$at_diff"
+at_diff='ax_at_diff_pattern'
 { set +x
-printf "%s\n" "$at_srcdir/02-trivial.at:14: echo ab; echo c"
-at_fn_check_prepare_trace "02-trivial.at:14"
-( $at_check_trace; echo ab; echo c
-) >>"$at_stdout" 2>>"$at_stderr" 5>&-
-at_status=$? at_failed=false
-$at_check_filter
-at_fn_diff_devnull "$at_stderr" || at_failed=:
-echo stdout:; tee stdout <"$at_stdout"
-at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:14"
-$at_failed && at_fn_log_failure
-$at_traceon; }
-
-
-{ set +x
-printf "%s\n" "$at_srcdir/02-trivial.at:15: ax_at_diff_pattern 02.re stdout"
-at_fn_check_prepare_trace "02-trivial.at:15"
-( $at_check_trace; ax_at_diff_pattern 02.re stdout
-) >>"$at_stdout" 2>>"$at_stderr" 5>&-
-at_status=$? at_failed=false
-$at_check_filter
-at_fn_diff_devnull "$at_stderr" || at_failed=:
-at_fn_diff_devnull "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:15"
-$at_failed && at_fn_log_failure
-$at_traceon; }
-
-
-
-
-
-
-_ax_at_check_pyrediff_prepare_original_at_diff="$at_diff"
-at_diff='ax_at_diff_pyre'
-{ set +x
-printf "%s\n" "$at_srcdir/02-trivial.at:19: echo ab; echo c"
-at_fn_check_prepare_trace "02-trivial.at:19"
+printf "%s\n" "$at_srcdir/02-trivial.at:13: echo ab; echo c"
+at_fn_check_prepare_trace "02-trivial.at:13"
 ( $at_check_trace; echo ab; echo c
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -2459,17 +2423,36 @@ echo >>"$at_stdout"; printf "%s\n" "ab?d?
 c
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:19"
+at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:13"
 if $at_failed
 then :
-  at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";
+  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";echo unexpected mismatch
 else case e in #(
-  e) at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff"; ;;
+  e) at_diff="$_ax_at_check_pattern_prepare_original_at_diff";pass=true ;;
 esac
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
+
+{ set +x
+printf "%s\n" "$at_srcdir/02-trivial.at:17: if \$pass; then exit 0; else exit 99; fi"
+at_fn_check_prepare_dynamic "if $pass; then exit 0; else exit 99; fi" "02-trivial.at:17"
+( $at_check_trace; if $pass; then exit 0; else exit 99; fi
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:17"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+cat >02.re <<'_ATEOF'
+ab?d?
+c
+_ATEOF
 
 
 { set +x
@@ -2486,20 +2469,196 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
+
 { set +x
-printf "%s\n" "$at_srcdir/02-trivial.at:25: ax_at_diff_pyre 02.re stdout"
-at_fn_check_prepare_trace "02-trivial.at:25"
+printf "%s\n" "$at_srcdir/02-trivial.at:26: ax_at_diff_pattern 02.re stdout"
+at_fn_check_prepare_trace "02-trivial.at:26"
+( $at_check_trace; ax_at_diff_pattern 02.re stdout
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:26"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+pass=false
+
+{ set +x
+printf "%s\n" "$at_srcdir/02-trivial.at:29: ax_at_diff_pattern 02.re stdout"
+at_fn_check_prepare_trace "02-trivial.at:29"
+( $at_check_trace; ax_at_diff_pattern 02.re stdout
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:29"
+if $at_failed
+then :
+  echo unexpected mismatch
+else case e in #(
+  e) pass=true ;;
+esac
+fi
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/02-trivial.at:31: if \$pass; then exit 0; else exit 99; fi"
+at_fn_check_prepare_dynamic "if $pass; then exit 0; else exit 99; fi" "02-trivial.at:31"
+( $at_check_trace; if $pass; then exit 0; else exit 99; fi
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:31"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+
+
+_ax_at_check_pyrediff_prepare_original_at_diff="$at_diff"
+at_diff='ax_at_diff_pyre'
+{ set +x
+printf "%s\n" "$at_srcdir/02-trivial.at:38: echo ab; echo c"
+at_fn_check_prepare_trace "02-trivial.at:38"
+( $at_check_trace; echo ab; echo c
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; printf "%s\n" "ab?d?
+c
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:38"
+if $at_failed
+then :
+  at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";
+else case e in #(
+  e) at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff"; ;;
+esac
+fi
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+pass=false
+
+_ax_at_check_pyrediff_prepare_original_at_diff="$at_diff"
+at_diff='ax_at_diff_pyre'
+{ set +x
+printf "%s\n" "$at_srcdir/02-trivial.at:44: echo ab; echo c"
+at_fn_check_prepare_trace "02-trivial.at:44"
+( $at_check_trace; echo ab; echo c
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; printf "%s\n" "ab?d?
+c
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:44"
+if $at_failed
+then :
+  at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";echo unexpected mismatch
+else case e in #(
+  e) at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";pass=true ;;
+esac
+fi
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/02-trivial.at:48: if \$pass; then exit 0; else exit 99; fi"
+at_fn_check_prepare_dynamic "if $pass; then exit 0; else exit 99; fi" "02-trivial.at:48"
+( $at_check_trace; if $pass; then exit 0; else exit 99; fi
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:48"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/02-trivial.at:50: echo ab; echo c"
+at_fn_check_prepare_trace "02-trivial.at:50"
+( $at_check_trace; echo ab; echo c
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo stdout:; tee stdout <"$at_stdout"
+at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:50"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/02-trivial.at:52: ax_at_diff_pyre 02.re stdout"
+at_fn_check_prepare_trace "02-trivial.at:52"
 ( $at_check_trace; ax_at_diff_pyre 02.re stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
 at_fn_diff_devnull "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:25"
+at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:52"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
+
+pass=false
+
+{ set +x
+printf "%s\n" "$at_srcdir/02-trivial.at:55: ax_at_diff_pyre 02.re stdout"
+at_fn_check_prepare_trace "02-trivial.at:55"
+( $at_check_trace; ax_at_diff_pyre 02.re stdout
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:55"
+if $at_failed
+then :
+  echo unexpected mismatch
+else case e in #(
+  e) pass=true ;;
+esac
+fi
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/02-trivial.at:57: if \$pass; then exit 0; else exit 99; fi"
+at_fn_check_prepare_dynamic "if $pass; then exit 0; else exit 99; fi" "02-trivial.at:57"
+( $at_check_trace; if $pass; then exit 0; else exit 99; fi
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/02-trivial.at:57"
+$at_failed && at_fn_log_failure
+$at_traceon; }
 
 
   set +x
@@ -2708,46 +2867,87 @@ at_xfail=no
   $at_traceon
 
 
-fault=false
+
+
 
 _ax_at_check_pattern_prepare_original_at_diff="$at_diff"
 at_diff='ax_at_diff_pattern'
 { set +x
-printf "%s\n" "$at_srcdir/04-trivial-bad.at:4: echo ab; echo c"
-at_fn_check_prepare_trace "04-trivial-bad.at:4"
+printf "%s\n" "$at_srcdir/04-trivial-bad.at:11: echo ab; echo c"
+at_fn_check_prepare_trace "04-trivial-bad.at:11"
 ( $at_check_trace; echo ab; echo c
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
-echo >>"$at_stdout"; printf "%s\n" "ab?d?
+echo >>"$at_stdout"; printf "%s\n" "ab?c?
 C
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/04-trivial-bad.at:4"
+at_fn_check_status 0 $at_status "$at_srcdir/04-trivial-bad.at:11"
 if $at_failed
 then :
-  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";echo expected mismatch;exit 0
+  at_diff="$_ax_at_check_pattern_prepare_original_at_diff";echo expected mismatch;at_failed=false
 else case e in #(
-  e) at_diff="$_ax_at_check_pattern_prepare_original_at_diff";echo unexpected match;fault=true ;;
+  e) at_diff="$_ax_at_check_pattern_prepare_original_at_diff";echo unexpected match;at_failed=: ;;
 esac
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
-printf "%s\n" "04-trivial-bad.at:11" >"$at_check_line_file"
-($fault) \
-  && at_fn_check_skip 99 "$at_srcdir/04-trivial-bad.at:11"
+
+cat >04.re <<'_ATEOF'
+ab?c?
+C
+_ATEOF
 
 
-fault=false
+{ set +x
+printf "%s\n" "$at_srcdir/04-trivial-bad.at:23: echo ab; echo c"
+at_fn_check_prepare_trace "04-trivial-bad.at:23"
+( $at_check_trace; echo ab; echo c
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo stdout:; tee stdout <"$at_stdout"
+at_fn_check_status 0 $at_status "$at_srcdir/04-trivial-bad.at:23"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/04-trivial-bad.at:25: ax_at_diff_pattern 04.re stdout"
+at_fn_check_prepare_trace "04-trivial-bad.at:25"
+( $at_check_trace; ax_at_diff_pattern 04.re stdout
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/04-trivial-bad.at:25"
+if $at_failed
+then :
+  echo expected mismatch;at_failed=false
+else case e in #(
+  e) echo unexpected match;at_failed=: ;;
+esac
+fi
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+
+
 
 _ax_at_check_pyrediff_prepare_original_at_diff="$at_diff"
 at_diff='ax_at_diff_pyre'
 { set +x
-printf "%s\n" "$at_srcdir/04-trivial-bad.at:15: echo ab; echo c"
-at_fn_check_prepare_trace "04-trivial-bad.at:15"
+printf "%s\n" "$at_srcdir/04-trivial-bad.at:34: echo ab; echo c"
+at_fn_check_prepare_trace "04-trivial-bad.at:34"
 ( $at_check_trace; echo ab; echo c
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -2757,21 +2957,55 @@ echo >>"$at_stdout"; printf "%s\n" "ab?d?
 C
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/04-trivial-bad.at:15"
+at_fn_check_status 0 $at_status "$at_srcdir/04-trivial-bad.at:34"
 if $at_failed
 then :
-  at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";echo expected mismatch;exit 0
+  at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";echo expected mismatch;at_failed=false
 else case e in #(
-  e) at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";echo unexpected match;fault=true ;;
+  e) at_diff="$_ax_at_check_pyrediff_prepare_original_at_diff";echo unexpected match;at_failed=: ;;
 esac
 fi
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
-printf "%s\n" "04-trivial-bad.at:22" >"$at_check_line_file"
-($fault) \
-  && at_fn_check_skip 99 "$at_srcdir/04-trivial-bad.at:22"
+
+{ set +x
+printf "%s\n" "$at_srcdir/04-trivial-bad.at:41: echo ab; echo c"
+at_fn_check_prepare_trace "04-trivial-bad.at:41"
+( $at_check_trace; echo ab; echo c
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo stdout:; tee stdout <"$at_stdout"
+at_fn_check_status 0 $at_status "$at_srcdir/04-trivial-bad.at:41"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/04-trivial-bad.at:43: ax_at_diff_pyre 04.re stdout"
+at_fn_check_prepare_trace "04-trivial-bad.at:43"
+( $at_check_trace; ax_at_diff_pyre 04.re stdout
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/04-trivial-bad.at:43"
+if $at_failed
+then :
+  echo expected mismatch;at_failed=false
+else case e in #(
+  e) echo unexpected match;at_failed=: ;;
+esac
+fi
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
 
 
   set +x
