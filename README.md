@@ -50,6 +50,28 @@ See [example 3](#example-3-pyre-pgroup-and-ggroup).
 > lines at different line offsets (instead of changed lines),
 > preventing `pyrediff` from applying the `PATTERN` correctly.
 
+The `pyrediff` usage is:
+```
+Usage: pyrediff PATTERN OUTPUT
+       pyrediff -e INPUT
+       pyrediff -f
+
+Pattern-aware comparison of PATTERN and OUTPUT. Similar to diff(1), except
+that PATTERN may contain python regular expressions. Strings captured in a
+named group using (?P<name>...) can be used in subsequent pattern lines with
+\g<name>; occurrences of \g<name> in the pattern line will be replaced with a
+previously captured value before the pattern is applied.
+
+Options:
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+  -e INPUT, --escape=INPUT
+                        escape INPUT to stdout instead of diffing
+  -f, --filter          filter stdin, which is the output of `diff PATTERN
+                        OUTPUT`
+```
+
+
 ## check\_pattern.awk
 
 `check_pattern.awk` is an AWK script to post-process the output of
@@ -78,7 +100,7 @@ and pyre (Python regular expression) support.
 
 Macros that support AWK regular expressions in the pattern:
 
-#### Macro: `AX_AT_CHECK_PATTERN(`_commands_, [_status_=0], [_stdout-re_], [_stderr-re_], [_run-if-fail_], [_run-if-pass_]`)`
+#### Macro: `AX_AT_CHECK_PATTERN(`_commands_, [_status_=`0`], [_stdout-re_], [_stderr-re_], [_run-if-fail_], [_run-if-pass_]`)`
 
 Similar to `AT_CHECK()`, except that _stdout-re_ and _stderr-re_ are
 AWK regular expressions (REs).
@@ -89,10 +111,10 @@ pattern _stdout-re_ and `stderr` to match the pattern _stderr-re_.
 The `AT_CHECK()` support for special values for _stdout-re_ and _stderr-re_
 of `ignore`, `stdout`, `stderr`, (etc) is available.
 
-#### Macro: `AX_AT_DIFF_PATTERN(`_pattern-file_, _test-file_, [_status_=0], [_differences_], [_run-if-fail_], [_run-if-pass_]`)`
+#### Macro: `AX_AT_DIFF_PATTERN(`_pattern-file_, _test-file_, [_status_=`0`], [_differences_], [_run-if-fail_], [_run-if-pass_]`)`
 
-Checks that an AWK pattern file `PATTERN-FILE` applies to a test file `TEST-FILE`,
-using `AT_CHECK()`.
+Checks that an AWK pattern file _pattern-file_ applies to a test file _test_file_,
+using `AT_CHECK()`, with expected `diff` differences in _differences_.
 
 #### Macro: `AX_AT_DATA_CHECK_PATTERN_AWK(`_filename_`)`
 
@@ -105,7 +127,7 @@ This is the same as the [check\_pattern.awk](#check_patternawk) script.
 Macros that support
 [Python regular expressions](https://docs.python.org/3/library/re.html):
 
-#### Macro: `AX_AT_CHECK_PYREDIFF(`_commands_, [_status_=0], [_stdout-re_], [_stderr-re_], [_run-if-fail_], [_run-if-pass_]`)`
+#### Macro: `AX_AT_CHECK_PYREDIFF(`_commands_, [_status_=`0`], [_stdout-re_], [_stderr-re_], [_run-if-fail_], [_run-if-pass_]`)`
 
 Similar to `AT_CHECK()`, except that _stdout-re_ and _stderr-re_ are
 Python regular expressions (pyre).
@@ -116,9 +138,10 @@ pyre (Python regular expression) _stdout-re_ and `stderr` to match the pyre _std
 The `AT_CHECK()` support for special values for _stdout-re_ and _stderr-re_
 of `ignore`, `stdout`, `stderr`, (etc) is available.
 
-#### Macro: `AX_AT_DIFF_PYRE(`_pyre-file_, _test-file_, [_status_=0], [_differences_], [_run-if-fail_], [_run-if-pass_])`
+#### Macro: `AX_AT_DIFF_PYRE(`_pyre-file_, _test-file_, [_status_=`0`], [_differences_], [_run-if-fail_], [_run-if-pass_]`)`
 
-Checks that a pyre file _pyre-file_ applies to a test file _test-file_.
+Checks that a pyre file _pyre-file_ applies to a test file _test-file_,
+using `AT_CHECK()`, with expected `diff` differences in _differences_.
 
 #### Macro: `AX_AT_DATA_PYREDIFF_PY(`_filename_`)`
 
