@@ -5,9 +5,13 @@ This project contains a collection of scripts and autotest
 (part of [autoconf](https://www.gnu.org/software/autoconf/))
 macros:
 
-  * [pyrediff](#pyrediff)
-  * [check\_pattern.awk](#check_patternawk)
-  * [autotest macros](#autotest-macros)
+  * [`pyrediff`](#pyrediff)
+  * [`check_pattern.awk`](#check_patternawk)
+  * [autotest m4 macros](#autotest-macros), including:
+    * [`AX_AT_CHECK_PATTERN()`](#macro-ax_at_check_patterncommands-status0-stdout-re-stderr-re-run-if-fail-run-if-pass)
+    * [`AX_AT_DIFF_PATTERN()`](#macro-ax_at_diff_patternpattern-file-test-file-status0-differences-run-if-fail-run-if-pass)
+    * [`AX_AT_CHECK_PYREDIFF()`](#macro-ax_at_check_pyrediffcommands-status0-stdout-re-stderr-re-run-if-fail-run-if-pass)
+    * [`AX_AT_DIFF_PYRE()`](#macro-ax_at_diff_pyrepyre-file-test-file-status0-differences-run-if-fail-run-if-pass)
 
 ## pyrediff
 
@@ -58,33 +62,64 @@ The script is usually invoked as:
 
 Various autotest
 ([autoconf](https://www.gnu.org/software/autoconf/))
-macros are provided with pattern (AWK regular expression)
+m4 macros are provided with pattern (AWK regular expression)
 and pyre (Python regular expression) support.
+
+> **Note**: As autoconf uses [] for quoting, the use of [brackets] in the
+> macro arguments _stdout-re_ and _stderr-re_ can be awkward and require
+> careful extra quoting, or quadrigraphs `@<:@` (for `[`) and `@:>@` (for `]`).
 
 ### AWK regular expression patterns
 
 Macros that support AWK regular expressions in the pattern:
 
-  * `AX_AT_CHECK_PATTERN()`: similar to `AT_CHECK()`,
-    except that stdout and stderr are AWK regular expressions (REs).
-  * `AX_AT_DIFF_PATTERN()`: checks that a pattern file applies to
-    a test file.
-  * `AX_AT_DATA_CHECK_PATTERN_AWK()`: create a file with the
-    contents of the AWK script used by `AX_AT_CHECK_PATTERN()`
-    and `AX_AT_DIFF_PATTERN()`.
-    This is the same as the [check\_pattern.awk](#check_patternawk) script.
+#### Macro: `AX_AT_CHECK_PATTERN(`_commands_, [_status_=0], [_stdout-re_], [_stderr-re_], [_run-if-fail_], [_run-if-pass_]`)`
+
+Similar to `AT_CHECK()`, except that _stdout-re_ and _stderr-re_ are
+AWK regular expressions (REs).
+
+Using `AT_CHECK()`, runs _commands_ in a subshell, which are expected to
+have an exit status of _status_, and to generate `stdout` to match the
+pattern _stdout-re_ and `stderr` to match the pattern _stderr-re_.
+The `AT_CHECK()` support for special values for _stdout-re_ and _stderr-re_
+of `ignore`, `stdout`, `stderr`, (etc) is available.
+
+#### Macro: `AX_AT_DIFF_PATTERN(`_pattern-file_, _test-file_, [_status_=0], [_differences_], [_run-if-fail_], [_run-if-pass_]`)`
+
+Checks that an AWK pattern file `PATTERN-FILE` applies to a test file `TEST-FILE`,
+using `AT_CHECK()`.
+
+#### Macro: `AX_AT_DATA_CHECK_PATTERN_AWK(`_filename_`)`
+
+Create the file _filename_ with the contents of the AWK script used by
+`AX_AT_CHECK_PATTERN()` and `AX_AT_DIFF_PATTERN()`.
+This is the same as the [check\_pattern.awk](#check_patternawk) script.
 
 ### Python regular expression (pyre) patterns
 
 Macros that support
 [Python regular expressions](https://docs.python.org/3/library/re.html):
 
-  * `AX_AT_CHECK_PYREDIFF()`: similar to `AT_CHECK()`,
-   except that stdout and stderr are Python regular expressions (pyre).
-  * `AX_AT_DIFF_PYRE()`: checks that a pattern file applies to a test file.
-  * `AX_AT_DATA_PYREDIFF_PY()`: create a file with the contents of the
-    Python script used by `AX_AT_CHECK_PYREDIFF()` and `AX_AT_DIFF_PYRE()`.
-    This is the same as the [pyrediff](#pyrediff) script.
+#### Macro: `AX_AT_CHECK_PYREDIFF(`_commands_, [_status_=0], [_stdout-re_], [_stderr-re_], [_run-if-fail_], [_run-if-pass_]`)`
+
+Similar to `AT_CHECK()`, except that _stdout-re_ and _stderr-re_ are
+Python regular expressions (pyre).
+
+Using `AT_CHECK()`, runs _commands_ in a subshell, which are expected to
+have an exit status of _status_, and to generate `stdout` to match the
+pyre (Python regular expression) _stdout-re_ and `stderr` to match the pyre _stderr-re_.
+The `AT_CHECK()` support for special values for _stdout-re_ and _stderr-re_
+of `ignore`, `stdout`, `stderr`, (etc) is available.
+
+#### Macro: `AX_AT_DIFF_PYRE(`_pyre-file_, _test-file_, [_status_=0], [_differences_], [_run-if-fail_], [_run-if-pass_])`
+
+Checks that a pyre file _pyre-file_ applies to a test file _test-file_.
+
+#### Macro: `AX_AT_DATA_PYREDIFF_PY(`_filename_`)`
+
+Create a file _filename_ with the contents of the Python script used by
+`AX_AT_CHECK_PYREDIFF()` and `AX_AT_DIFF_PYRE()`.
+This is the same as the [pyrediff](#pyrediff) script.
 
 ## Examples
 

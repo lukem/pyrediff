@@ -4,7 +4,7 @@
 
 ### Changed
 - Extend `AX_AT_DIFF_PATTERN()` and `AX_AT_DIFF_PYRE()` to support
-- optional `RUN-IF-FAIL` and `RUN-IF-PASS` arguments.
+  optional `RUN-IF-FAIL` and `RUN-IF-PASS` arguments.
 
 ## [18] - 2024-03-12
 
