@@ -4,6 +4,10 @@ dnl
 dnl Also exercises RUN-IF-FAIL and RUN-IF-PASS support.
 dnl
 
+dnl
+dnl PATTERN checks
+dnl
+
 AX_AT_CHECK_PATTERN([echo ab; echo c], [0], [dnl
 ab?c?
 C
@@ -11,11 +15,34 @@ C
  [echo expected mismatch;at_failed=false],
  [echo unexpected match;at_failed=:])
 
+AT_DATA([04.re], [dnl
+ab?c?
+C
+])
+
+AT_CHECK([echo ab; echo c], [0], [stdout])
+
+AX_AT_DIFF_PATTERN([04.re], [stdout], [0], [],
+ [echo expected mismatch;at_failed=false],
+ [echo unexpected match;at_failed=:])
+
+
+dnl
+dnl PYRE checks
+dnl
+
 AX_AT_CHECK_PYREDIFF([echo ab; echo c], [0], [dnl
 ab?d?
 C
 ], [],
  [echo expected mismatch;at_failed=false],
  [echo unexpected match;at_failed=:])
+
+AT_CHECK([echo ab; echo c], [0], [stdout])
+
+AX_AT_DIFF_PYRE([04.re], [stdout], [0], [],
+ [echo expected mismatch;at_failed=false],
+ [echo unexpected match;at_failed=:])
+
 
 AT_CLEANUP()

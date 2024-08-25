@@ -1,7 +1,7 @@
 # SYNOPSIS
 #
 #   AX_AT_CHECK_PYREDIFF(COMMANDS, [STATUS], [STDOUT-RE], [STDERR-RE], [RUN-IF-FAIL], [RUN-IF-PASS])
-#   AX_AT_DIFF_PYRE(PYRE-FILE, TEST-FILE, [STATUS=0], [DIFFERENCES])
+#   AX_AT_DIFF_PYRE(PYRE-FILE, TEST-FILE, [STATUS=0], [DIFFERENCES], [RUN-IF-FAIL], [RUN-IF-PASS])
 #   AX_AT_DATA_PYREDIFF_PY(FILENAME)
 #
 # DESCRIPTION
@@ -247,7 +247,7 @@ AT_CHECK(m4_expand([$1]), [$2], m4_expand([$3]), m4_expand([$4]),
 
 m4_defun([AX_AT_DIFF_PYRE], [dnl
 AS_REQUIRE([_AX_AT_CHECK_PYRE_PREPARE])
-AT_CHECK([ax_at_diff_pyre $1 $2], [$3], [$4])
+AT_CHECK([ax_at_diff_pyre $1 $2], [$3], m4_expand([$4]), [], [$5], [$6])
 ])dnl AX_AT_DIFF_PYRE
 
 

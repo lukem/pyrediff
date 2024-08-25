@@ -22,7 +22,13 @@ c
 ])
 
 AT_CHECK([echo ab; echo c], [0], [stdout])
+
 AX_AT_DIFF_PATTERN([02.re], [stdout])
+
+pass=false
+AX_AT_DIFF_PATTERN([02.re], [stdout], [0], [],
+ [echo unexpected mismatch], [pass=true])
+AT_CHECK([if $pass; then exit 0; else exit 99; fi])
 
 
 dnl
@@ -42,6 +48,12 @@ c
 AT_CHECK([if $pass; then exit 0; else exit 99; fi])
 
 AT_CHECK([echo ab; echo c], [0], [stdout])
+
 AX_AT_DIFF_PYRE([02.re], [stdout])
+
+pass=false
+AX_AT_DIFF_PYRE([02.re], [stdout], [0], [],
+ [echo unexpected mismatch], [pass=true])
+AT_CHECK([if $pass; then exit 0; else exit 99; fi])
 
 AT_CLEANUP()

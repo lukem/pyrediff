@@ -1,7 +1,7 @@
 # SYNOPSIS
 #
 #   AX_AT_CHECK_PATTERN(COMMANDS, [STATUS], [STDOUT-RE], [STDERR-RE], [RUN-IF-FAIL], [RUN-IF-PASS])
-#   AX_AT_DIFF_PATTERN(PATTERN-FILE, TEST-FILE, [STATUS=0], [DIFFERENCES])
+#   AX_AT_DIFF_PATTERN(PATTERN-FILE, TEST-FILE, [STATUS=0], [DIFFERENCES], [RUN-IF-FAIL], [RUN-IF-PASS])
 #   AX_AT_DATA_CHECK_PATTERN_AWK(FILENAME)
 #
 # DESCRIPTION
@@ -33,7 +33,7 @@
 #
 # LICENSE
 #
-#   Copyright (c) 2013-2023, Luke Mewburn <luke@mewburn.net>
+#   Copyright (c) 2013-2024, Luke Mewburn <luke@mewburn.net>
 #
 #   Copying and distribution of this file, with or without modification,
 #   are permitted in any medium without royalty provided the copyright
@@ -154,7 +154,7 @@ AT_CHECK(m4_expand([$1]), [$2], m4_expand([$3]), m4_expand([$4]),
 
 m4_defun([AX_AT_DIFF_PATTERN], [dnl
 AS_REQUIRE([_AX_AT_CHECK_PATTERN_PREPARE])
-AT_CHECK([ax_at_diff_pattern $1 $2], [$3], [$4])
+AT_CHECK([ax_at_diff_pattern $1 $2], [$3], m4_expand([$4]), [], m4_expand([$5]), m4_expand([$6]))
 ])dnl AX_AT_DIFF_PATTERN
 
 
