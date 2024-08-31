@@ -1,6 +1,6 @@
 # Change Log
 
-## [19] - unreleased
+## [19] - 2024-08-31
 
 ### Changed
 - Extend `AX_AT_DIFF_PATTERN()` and `AX_AT_DIFF_PYRE()` to support
